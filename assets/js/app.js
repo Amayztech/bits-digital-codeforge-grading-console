@@ -1177,7 +1177,67 @@
    * Boot
    * ==================================================================== */
 
+  /**
+   * The accepted header spellings are rendered from the parser's own alias
+   * table, so the guidance on screen cannot drift from what is actually
+   * accepted. A few representative variants are shown inline; the rest sit
+   * behind a disclosure so the panel does not turn into a wall of chips.
+   */
+  function renderHeaderVariants() {
+    var host = document.getElementById("headerVariants");
+    if (!host) return;
+    D.clear(host);
+    var INLINE = 4;
+    ["id", "course", "marks"].forEach(function (field) {
+      var aliases = CF.workbook.FIELD_ALIASES[field];
+      // The first alias is the canonical header already shown in the table.
+      var variants = aliases.slice(1);
+      var row = D.el("div", { style: { display: "flex", gap: "5px", "flex-wrap": "wrap", "align-items": "center" } }, [
+        D.el("span", {
+          style: {
+            "font-size": "var(--fs-2xs)",
+            "font-weight": "700",
+            "letter-spacing": "var(--tracking-eyebrow)",
+            "text-transform": "uppercase",
+            color: "var(--c-ink-500)",
+            "min-width": "66px"
+          },
+          text: CF.workbook.FIELD_LABEL[field]
+        })
+      ]);
+      variants.slice(0, INLINE).forEach(function (alias) {
+        row.appendChild(D.el("code", { text: alias }));
+      });
+      if (variants.length > INLINE) {
+        var more = D.el("details", { style: { display: "inline" } });
+        more.appendChild(
+          D.el("summary", {
+            style: {
+              "font-size": "var(--fs-2xs)",
+              color: "var(--c-ink-500)",
+              cursor: "pointer",
+              "list-style": "none"
+            },
+            text: "+" + (variants.length - INLINE) + " more"
+          })
+        );
+        var full = D.el("div", { style: { display: "flex", gap: "5px", "flex-wrap": "wrap", "margin-top": "5px", width: "100%" } });
+        variants.forEach(function (alias) {
+          full.appendChild(D.el("code", { text: alias }));
+        });
+        more.appendChild(full);
+        row.appendChild(more);
+      }
+      host.appendChild(row);
+    });
+  }
+
   function init() {
+    // The markup declares the accepted types so the console degrades without
+    // JavaScript; re-applying them here keeps the two from drifting apart.
+    var fileInput = document.getElementById("fileInput");
+    if (fileInput) fileInput.accept = CF.workbook.fileAccept();
+
     var help = D.el("p.visually-hidden", { id: "chartKeyHelp" });
     help.textContent =
       "Each cutoff handle is a slider. Use the left and right arrow keys to move it by one mark, " +
@@ -1298,6 +1358,7 @@
 
     renderTimer();
     renderStageBar();
+    renderHeaderVariants();
 
     var draft = null;
     try {

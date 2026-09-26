@@ -1,0 +1,14 @@
+﻿
+Verifying file:///C:/BITS_DIGITAL_CODEFORGE_V1.0/index.html
+
+  [32mΓ£ô[0m page loads from file://
+  [32mΓ£ô[0m stylesheet applied
+  [32mΓ£ô[0m vendored SheetJS loaded
+  [32mΓ£ô[0m no script errors
+  [32mΓ£ô[0m demo class loads
+  [32mΓ£ô[0m workflow advances
+  [32mΓ£ô[0m both files download from file://
+  [32mΓ£ô[0m no errors during the full workflow
+
+----------------------------------------------------------------
+[32m8 passing, 0 failing ΓÇö the console works opened directly from disk[0m

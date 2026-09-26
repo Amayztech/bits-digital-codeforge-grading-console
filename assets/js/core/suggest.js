@@ -180,8 +180,6 @@
   }
 
   CF.suggest = {
-    METHOD: METHOD,
-    METHOD_SHORT: METHOD_SHORT,
     suggest: suggest,
     preview: preview,
     repair: repair

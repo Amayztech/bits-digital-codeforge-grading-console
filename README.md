@@ -248,6 +248,13 @@ Full detail in [`TEST_REPORT.md`](TEST_REPORT.md)**. In summary:
   widths, console hygiene, reduced motion, and local draft recovery.
 - **23 live assertions** against the deployed URL, including that every asset
   resolves from the `/<repo>/` subdirectory.
+- **8 assertions** against the console opened directly from `file://`, confirming
+  the choice of classic scripts keeps that path working.
+- **A static hygiene gate** (`npm run hygiene`) over the shipped code: unreachable
+  exports, console calls, unresolved markers, raw-HTML sinks, dynamic code
+  execution, native dialogs, outbound URLs, and source encoding. It also verifies
+  that the preserved copy of the starter still matches the file the challenge
+  supplied.
 - **Print output** rendered to PDF and inspected; one real bug (a blank printed
   page) was found and fixed this way.
 - **Zero** uncaught page errors and **zero** console errors across every run.
@@ -256,8 +263,10 @@ Full detail in [`TEST_REPORT.md`](TEST_REPORT.md)**. In summary:
 npm test              # 92 unit tests
 npm run test:browser  # 174 browser assertions (needs: npx playwright install chromium)
 npm run test:print    # renders the printable report to PDF
-npm run test:all      # all of the above
+npm run verify:file   # drives the console opened directly from disk
 npm run verify:live   # drives the deployed URL end to end
+npm run hygiene       # dead exports, console noise, raw-HTML sinks, encoding
+npm run test:all      # hygiene + unit + browser + print + file-protocol
 npm run fixtures      # regenerate the 25-workbook corpus
 ```
 
@@ -281,8 +290,7 @@ npx serve .
 
 # Option 4 - just open the file
 # index.html also works from file://, because the scripts are classic scripts
-# rather than ES modules. The download and print features work; the browser
-# treats file:// origins as opaque, so serving it is still preferable.
+# rather than ES modules. Verified by `npm run verify:file`.
 ```
 
 `npm install` is only needed for the test tooling. The application itself has no

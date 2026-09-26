@@ -543,16 +543,11 @@
      Workbook reading
      ====================================================================== */
 
-  var XLSX_MIME =
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet," +
-    "application/vnd.ms-excel," +
-    "application/vnd.ms-excel.sheet.macroEnabled.12," +
-    "application/octet-stream,text/csv,text/plain";
-
-  function supportedTypes() {
-    return XLSX_MIME;
-  }
-
+  /**
+   * The single source of truth for which file types the picker offers. The
+   * markup carries the same list so the console degrades gracefully without
+   * JavaScript, and app.js re-applies this on start-up so the two cannot drift.
+   */
   function fileAccept() {
     return ".xlsx,.xls,.xlsm,.csv,text/csv";
   }
@@ -706,7 +701,6 @@
   CF.workbook = {
     FIELD_ALIASES: FIELD_ALIASES,
     FIELD_LABEL: FIELD_LABEL,
-    ISSUE: ISSUE,
     matchField: matchField,
     parseMark: parseMark,
     scoreHeaderRow: scoreHeaderRow,
@@ -714,7 +708,6 @@
     readWorkbook: readWorkbook,
     readRows: readRows,
     fileAccept: fileAccept,
-    supportedTypes: supportedTypes,
     isSupportedName: isSupportedName
   };
 })(typeof globalThis !== "undefined" ? globalThis : this);

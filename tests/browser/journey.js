@@ -188,19 +188,36 @@ function section(t) {
    * 5. Student table search and sort
    * ================================================================ */
   section('5. Student table search and sort');
-  await page.fill('#studentSearch', rows[0].id);
-  await page.waitForTimeout(400);
-  const filtered = await page.locator('#studentTable table.data tbody tr').count();
-  check('search narrows the table to one student', filtered === 1, 'got ' + filtered);
-  await page.fill('#studentSearch', 'zzzznomatch');
-  await page.waitForTimeout(400);
-  check('no-match state is designed', (await page.locator('#studentTable .empty').count()) === 1);
-  await page.fill('#studentSearch', 'A-');
-  await page.waitForTimeout(400);
-  const byGrade = await page.locator('#studentTable table.data tbody tr').count();
-  check('search matches on grade too', byGrade > 0 && byGrade < rows.length, 'got ' + byGrade);
+  // The search box is debounced, so wait for the rendered row count to settle
+  // rather than sleeping a fixed amount.
+  const rowCount = () => page.locator('#studentTable table.data tbody tr').count();
+  const emptyCount = () => page.locator('#studentTable .empty').count();
+  const settle = async () => {
+    let prevRows = -1;
+    let prevEmpty = -1;
+    for (let i = 0; i < 40; i++) {
+      await page.waitForTimeout(70);
+      const rows = await rowCount();
+      const empty = await emptyCount();
+      if (rows === prevRows && empty === prevEmpty) return { rows, empty };
+      prevRows = rows;
+      prevEmpty = empty;
+    }
+    return { rows: prevRows, empty: prevEmpty };
+  };
+  const searchFor = async (term) => {
+    await page.fill('#studentSearch', term);
+    return settle();
+  };
+
+  let r = await searchFor(rows[0].id);
+  check('search narrows the table to one student', r.rows === 1, 'rows=' + r.rows);
+  r = await searchFor('zzzznomatch');
+  check('no-match state is designed', r.empty === 1 && r.rows === 0, 'rows=' + r.rows + ' empty=' + r.empty);
+  r = await searchFor('A-');
+  check('search matches on grade too', r.rows > 0 && r.rows < rows.length, 'rows=' + r.rows);
   await page.fill('#studentSearch', '');
-  await page.waitForTimeout(400);
+  await settle();
   await page.click('#studentTable th >> nth=1');
   await page.waitForTimeout(300);
   check('numeric columns sort descending first', await page.evaluate(() => window.CF.app.state.studentSort.dir === 'desc'));

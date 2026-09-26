@@ -10,7 +10,9 @@ this report:
 - `artifacts/recon/starter-probe.json` — the starter's recorded behaviour across 33 scenarios
 - `artifacts/recon/A-gap-export.csv` — the starter's 15-of-17-row export
 - `artifacts/grade-report.pdf` — the printable grade report
-- `artifacts/screenshots/` — 15 screenshots across five viewport widths
+- `artifacts/screenshots/` — 16 screenshots across five viewport widths
+
+Reproduce with `npm run test:all` and `npm run verify:live`.
 
 ---
 
@@ -20,9 +22,11 @@ this report:
 | --- | --- | --- | --- |
 | Chromium (Playwright headless shell) | 153.0.8010.12 | `npm run test:browser` | 174 / 174 pass, 0 console errors, 0 page errors |
 | Chromium, **deployed URL** | same | `npm run verify:live` | 23 / 23 pass, 0 failed asset requests, 0 console errors |
+| Chromium, **`file://` protocol** | same | `npm run verify:file` | 8 / 8 pass — the console works opened directly from disk |
 | Chromium with `prefers-reduced-motion: reduce` | same | Playwright context option | Full journey completes, 0 errors |
 | Print rendering (A4 portrait) | Chromium print pipeline | `npm run test:print` → PDF | Clean single-document report |
 | Node.js | v22.23.0 on Windows 11 | `npm test` | 92 / 92 pass |
+| Static analysis | `tools/hygiene.js` | `npm run hygiene` | Clean: 24 shipped files, 46 sources scanned |
 | Static file server | `tools/serve.js`, no dependencies | `npm start` | Serves on :4173, no caching |
 | GitHub Pages (production) | `amayztech.github.io` | `npm run verify:live` | Full workflow incl. both downloads |
 
@@ -292,11 +296,13 @@ caught by the tests and fixed:
 | Unit and integration (`npm test`) | 92 | 92 | 0 |
 | Browser journey (`npm run test:browser`) | 174 | 174 | 0 |
 | Deployed site (`npm run verify:live`) | 23 | 23 | 0 |
+| `file://` protocol (`npm run verify:file`) | 8 | 8 | 0 |
+| Static hygiene (`npm run hygiene`) | 24 files | clean | 0 |
 | Print rendering | 1 document | 1 | 0 |
-| **Total** | **290** | **290** | **0** |
+| **Total behavioural tests** | **298** | **298** | **0** |
 
 Uncaught page errors: **0**. Console errors: **0**. Native dialogs: **0**.
-Failed network requests on the deployed site: **0**.
+Failed network requests on the deployed site: **0**. Static hygiene findings: **0**.
 
 Known limitations are listed in section 1 and in the README's *Honesty notes*.
 They are limitations of what was verified, not of what is claimed.

@@ -5,7 +5,7 @@ Instructor,Dr. A. Kumar
 Course,CS101
 Source file,demo-class.xlsx
 Source sheet,Marks
-Generated at,"26 Sep 2026, 18:21"
+Generated at,"26 Sep 2026, 18:50"
 Active grading time,12s
 Rows accepted from workbook,99
 Rows rejected,0
@@ -35,12 +35,12 @@ E,0,19,0,0.0%
 
 Change log
 #,Time,Change
-1,18:21,A minimum: 80 → 81
-2,18:21,A minimum: 81 → 82
-3,18:21,A minimum: 82 → 87
-4,18:21,A minimum: 87 → 86
-5,18:21,Undone: A minimum: 86 → 100 (limited to the legal range for this band)
-6,18:21,Reset all cutoffs to the challenge defaults
-7,18:21,Undone: Applied suggested cutoffs from the class distribution
+1,18:50,A minimum: 80 → 81
+2,18:50,A minimum: 81 → 82
+3,18:50,A minimum: 82 → 87
+4,18:50,A minimum: 87 → 86
+5,18:50,Undone: A minimum: 86 → 100 (limited to the legal range for this band)
+6,18:50,Reset all cutoffs to the challenge defaults
+7,18:50,Undone: Applied suggested cutoffs from the class distribution
 
 Note,Generated in the instructor's browser. No student data was transmitted.

@@ -258,8 +258,6 @@
 
   CF.grading = {
     GRADES: GRADES,
-    EDITABLE: EDITABLE,
-    DEFAULT_CUTOFFS: DEFAULT_CUTOFFS,
     defaults: defaults,
     defaultBands: defaultBands,
     bandsFromCutoffs: bandsFromCutoffs,

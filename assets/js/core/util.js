@@ -166,13 +166,6 @@
     return n === 1 ? one : many || one + "s";
   }
 
-  function byId(list, id) {
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id === id) return list[i];
-    }
-    return null;
-  }
-
   function byKey(list, key) {
     for (var i = 0; i < list.length; i++) {
       if (list[i].key === key) return list[i];
@@ -220,7 +213,6 @@
     formatBytes: formatBytes,
     percent: percent,
     pluralise: pluralise,
-    byId: byId,
     byKey: byKey,
     deepEqual: deepEqual,
     uniqueBy: uniqueBy
