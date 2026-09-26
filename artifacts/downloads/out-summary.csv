@@ -1,0 +1,46 @@
+﻿BITS Pilani Digital - Grading Summary
+
+Field,Value
+Instructor,Dr. A. Kumar
+Course,CS101
+Source file,demo-class.xlsx
+Source sheet,Marks
+Generated at,"26 Sep 2026, 17:23"
+Active grading time,15s
+Rows accepted from workbook,99
+Rows rejected,0
+Marks normalised,2
+
+Cohort statistics
+Measure,Value
+Students graded,34
+Minimum,26
+Maximum,100
+Mean,63.62
+Median,62.00
+Q1,57.00
+Q3,69.25
+Standard deviation,12.85
+
+Final grade cutoffs
+Grade,Marks from,Marks to,Students,Share of class
+A,80,100,4,11.8%
+A-,70,79,5,14.7%
+B,60,69,12,35.3%
+B-,50,59,11,32.4%
+C,40,49,1,2.9%
+C-,30,39,0,0.0%
+D,20,29,1,2.9%
+E,0,19,0,0.0%
+
+Change log
+#,Time,Change
+1,17:22,A minimum: 80 → 81
+2,17:22,A minimum: 81 → 82
+3,17:22,A minimum: 82 → 87
+4,17:22,A minimum: 87 → 86
+5,17:23,Undone: A minimum: 86 → 100 (limited to the legal range for this band)
+6,17:23,Reset all cutoffs to the challenge defaults
+7,17:23,Undone: Applied suggested cutoffs from the class distribution
+
+Note,Generated in the instructor's browser. No student data was transmitted.

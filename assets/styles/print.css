@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Print - the final review sheet doubles as the official grade report.
+   Everything that is not the report is removed so Ctrl+P produces a clean,
+   paginated document with no app chrome.
+   ========================================================================== */
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 14mm 12mm;
+  }
+
+  :root {
+    --c-paper: #ffffff;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000;
+    font-size: 10.5pt;
+  }
+
+  .app-header,
+  .stagebar,
+  .app-footer,
+  .toast-region,
+  .modal-backdrop,
+  .no-print,
+  .stage:not([data-printable="true"]) {
+    display: none !important;
+  }
+
+  .main {
+    padding: 0 !important;
+  }
+
+  .shell {
+    max-width: none;
+    padding: 0 !important;
+  }
+
+  .sheet {
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  .sheet__masthead {
+    background: #0a1a2f !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    padding: 8mm 6mm !important;
+    border-radius: 0 !important;
+  }
+
+  .sheet__masthead::after {
+    display: none !important;
+  }
+
+  .sheet__body {
+    padding: 6mm !important;
+    gap: 5mm !important;
+  }
+
+  .sheet__foot {
+    padding: 4mm 6mm !important;
+    background: #f3f5f9 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .panel,
+  .table-wrap,
+  .notice {
+    box-shadow: none !important;
+    border-color: #c8cedb !important;
+    break-inside: avoid;
+  }
+
+  .table-scroll {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  table.data thead th {
+    position: static !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  table.data tbody tr {
+    break-inside: avoid;
+  }
+
+  .stats,
+  .metric-row {
+    break-inside: avoid;
+  }
+
+  .chart {
+    break-inside: avoid;
+  }
+
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+
+  .grade-chip,
+  .badge,
+  .chart__band {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

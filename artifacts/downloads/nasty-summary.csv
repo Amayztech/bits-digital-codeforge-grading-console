@@ -1,0 +1,45 @@
+﻿BITS Pilani Digital - Grading Summary
+
+Field,Value
+Instructor,"Kumar, ""A."""
+Course,CS101
+Source file,01-valid-standard.xlsx
+Source sheet,Sheet1
+Generated at,"26 Sep 2026, 17:23"
+Active grading time,3s
+Rows accepted from workbook,60
+Rows rejected,0
+Marks normalised,0
+
+Cohort statistics
+Measure,Value
+Students graded,22
+Minimum,52
+Maximum,84
+Mean,68.41
+Median,69.50
+Q1,65.25
+Q3,72.75
+Standard deviation,7.68
+
+Final grade cutoffs
+Grade,Marks from,Marks to,Students,Share of class
+A,85,100,0,0.0%
+A-,70,84,11,50.0%
+B,60,69,8,36.4%
+B-,50,59,3,13.6%
+C,40,49,0,0.0%
+C-,30,39,0,0.0%
+D,20,29,0,0.0%
+E,0,19,0,0.0%
+
+Change from previous configuration
+Students affected,1
+Moved up a grade,0
+Moved down a grade,1
+
+Change log
+#,Time,Change
+1,17:23,A minimum: 80 → 85
+
+Note,Generated in the instructor's browser. No student data was transmitted.

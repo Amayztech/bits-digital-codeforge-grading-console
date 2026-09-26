@@ -1,0 +1,156 @@
+/* ==========================================================================
+   Design tokens - the single source of truth for the visual language.
+   Every colour, space, radius, shadow and type size in the app resolves here.
+   ========================================================================== */
+
+:root {
+  /* --- Neutral ramp: cool paper greys, not pure black ------------------ */
+  --c-white: #ffffff;
+  --c-paper: #f5f6f8;
+  --c-paper-2: #eef0f4;
+  --c-ink-900: #0d1526;
+  --c-ink-800: #1a2337;
+  --c-ink-700: #2c3852;
+  --c-ink-600: #47546d;
+  --c-ink-500: #64708a;
+  --c-ink-400: #8b95a9;
+  --c-ink-300: #b6bdcc;
+  --c-ink-200: #d9dee7;
+  --c-ink-100: #e8ecf2;
+  --c-ink-050: #f3f5f9;
+
+  /* --- Brand: deep academic navy + copper accent ---------------------- */
+  --c-brand-900: #0a1a2f;
+  --c-brand-800: #10294a;
+  --c-brand-700: #17395f;
+  --c-primary: #1b4d8f;
+  --c-primary-hover: #163d72;
+  --c-primary-active: #12325d;
+  --c-primary-soft: #e9f0f9;
+  --c-primary-soft-2: #d6e4f3;
+  --c-primary-ring: rgba(27, 77, 143, 0.28);
+
+  --c-accent: #a96718;
+  --c-accent-hover: #8d5613;
+  --c-accent-soft: #fdf3e4;
+  --c-accent-line: #e8c489;
+
+  /* --- Semantic status ------------------------------------------------ */
+  --c-success: #0b6b4f;
+  --c-success-soft: #e4f4ed;
+  --c-success-line: #a8d8c4;
+  --c-warning: #a2560a;
+  --c-warning-soft: #fdf1e0;
+  --c-warning-line: #edc68a;
+  --c-danger: #a52218;
+  --c-danger-hover: #8a1c13;
+  --c-danger-soft: #fdecea;
+  --c-danger-line: #f2b8b1;
+  --c-info: #1b4d8f;
+  --c-info-soft: #e9f0f9;
+  --c-info-line: #b9cfe8;
+
+  /* --- Ordinal grade ramp -------------------------------------------- *
+   * Grades are ordered, so the ramp is ordered too: one hue, descending
+   * lightness. Every band is also labelled with its letter and range, so
+   * colour is reinforcement rather than the only signal.                  */
+  --grade-1: #10395f;
+  --grade-2: #17527f;
+  --grade-3: #1f6d94;
+  --grade-4: #2f89a3;
+  --grade-5: #4ea5ac;
+  --grade-6: #82bfb4;
+  --grade-7: #b6d3c6;
+  --grade-8: #dfe8e2;
+
+  /* --- Chart ramp: one hue, eight ordered steps ------------------------ *
+   * Used for per-mark bars. Every step clears 3:1 against white so no band
+   * becomes invisible, and lightness carries the ordering.                  */
+  --chart-g1: #123a5e;
+  --chart-g2: #17527d;
+  --chart-g3: #1d6a9b;
+  --chart-g4: #2b83b0;
+  --chart-g5: #4d9bc0;
+  --chart-g6: #74b2cd;
+  --chart-g7: #9cc6d9;
+  --chart-g8: #c4dbe6;
+
+  /* --- Typography ----------------------------------------------------- */
+  --font-sans: "Inter", "Segoe UI Variable Text", "Segoe UI", -apple-system,
+    BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+    "Times New Roman", serif;
+  --font-mono: "SFMono-Regular", "Cascadia Mono", Consolas, "Liberation Mono",
+    Menlo, monospace;
+
+  --fs-2xs: 0.6875rem; /* 11px - micro labels */
+  --fs-xs: 0.75rem; /* 12px */
+  --fs-sm: 0.8125rem; /* 13px */
+  --fs-base: 0.875rem; /* 14px - app body */
+  --fs-md: 0.9375rem; /* 15px */
+  --fs-lg: 1.0625rem; /* 17px */
+  --fs-xl: 1.3125rem; /* 21px */
+  --fs-2xl: 1.625rem; /* 26px */
+  --fs-3xl: 2.125rem; /* 34px - stat numerals */
+  --fs-4xl: 2.75rem; /* 44px - rare display */
+
+  --lh-tight: 1.15;
+  --lh-snug: 1.35;
+  --lh-normal: 1.55;
+  --lh-loose: 1.7;
+
+  --tracking-eyebrow: 0.09em;
+  --tracking-tight: -0.014em;
+  --tracking-tighter: -0.022em;
+
+  /* --- Spacing: 4px base ---------------------------------------------- */
+  --sp-0: 0;
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.25rem;
+  --sp-6: 1.5rem;
+  --sp-7: 1.75rem;
+  --sp-8: 2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-20: 5rem;
+
+  /* --- Radii ----------------------------------------------------------- */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 9px;
+  --r-lg: 13px;
+  --r-xl: 18px;
+  --r-2xl: 24px;
+  --r-pill: 999px;
+
+  /* --- Elevation: soft, layered, never muddy --------------------------- */
+  --sh-xs: 0 1px 2px rgba(13, 21, 38, 0.05);
+  --sh-sm: 0 1px 2px rgba(13, 21, 38, 0.05), 0 2px 6px rgba(13, 21, 38, 0.04);
+  --sh-md: 0 1px 2px rgba(13, 21, 38, 0.04), 0 6px 16px rgba(13, 21, 38, 0.07);
+  --sh-lg: 0 2px 4px rgba(13, 21, 38, 0.04), 0 14px 34px rgba(13, 21, 38, 0.1);
+  --sh-xl: 0 4px 8px rgba(13, 21, 38, 0.05), 0 28px 60px rgba(13, 21, 38, 0.14);
+  --sh-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --ring: 0 0 0 3px var(--c-primary-ring);
+
+  /* --- Motion ---------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+  --dur-1: 110ms;
+  --dur-2: 170ms;
+  --dur-3: 240ms;
+  --dur-4: 320ms;
+
+  /* --- Layout ---------------------------------------------------------- */
+  --shell-max: 1360px;
+  --rail-w: 396px;
+  --header-h: 60px;
+  --z-sticky: 20;
+  --z-drawer: 40;
+  --z-toast: 60;
+  --z-modal: 80;
+}

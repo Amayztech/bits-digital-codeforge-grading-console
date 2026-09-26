@@ -1,0 +1,16 @@
+{
+  "name": "bits-digital-codeforge-grading-console",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BITS Digital CodeForge V1.0 submission - Instructor Grading Workspace (static, browser-local)",
+  "scripts": {
+    "start": "node tools/serve.js",
+    "test": "node tests/run.js",
+    "test:browser": "node tests/browser/journey.js",
+    "fixtures": "node tests/fixtures/build.js"
+  },
+  "devDependencies": {
+    "fflate": "^0.8.3",
+    "playwright": "^1.49.0"
+  }
+}

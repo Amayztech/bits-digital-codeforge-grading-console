@@ -1,0 +1,4246 @@
+[
+  {
+    "name": "00-baseline-no-upload",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "download button state with zero data loaded",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "01-xlsx-accept-attribute",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "accept=\".xls\" (as read back: .xls)",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "02-valid-standard",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 61,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "workbook has 60 data rows across 3 courses; option elements = 61",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "03-second-upload-accumulates",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 62,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "after 1st upload=61 options; after 2nd upload=62 options -> [\"Select a course to begin\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"CS101\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"ME201\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"BA210\",\"CS101\"]",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "04-select-course-duplicates",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 61,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "84",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "52",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "68.41",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "69.5",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 1",
+        "A-: 10",
+        "B: 8",
+        "B-: 3",
+        "C: 0",
+        "C-: 0",
+        "D: 0",
+        "E: 0"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "grade cards built = 8",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "05-instructor-required-alert",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 2,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "instructor was left blank on purpose",
+    "dialogs": [
+      {
+        "type": "alert",
+        "message": "Please enter instructor name first"
+      }
+    ],
+    "consoleErrors": []
+  },
+  {
+    "name": "06-spec-headers",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 4,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "brief says the column is \"Student's BITS ID\"",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "07-text-marks-sort",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 6,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "100",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "9",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "1821296420.00",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "64",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 2",
+        "A-: 0",
+        "B: 1",
+        "B-: 0",
+        "C: 0",
+        "C-: 0",
+        "D: 0",
+        "E: 2"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "marks stored as text: 9, 10, 82, 100, 64",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "08-empty-headers-only",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "headers only, zero students",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "09-identical-marks",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 13,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "75",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "75",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "75.00",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "75",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 0",
+        "A-: 12",
+        "B: 0",
+        "B-: 0",
+        "C: 0",
+        "C-: 0",
+        "D: 0",
+        "E: 0"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "12 students all at 75",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "10-fractional-marks",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 11,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "75",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "NaN",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "41.5",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 2",
+        "A-: 1",
+        "B: 0",
+        "B-: 0",
+        "C: 0",
+        "C-: 0",
+        "D: 0",
+        "E: 2"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "includes 82.6, 0.4, \"ABS\", -5, 120, \"\", null, \"82/100\"",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "11-corrupt-file",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "plain text with an .xlsx extension",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "12-empty-file",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "0 bytes",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "13-csv-wearing-xlsx",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 2,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "real CSV bytes, .xlsx name",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "14-zero-worksheets",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "valid zip, workbook.xml has <sheets></sheets>",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "15-missing-column",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 3,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "no Total Marks column",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "16-duplicate-and-blank-ids",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 8,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "",
+        "CS102",
+        "CS102"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "82",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "41",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "60.25",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "59",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 1",
+        "A-: 0",
+        "B: 1",
+        "B-: 1",
+        "C: 1",
+        "C-: 0",
+        "D: 0",
+        "E: 0"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "3 duplicate IDs, 1 blank ID, 1 blank course",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "17-course-name-fragments",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 5,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "cs101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "\"CS101\", \"CS101 \", \" cs101\", \"CS101\"",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "18-instructions-first",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 3,
+      "courseOptions": [
+        "Select a course to begin",
+        "",
+        ""
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "Sheet1=Instructions, Sheet2=Marks",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "19-range-coverage-gap",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 18,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "100",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "0",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "52.47",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "50",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 1",
+        "A-: 2",
+        "B: 2",
+        "B-: 2",
+        "C: 2",
+        "C-: 2",
+        "D: 2",
+        "E: 2"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:02",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "A band set to 80-90; 99 and 100 now fall outside every band",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "20-range-bottom-gap",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 18,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "100",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "0",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "52.47",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "50",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 3",
+        "A-: 2",
+        "B: 2",
+        "B-: 2",
+        "C: 2",
+        "C-: 2",
+        "D: 2",
+        "E: 1"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:02",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "E band set to 10-19; 0..9 now fall outside every band",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "21-single-mark-band",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 18,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "100",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "0",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "52.47",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "50",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 3",
+        "A-: 2",
+        "B: 5",
+        "B-: 0",
+        "C: 1",
+        "C-: 2",
+        "D: 2",
+        "E: 2"
+      ],
+      "rangeError": "Each grade must have Min < Max.",
+      "downloadDisabled": true,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:01",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "attempted a 1-mark-wide band",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "22-export-with-gap",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 18,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "100",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "0",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "52.47",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "50",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 1",
+        "A-: 2",
+        "B: 2",
+        "B-: 2",
+        "C: 2",
+        "C-: 2",
+        "D: 2",
+        "E: 2"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "You completed grading in 0 min 1 sec in your first attempt.",
+      "timerText": "00:01",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "no download captured",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "23-export-with-no-data",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:03",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "button disabled=true, no download",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "24-csv-escaping",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 61,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "84",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "52",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "68.41",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "69.5",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 1",
+        "A-: 10",
+        "B: 8",
+        "B-: 3",
+        "C: 0",
+        "C-: 0",
+        "D: 0",
+        "E: 0"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH, \"PROF\" KUMAR. Please review and finalize grading.",
+      "thankyou": "You completed grading in 0 min 1 sec in your first attempt.",
+      "timerText": "00:01",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "[\"Instructor,Ayesh, \\\"Prof\\\" Kumar\",\"Course, CS101\",\"\"]",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "25-course-switch-drops-config",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 61,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "84",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "52",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "68.41",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "69.5",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 1",
+        "A-: 10",
+        "B: 8",
+        "B-: 3",
+        "C: 0",
+        "C-: 0",
+        "D: 0",
+        "E: 0"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:03",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "A min after edit=85, after switching away and back=80",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "26-timer-start-point",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:03",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "timer read \"00:02\" 2.5s after page load, before any upload or interaction",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "27-timer-arc",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "{\"dash\":\"251\",\"circumference\":251.32741228718345,\"textAtLoad\":\"00:00\"}",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "28-repeated-finalize",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 2,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "73",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "73",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "73.00",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "73",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 0",
+        "A-: 1",
+        "B: 0",
+        "B-: 0",
+        "C: 0",
+        "C-: 0",
+        "D: 0",
+        "E: 0"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "You took a total of 0 min 6 sec to complete the grading in your 4th attempt.",
+      "timerText": "00:01",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "[\n \"You completed grading in 0 min 1 sec in your first attempt.\",\n \"You took a total of 0 min 3 sec to complete the grading in your second attempt.\",\n \"You took a total of 0 min 5 sec to complete the grading in your third attempt.\",\n \"You took a total of 0 min 6 sec to complete the grading in your 4th attempt.\"\n]",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "29-finalize-counter-across-files",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 62,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "84",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "52",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "68.41",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "69.5",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 1",
+        "A-: 10",
+        "B: 8",
+        "B-: 3",
+        "C: 0",
+        "C-: 0",
+        "D: 0",
+        "E: 0"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "You took a total of 0 min 1 sec to complete the grading in your second attempt.",
+      "timerText": "00:00",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "message after switching to a brand new workbook: \"You took a total of 0 min 1 sec to complete the grading in your second attempt.\"",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "30-new-upload-keeps-stale-config",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 78,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "100",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "0",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "52.47",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "50",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 2",
+        "A-: 3",
+        "B: 2",
+        "B-: 2",
+        "C: 2",
+        "C-: 2",
+        "D: 2",
+        "E: 2"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:02",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "selected course value after 2nd upload=\"CS101\", grade cards still in DOM=true",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "31-responsive-390",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 61,
+      "courseOptions": [
+        "Select a course to begin",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "CS101",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "ME201",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210",
+        "BA210"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "84",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "52",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "68.41",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "69.5",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [
+        "A: 1",
+        "A-: 10",
+        "B: 8",
+        "B-: 3",
+        "C: 0",
+        "C-: 0",
+        "D: 0",
+        "E: 0"
+      ],
+      "rangeError": "",
+      "downloadDisabled": false,
+      "welcome": "Welcome AYESH. Please review and finalize grading.",
+      "thankyou": "",
+      "timerText": "00:02",
+      "gradeCardCount": 8,
+      "selectOptionCounts": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "workspace columns=420px 196.562px | doc scrollWidth=692 clientWidth=390 | canvas attr=380x240 css=380x240",
+    "dialogs": [],
+    "consoleErrors": []
+  },
+  {
+    "name": "32-accessibility-baseline",
+    "before": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "after": {
+      "courseOptionCount": 1,
+      "courseOptions": [
+        "Select a course to begin"
+      ],
+      "statBoxes": [
+        {
+          "label": "Min",
+          "shows": "",
+          "elementId": "max"
+        },
+        {
+          "label": "Max",
+          "shows": "",
+          "elementId": "min"
+        },
+        {
+          "label": "Avg",
+          "shows": "",
+          "elementId": "avg"
+        },
+        {
+          "label": "Median",
+          "shows": "",
+          "elementId": "med"
+        }
+      ],
+      "gradeSummary": [],
+      "rangeError": "",
+      "downloadDisabled": true,
+      "welcome": "",
+      "thankyou": "",
+      "timerText": "00:00",
+      "gradeCardCount": 0,
+      "selectOptionCounts": [],
+      "canvasSize": [
+        380,
+        240
+      ],
+      "canvasClientSize": [
+        380,
+        240
+      ],
+      "alerts": [],
+      "hasImpliedGlobals": 9
+    },
+    "note": "{\"inputs\":[{\"id\":\"instructor\",\"type\":\"text\",\"hasLabel\":false,\"ariaLabel\":null,\"placeholder\":\"Instructor name (mandatory)\"},{\"id\":\"file\",\"type\":\"file\",\"hasLabel\":false,\"ariaLabel\":null,\"placeholder\":null},{\"id\":\"course\",\"type\":\"select-one\",\"hasLabel\":false,\"ariaLabel\":null,\"placeholder\":null}],\"canvasHasRole\":null,\"canvasHasLabel\":null,\"liveRegions\":0,\"mainLandmark\":false,\"h1\":1}",
+    "dialogs": [],
+    "consoleErrors": []
+  }
+]
