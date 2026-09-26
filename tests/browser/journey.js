@@ -83,6 +83,24 @@ function section(t) {
 
   check('page title is set', (await page.title()).includes('Grading Workspace'));
   check('exactly one h1', (await page.locator('h1').count()) === 1);
+  check('brand crest loads', await page.evaluate(() => {
+    const img = document.querySelector('.brand__mark img');
+    return !!(img && img.complete && img.naturalWidth > 0);
+  }));
+  check('brand crest is decorative (empty alt, named by the h1)', await page.evaluate(() => {
+    const img = document.querySelector('.brand__mark img');
+    return img.getAttribute('alt') === '' && /BITS Pilani Digital/.test(document.querySelector('h1').textContent);
+  }));
+  check('brand crest is sized for legibility, not shrunk to a smudge', await page.evaluate(() => {
+    const r = document.querySelector('.brand__mark').getBoundingClientRect();
+    return r.width >= 40;
+  }));
+  check('favicon points at a real raster asset', await page.evaluate(async () => {
+    const link = document.querySelector('link[rel="icon"]');
+    if (!link) return false;
+    const r = await fetch(link.href);
+    return r.ok && r.headers.get('content-type').indexOf('image/') === 0;
+  }));
   check('import stage is visible', await page.locator('#stage-import').isVisible());
   check('analyse stage hidden', !(await page.locator('#stage-analyse').isVisible()));
   check('dropzone is present', await page.locator('#dropzone').isVisible());

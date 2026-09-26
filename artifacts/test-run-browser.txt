@@ -2,6 +2,10 @@
 [1m1. First load and empty states[0m
   [32mΓ£ô[0m page title is set
   [32mΓ£ô[0m exactly one h1
+  [32mΓ£ô[0m brand crest loads
+  [32mΓ£ô[0m brand crest is decorative (empty alt, named by the h1)
+  [32mΓ£ô[0m brand crest is sized for legibility, not shrunk to a smudge
+  [32mΓ£ô[0m favicon points at a real raster asset
   [32mΓ£ô[0m import stage is visible
   [32mΓ£ô[0m analyse stage hidden
   [32mΓ£ô[0m dropzone is present
@@ -209,5 +213,5 @@
   [32mΓ£ô[0m discarding unticks the toggle
 
 ----------------------------------------------------------------
-[32m177 passing, 0 failing[0m
+[32m181 passing, 0 failing[0m
 Screenshots: artifacts/screenshots/

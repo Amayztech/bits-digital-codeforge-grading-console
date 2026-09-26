@@ -13,7 +13,9 @@
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="./" />
 
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/favicon.png" sizes="64x64" type="image/png" />
+    <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" sizes="180x180" />
     <link rel="stylesheet" href="assets/styles/tokens.css" />
     <link rel="stylesheet" href="assets/styles/base.css" />
     <link rel="stylesheet" href="assets/styles/components.css" />
@@ -142,14 +144,16 @@
       <header class="app-header">
         <div class="shell app-header__inner">
           <div class="brand">
-            <div class="brand__mark" aria-hidden="true">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 19V6.5A2 2 0 0 1 6 4.5h5.5" />
-                <path d="M4 19a2 2 0 0 0 2 2h6" />
-                <path d="M9 9.5l4.2 4.2M20 4.5v6.8M20 11.3 16.6 7" />
-                <path d="M13.2 14.4 20 20.8" />
-              </svg>
-            </div>
+            <picture class="brand__mark">
+              <source srcset="assets/brand/bits-pilani-crest.webp" type="image/webp" />
+              <img
+                src="assets/brand/bits-pilani-crest.png"
+                alt=""
+                width="256"
+                height="256"
+                decoding="async"
+              />
+            </picture>
             <div class="brand__text">
               <h1 class="brand__name">BITS Pilani Digital</h1>
               <p class="brand__sub">Grading Workspace</p>

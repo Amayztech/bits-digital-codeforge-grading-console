@@ -359,7 +359,9 @@ assets/
       impact-panel.js  review-panel.js
     app.js                     Session state, stage navigation, timer, wiring
   data/demo-class.js           Generated demo dataset
-  favicon.svg
+  brand/                       Institutional crest: 256px WebP + 128px PNG fallback
+  favicon.png favicon-32.png   Raster favicons derived from the crest
+  apple-touch-icon.png
 samples/                       sample-marks.xlsx, template-marks.xlsx
 vendor/xlsx.full.min.js        SheetJS 0.18.5, vendored
 tests/
