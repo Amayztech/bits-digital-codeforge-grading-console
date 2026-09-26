@@ -13,6 +13,9 @@
   [32mΓ£ô[0m skip link is the first tab stop
   [32mΓ£ô[0m tab order reaches the file input
   [32mΓ£ô[0m tab order reaches the demo loader
+  [32mΓ£ô[0m footer names the challenge
+  [32mΓ£ô[0m footer carries no disclaimer language
+  [32mΓ£ô[0m footer still states the privacy guarantee
 
 [1m2. Unusable files produce designed errors[0m
   [32mΓ£ô[0m 20-corrupt-not-a-zip.xlsx shows a clear error
@@ -206,5 +209,5 @@
   [32mΓ£ô[0m discarding unticks the toggle
 
 ----------------------------------------------------------------
-[32m174 passing, 0 failing[0m
+[32m177 passing, 0 failing[0m
 Screenshots: artifacts/screenshots/
