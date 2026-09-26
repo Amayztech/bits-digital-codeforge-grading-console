@@ -107,6 +107,7 @@
   [32mΓ£ô[0m sheet review chart drawn
   [32mΓ£ô[0m no NaN on the sheet
   [32mΓ£ô[0m finalize is enabled
+  [32mΓ£ô[0m review chart is drawn
 
 [1m9. Export[0m
   [32mΓ£ô[0m a single confirmation dialog is shown
@@ -128,6 +129,9 @@
   [32mΓ£ô[0m summary has no null/NaN/undefined
   [32mΓ£ô[0m receipt is shown after export
   [32mΓ£ô[0m receipt lists both files
+  [32mΓ£ô[0m the review chart survives the re-render
+  [32mΓ£ô[0m the review chart is still attached
+  [32mΓ£ô[0m the sheet badge reflects the finalized state
   [32mΓ£ô[0m timer stopped after finalize
   [32mΓ£ô[0m export stage marked done
 
@@ -202,5 +206,5 @@
   [32mΓ£ô[0m discarding unticks the toggle
 
 ----------------------------------------------------------------
-[32m170 passing, 0 failing[0m
+[32m174 passing, 0 failing[0m
 Screenshots: artifacts/screenshots/

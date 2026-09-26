@@ -4,11 +4,13 @@ Everything below was executed. The raw captured output is committed alongside
 this report:
 
 - `artifacts/test-run-unit.txt` — 92 unit and integration tests
-- `artifacts/test-run-browser.txt` — 170 browser assertions
+- `artifacts/test-run-browser.txt` — 174 browser assertions
+- `artifacts/test-run-print.txt` — printable report rendering
+- `artifacts/live-verify.txt` — 23 assertions against the deployed URL
 - `artifacts/recon/starter-probe.json` — the starter's recorded behaviour across 33 scenarios
 - `artifacts/recon/A-gap-export.csv` — the starter's 15-of-17-row export
 - `artifacts/grade-report.pdf` — the printable grade report
-- `artifacts/screenshots/` — 14 screenshots across five viewport widths
+- `artifacts/screenshots/` — 15 screenshots across five viewport widths
 
 ---
 
@@ -16,11 +18,13 @@ this report:
 
 | Environment | Version | How | Result |
 | --- | --- | --- | --- |
-| Chromium (Playwright headless shell) | 153.0.8010.12 | `npm run test:browser` | 170 / 170 pass, 0 console errors, 0 page errors |
+| Chromium (Playwright headless shell) | 153.0.8010.12 | `npm run test:browser` | 174 / 174 pass, 0 console errors, 0 page errors |
+| Chromium, **deployed URL** | same | `npm run verify:live` | 23 / 23 pass, 0 failed asset requests, 0 console errors |
 | Chromium with `prefers-reduced-motion: reduce` | same | Playwright context option | Full journey completes, 0 errors |
-| Print rendering (A4 portrait) | Chromium print pipeline | `tests/browser/print.js` → PDF | Clean single-document report |
+| Print rendering (A4 portrait) | Chromium print pipeline | `npm run test:print` → PDF | Clean single-document report |
 | Node.js | v22.23.0 on Windows 11 | `npm test` | 92 / 92 pass |
 | Static file server | `tools/serve.js`, no dependencies | `npm start` | Serves on :4173, no caching |
+| GitHub Pages (production) | `amayztech.github.io` | `npm run verify:live` | Full workflow incl. both downloads |
 
 **Not tested, and this is stated as a limitation rather than glossed over:**
 
@@ -186,7 +190,9 @@ generator.
 | E15 | Repeated downloads | Both files each time | 2 downloads in section 9, 2 in section 11 | Pass |
 | E16 | Confirmation count | Exactly one | 1 dialog, 2 actions | Pass |
 | E17 | Confirmation content | Names course, instructor, files, distribution | All present | Pass |
-| E18 | No native dialogs anywhere | Zero | 0 across 170 assertions | Pass |
+| E18 | No native dialogs anywhere | Zero | 0 across 174 assertions | Pass |
+| E19 | Deployed site | Full workflow from the public URL | 23 / 23 pass, both files downloaded from `amayztech.github.io` | Pass |
+| E20 | Assets resolve from a `/<repo>/` subdirectory | Yes | Verified against the live URL; the workflow fails the build on any absolute path | Pass |
 
 ### UX
 
@@ -275,6 +281,7 @@ caught by the tests and fixed:
 | Student-count axis showed 0.5 / 1.5 gridlines | `tests/browser/print.js` | Integer steps for small peaks |
 | A mojibake pass corrupted 11 non-ASCII characters in `app.js` | Encoding audit | `tools/fix-encoding.js` |
 | The course list was not cleared on a failed import | Browser journey §10 | `onFailed` clears the picker and the stage bar |
+| The review chart was orphaned when the sheet re-rendered, so the distribution vanished from the report after export | Browser journey 9, after the export | The chart element is created once and handed to the panel to place, so a re-render cannot detach it |
 
 ---
 
@@ -283,11 +290,13 @@ caught by the tests and fixed:
 | Suite | Tests | Pass | Fail |
 | --- | --- | --- | --- |
 | Unit and integration (`npm test`) | 92 | 92 | 0 |
-| Browser journey (`npm run test:browser`) | 170 | 170 | 0 |
+| Browser journey (`npm run test:browser`) | 174 | 174 | 0 |
+| Deployed site (`npm run verify:live`) | 23 | 23 | 0 |
 | Print rendering | 1 document | 1 | 0 |
-| **Total** | **263** | **263** | **0** |
+| **Total** | **290** | **290** | **0** |
 
 Uncaught page errors: **0**. Console errors: **0**. Native dialogs: **0**.
+Failed network requests on the deployed site: **0**.
 
 Known limitations are listed in section 1 and in the README's *Honesty notes*.
 They are limitations of what was verified, not of what is claimed.

@@ -239,20 +239,25 @@ Full detail in [`TEST_REPORT.md`](TEST_REPORT.md)**. In summary:
   legacy `.xls`, a corrupt file, a zero-byte file, a truncated zip, CSV wearing an
   `.xlsx` extension, a workbook with zero worksheets, and a title row above the
   header.
-- **170 browser assertions** across 16 sections driving the real console in
+- **174 browser assertions** across 16 sections driving the real console in
   Chromium: empty states, three unusable files, the demo class, course selection,
   statistics verified against the rendered student table, search and all three
   sort orders, the band editor by keyboard, mouse and by typing an illegal value,
   the optional suggestion and its undo, the review sheet, two complete exports
   with byte-level CSV verification, a second import, accessibility, five viewport
   widths, console hygiene, reduced motion, and local draft recovery.
+- **23 live assertions** against the deployed URL, including that every asset
+  resolves from the `/<repo>/` subdirectory.
 - **Print output** rendered to PDF and inspected; one real bug (a blank printed
   page) was found and fixed this way.
-- **Zero** uncaught page errors and **zero** console errors across the full run.
+- **Zero** uncaught page errors and **zero** console errors across every run.
 
 ```bash
 npm test              # 92 unit tests
-npm run test:browser  # 170 browser assertions (needs: npx playwright install chromium)
+npm run test:browser  # 174 browser assertions (needs: npx playwright install chromium)
+npm run test:print    # renders the printable report to PDF
+npm run test:all      # all of the above
+npm run verify:live   # drives the deployed URL end to end
 npm run fixtures      # regenerate the 25-workbook corpus
 ```
 

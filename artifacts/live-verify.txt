@@ -1,0 +1,29 @@
+﻿
+Verifying https://amayztech.github.io/bits-digital-codeforge-grading-console/
+
+  [32mΓ£ô[0m page responds 200
+  [32mΓ£ô[0m page title is correct
+  [32mΓ£ô[0m no failed asset requests
+  [32mΓ£ô[0m stylesheet loaded from the subdirectory
+  [32mΓ£ô[0m vendored SheetJS loaded
+  [32mΓ£ô[0m app namespace present
+  [32mΓ£ô[0m favicon resolves
+  [32mΓ£ô[0m template workbook downloads
+  [32mΓ£ô[0m sample workbook downloads
+  [32mΓ£ô[0m demo class loads
+  [32mΓ£ô[0m course selection works
+  [32mΓ£ô[0m statistics rendered
+  [32mΓ£ô[0m chart drawn
+  [32mΓ£ô[0m band editor rendered
+  [32mΓ£ô[0m cutoff applied
+  [32mΓ£ô[0m impact reported
+  [32mΓ£ô[0m review sheet rendered
+  [32mΓ£ô[0m review chart drawn
+  [32mΓ£ô[0m confirmation shown
+  [32mΓ£ô[0m both files downloaded from the live site
+  [32mΓ£ô[0m grade file name is correct
+  [32mΓ£ô[0m receipt shown
+  [32mΓ£ô[0m no console or page errors
+
+----------------------------------------------------------------
+[32m23 passing, 0 failing ΓÇö the deployed site works end to end[0m
