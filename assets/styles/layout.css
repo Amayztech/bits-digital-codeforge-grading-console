@@ -64,6 +64,7 @@
   letter-spacing: -0.02em;
   color: var(--c-brand-900);
   line-height: 1.15;
+  white-space: nowrap;
 }
 
 .brand__sub {
@@ -86,6 +87,14 @@
 }
 
 /* --- Session field: instructor name, always reachable ---------------- */
+.session-action {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  flex: none;
+  flex-wrap: wrap;
+}
+
 .session-field {
   position: relative;
   display: flex;
@@ -275,7 +284,6 @@
 .stagebar__inner {
   display: flex;
   align-items: center;
-  gap: var(--sp-6);
   min-height: 46px;
   padding-block: var(--sp-2);
 }
@@ -378,20 +386,21 @@
   background: var(--c-ink-200);
 }
 
-.stagebar__progress {
-  flex: none;
-  width: 132px;
-  height: 4px;
-  border-radius: var(--r-pill);
-  background: var(--c-ink-150, var(--c-ink-100));
-  overflow: hidden;
+/* Progress rail: a hairline along the bottom edge reads as a progress
+   indicator; a floating pill in the corner read as a stray element. */
+.stagebar__rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: transparent;
 }
 
 .stagebar__fill {
   height: 100%;
   width: 0;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--c-primary), var(--c-accent));
+  background: linear-gradient(90deg, var(--c-primary) 0%, var(--c-accent) 100%);
   transition: width var(--dur-4) var(--ease-out);
 }
 
@@ -428,6 +437,13 @@
   gap: var(--sp-5);
   flex-wrap: wrap;
   margin-bottom: var(--sp-5);
+}
+
+.stage__eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
 }
 
 .stage__title {
@@ -545,15 +561,12 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .stagebar__progress {
-    display: none;
-  }
-
+  /* Keep only the current step's name: a six-item labelled bar does not fit. */
   .stage-step__label {
     display: none;
   }
 
-  .stage-step__label--keep {
+  .stage-step[aria-current="step"] .stage-step__label {
     display: inline;
   }
 
@@ -608,16 +621,33 @@
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 560px) {
   .shell {
     padding-inline: var(--sp-3);
   }
 
+  .app-header__inner {
+    gap: var(--sp-2);
+  }
+
   .brand__name {
-    font-size: var(--fs-base);
+    font-size: var(--fs-sm);
   }
 
   .app-header__tools {
     gap: var(--sp-2);
+  }
+
+  /* The course is named in each stage's eyebrow, so the chip is redundant here. */
+  .context-chip {
+    display: none !important;
+  }
+
+  .timer__state {
+    display: none;
+  }
+
+  .timer {
+    padding-right: var(--sp-3);
   }
 }

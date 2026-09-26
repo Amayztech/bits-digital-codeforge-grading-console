@@ -1,0 +1,55 @@
+name: Deploy to GitHub Pages
+
+# The submission is a plain static site: there is nothing to build. This workflow
+# publishes the repository root as-is, which keeps the deployed artefact
+# byte-identical to what was tested locally.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify the submission is self-contained
+        run: |
+          set -euo pipefail
+          for f in index.html \
+                   assets/styles/tokens.css \
+                   assets/js/app.js \
+                   assets/data/demo-class.js \
+                   vendor/xlsx.full.min.js \
+                   samples/sample-marks.xlsx \
+                   samples/template-marks.xlsx; do
+            test -f "$f" || { echo "MISSING: $f"; exit 1; }
+          done
+          # Every asset reference must be relative so the site works from a
+          # project subdirectory such as /<repo>/.
+          if grep -nE '(src|href)="/' index.html; then
+            echo "Absolute paths found in index.html; they will break under a subdirectory."
+            exit 1
+          fi
+          echo "Static submission verified: $(du -sh . | cut -f1)"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

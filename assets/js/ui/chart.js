@@ -33,15 +33,15 @@
     "var(--chart-g5)", "var(--chart-g6)", "var(--chart-g7)", "var(--chart-g8)"
   ];
 
-  function layout(width) {
+  function layout(width, withCutoffs) {
     var narrow = width < 560;
-    var height = narrow ? 214 : 268;
+    var cutoffs = !!withCutoffs;
     return {
       width: width,
-      height: height,
+      height: narrow ? (cutoffs ? 226 : 200) : cutoffs ? 288 : 258,
       ml: narrow ? 30 : 38,
       mr: 10,
-      mt: narrow ? 30 : 34,
+      mt: narrow ? (cutoffs ? 42 : 30) : cutoffs ? 48 : 36,
       mb: narrow ? 40 : 44,
       narrow: narrow
     };
@@ -67,7 +67,7 @@
       current = model;
       if (!container) return;
       var width = Math.max(240, Math.floor(container.clientWidth || 640));
-      var L = layout(width);
+      var L = layout(width, current && current.cutoffs);
       var hist = S.histogram(current.marks || []);
       var stats = current.stats || S.describe(current.marks || []);
       var plotW = L.width - L.ml - L.mr;
@@ -116,12 +116,15 @@
               "clip-path": "url(#" + clipId(container) + ")"
             })
           );
-          if (bw >= 15) {
+          // On a narrow viewport the regions are a few pixels wide and the
+          // letters collide; the band editor below carries them instead. The
+          // printed report labels the cutoffs instead, so it needs neither.
+          if (!L.narrow && !current.readOnly && bw >= 15) {
             svg.appendChild(
               D.svg("text", {
                 class: "chart__band-label",
                 x: bx + bw / 2,
-                y: L.mt - 16,
+                y: L.mt - 14,
                 dataset: isActive ? { active: "true" } : null,
                 text: b.grade
               })
@@ -214,13 +217,22 @@
       }
 
       /* ---- cutoffs ------------------------------------------------------ */
-      if (current.cutoffs && current.onCutoff) {
+      // A chart with no onCutoff handler (the printed report) still shows where
+      // the boundaries are, just without the draggable handles.
+      var showCutoffs = current.cutoffs && (current.onCutoff || current.readOnly);
+      if (showCutoffs) {
         current.cutoffs.forEach(function (c, i) {
           var cx = x(c);
           svg.appendChild(
             D.svg("line", { class: "chart__cutoff", x1: cx, x2: cx, y1: L.mt - 12, y2: y1 })
           );
           var gradeLabel = CF.grading.GRADES[i];
+          if (current.readOnly) {
+            svg.appendChild(
+              D.svg("text", { class: "chart__cutoff-value", x: cx, y: L.mt - 6, text: gradeLabel + " " + c })
+            );
+            return;
+          }
           var g2 = D.svg("g", {
             class: "chart__cutoff-grip-wrap",
             tabindex: "0",
@@ -315,7 +327,7 @@
         if (!svgEl) return null;
         var rect = svgEl.getBoundingClientRect();
         if (!rect.width) return null;
-        var L = layout(svgEl.getAttribute("viewBox").split(" ").slice(2).map(Number));
+        var L = layout(svgEl.getAttribute("viewBox").split(" ").slice(2).map(Number), true);
         var scale = L.width / rect.width;
         var px = (clientX - rect.left) * scale;
         var x0 = L.ml;
@@ -405,15 +417,17 @@
     var binW = plotW / 101;
     var px = x0 + value * binW;
     svg.appendChild(
-      D.svg("line", { class: "chart__stat-line", x1: px, x2: px, y1: L.mt - 8, y2: y1, stroke: colour })
+      D.svg("line", { class: "chart__stat-line", x1: px, x2: px, y1: L.mt, y2: y1, stroke: colour })
     );
-    var anchor = value > 88 ? "end" : "start";
-    var dx = value > 88 ? -5 : 5;
+    // Labelled at the top of the plot: on the baseline the label collided with
+    // the bars, which is exactly where the interesting data is.
+    var anchor = value > 92 ? "end" : value < 8 ? "start" : "middle";
+    var dx = value > 92 ? -4 : value < 8 ? 4 : 0;
     svg.appendChild(
       D.svg("text", {
         class: "chart__stat-label",
         x: px + dx,
-        y: y1 - 6,
+        y: L.mt - 5,
         "text-anchor": anchor,
         fill: colour,
         text: label

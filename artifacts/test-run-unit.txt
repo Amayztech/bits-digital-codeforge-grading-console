@@ -1,0 +1,111 @@
+﻿
+[1mutil[0m
+  [32mΓ£ô[0m roundHalfUp is classic half-up, and roundMark honours the chosen policy
+  [32mΓ£ô[0m headerKey normalises case, padding, underscores and "(out of 100)"
+  [32mΓ£ô[0m csvField applies RFC 4180 quoting
+  [32mΓ£ô[0m csvField neutralises spreadsheet formula injection
+  [32mΓ£ô[0m slugify produces filesystem-safe file name fragments
+  [32mΓ£ô[0m percent never returns NaN for an empty whole
+  [32mΓ£ô[0m formatDuration reads naturally at every magnitude
+  [32mΓ£ô[0m deepEqual compares cutoff arrays by value
+
+[1mstatistics[0m
+  [32mΓ£ô[0m sortedMarks sorts numerically even when the source values were text
+  [32mΓ£ô[0m sortedMarks and describe ignore values that are not numbers at all
+  [32mΓ£ô[0m describe on an empty cohort returns nulls, never NaN
+  [32mΓ£ô[0m describe on a single value is well defined
+  [32mΓ£ô[0m describe on identical marks reports zero standard deviation, not NaN
+  [32mΓ£ô[0m min, max, mean and median are mathematically correct
+  [32mΓ£ô[0m median of an even-length cohort averages the two middle values
+  [32mΓ£ô[0m quantile interpolates linearly (spreadsheet PERCENTILE.INC convention)
+  [32mΓ£ô[0m standard deviation is null for fewer than two values
+  [32mΓ£ô[0m histogram has exactly 101 bins and places 100 in the top bin
+  [32mΓ£ô[0m histogram ignores marks outside the 0-100 scale instead of corrupting bins
+  [32mΓ£ô[0m axisTicks gives a sensible scale for tiny and large classes
+  [32mΓ£ô[0m clusters finds separated groups and one merged group
+
+[1mgrading[0m
+  [32mΓ£ô[0m default cutoffs produce the bands named in the challenge brief
+  [32mΓ£ô[0m every mark from 0 to 100 receives exactly one grade on the defaults
+  [32mΓ£ô[0m boundary marks land in the band the instructor expects
+  [32mΓ£ô[0m marks outside the scale are refused rather than silently graded
+  [32mΓ£ô[0m single-mark bands are representable (the starter rejected Min === Max)
+  [32mΓ£ô[0m applyCutoff clamps to the legal window and reports that it did
+  [32mΓ£ô[0m applyCutoff refuses to edit the bottom band, which is fixed at 0
+  [32mΓ£ô[0m windows match the derivation rules
+  [32mΓ£ô[0m no sequence of edits can produce a gap or an overlap
+  [32mΓ£ô[0m validate reports a non-increasing configuration instead of passing it
+  [32mΓ£ô[0m gradeAll tallies per band and never loses a student
+  [32mΓ£ô[0m impact counts moves, direction and per-band deltas
+  [32mΓ£ô[0m impact with no baseline reports counts but no movement
+  [32mΓ£ô[0m rangeLabel collapses single-mark bands
+
+[1mworkbook ΓÇö mark parsing[0m
+  [32mΓ£ô[0m accepts a plain whole number
+  [32mΓ£ô[0m rounds a fractional mark and reports it under the chosen policy
+  [32mΓ£ô[0m the rounding policy is applied per import and reported in the counts
+  [32mΓ£ô[0m reads a numeric string and reports it as text
+  [32mΓ£ô[0m reads "82/100" and "82%" but keeps them visible
+  [32mΓ£ô[0m rejects an unparseable, out-of-range or blank mark
+  [32mΓ£ô[0m out-of-range marks report both the parse problem and the range problem
+  [32mΓ£ô[0m strips padded whitespace and says so
+  [32mΓ£ô[0m header matching is case- and alias-tolerant
+
+[1mworkbook ΓÇö fixture corpus[0m
+  [32mΓ£ô[0m 01 valid standard workbook imports 60 students across 3 unique courses
+  [32mΓ£ô[0m 02 headers written as "Student's BITS ID" (the brief's wording) are accepted
+  [32mΓ£ô[0m 03 messy headers (padding, case) are matched
+  [32mΓ£ô[0m 04 single student imports and every statistic is defined
+  [32mΓ£ô[0m 05 identical marks import with a zero standard deviation and no NaN anywhere
+  [32mΓ£ô[0m 06 boundary marks every receive exactly one grade
+  [32mΓ£ô[0m 07 marks of only 0 and 100 import cleanly
+  [32mΓ£ô[0m 08 marks stored as text import as numbers, not concatenated garbage
+  [32mΓ£ô[0m 09 invalid marks are rejected with a row number and a remedy, not guessed
+  [32mΓ£ô[0m 10 a missing Total Marks column is a clear fatal error naming the headers
+  [32mΓ£ô[0m 11 duplicate IDs are rejected per course; the same ID in another course is fine
+  [32mΓ£ô[0m 12 course names differing by case or padding are merged and reported
+  [32mΓ£ô[0m 13 a workbook with headers but no students fails with a clear reason
+  [32mΓ£ô[0m 14 extra columns are ignored and reported, not treated as an error
+  [32mΓ£ô[0m 15 the sheet that actually holds the marks is found, not just the first sheet
+  [32mΓ£ô[0m 16 an extreme outlier does not break the statistics
+  [32mΓ£ô[0m 17 a bimodal class imports and both clusters are detected
+  [32mΓ£ô[0m 18 a 300-student, two-course workbook grades every student exactly once
+  [32mΓ£ô[0m 19 a legacy .xls (BIFF8) workbook is accepted
+  [32mΓ£ô[0m 20 a corrupt file produces a helpful error instead of silence
+  [32mΓ£ô[0m 21 an empty file produces a specific error
+  [32mΓ£ô[0m 22 a truncated zip is handled, not thrown
+  [32mΓ£ô[0m 23 CSV content in an .xlsx file is read leniently rather than rejected
+  [32mΓ£ô[0m 24 a workbook with zero worksheets is reported clearly
+  [32mΓ£ô[0m 25 a title row above the header row is skipped
+  [32mΓ£ô[0m re-uploading the same file replaces the state completely
+  [32mΓ£ô[0m blank rows are skipped silently but counted
+
+[1msuggestions[0m
+  [32mΓ£ô[0m declines when there is nothing to find
+  [32mΓ£ô[0m produces seven strictly decreasing, in-range cutoffs
+  [32mΓ£ô[0m is deterministic
+  [32mΓ£ô[0m separates a genuinely bimodal class at the gap
+  [32mΓ£ô[0m handles a class smaller than the number of bands
+  [32mΓ£ô[0m states its method in plain language
+
+[1mexport[0m
+  [32mΓ£ô[0m grades CSV has a header and exactly one row per student
+  [32mΓ£ô[0m grades CSV carries a UTF-8 BOM so Excel renders names correctly
+  [32mΓ£ô[0m grades CSV escapes commas, quotes and newlines in the ID field
+  [32mΓ£ô[0m grades CSV neutralises a formula-looking BITS ID
+  [32mΓ£ô[0m grades CSV never silently drops a record, even one outside the scale
+  [32mΓ£ô[0m for any valid configuration, every mark 0-100 lands in exactly one band
+  [32mΓ£ô[0m exported grades agree with what the screen shows
+  [32mΓ£ô[0m summary CSV carries the audit trail and escapes the instructor name
+  [32mΓ£ô[0m summary CSV renders blanks, not "null", for undefined statistics
+  [32mΓ£ô[0m file names include the course and a timestamp
+  [32mΓ£ô[0m rejected-rows CSV lists the row, the problem, the value and the fix
+  [32mΓ£ô[0m an empty cohort still produces a well-formed grades CSV
+
+[1mdemo data[0m
+  [32mΓ£ô[0m demo data travels the same pipeline and yields valid records
+  [32mΓ£ô[0m demo data includes recoverable imperfections that are reported, not hidden
+  [32mΓ£ô[0m every demo course grades completely
+
+----------------------------------------------------------------
+[32m92 passing, 0 failing[0m

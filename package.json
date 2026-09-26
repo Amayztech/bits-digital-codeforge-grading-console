@@ -7,10 +7,15 @@
     "start": "node tools/serve.js",
     "test": "node tests/run.js",
     "test:browser": "node tests/browser/journey.js",
-    "fixtures": "node tests/fixtures/build.js"
+    "test:print": "node tests/browser/print.js",
+    "test:all": "npm test && npm run test:browser && npm run test:print",
+    "fixtures": "node tests/fixtures/build.js",
+    "demo": "node tools/build-demo.js",
+    "recon": "node tests/recon/starter-probe.js && node tests/recon/starter-probe2.js",
+    "deploy": "git push origin main && gh workflow run pages.yml"
   },
   "devDependencies": {
-    "fflate": "^0.8.3",
+    "fflate": "^0.8.2",
     "playwright": "^1.49.0"
   }
 }

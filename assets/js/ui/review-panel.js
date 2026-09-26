@@ -23,7 +23,8 @@
     var list = [
       {
         ok: !!state.instructor.trim(),
-        label: "<b>Instructor</b> is recorded on the report.",
+        strong: "Instructor",
+        rest: "is recorded on the report.",
         detail: state.instructor.trim() || "No instructor name has been entered yet.",
         fix: state.instructor.trim()
           ? null
@@ -43,31 +44,42 @@
       },
       {
         ok: !!state.analysis && state.analysis.ok,
-        label: "<b>Marks file</b> was imported and validated.",
+        strong: "Marks file",
+        rest: "was imported and validated.",
         detail: state.analysis
           ? state.analysis.meta.name + " — " + counts.accepted + " rows accepted" + (counts.rejected ? ", " + counts.rejected + " rejected" : "")
           : "No file imported."
       },
       {
         ok: !!state.cohort.length,
-        label: "<b>Course</b> is selected and has students.",
+        strong: "Course",
+        rest: "is selected and has students.",
         detail: state.courseName ? state.courseName + " — " + state.cohort.length + " students" : "No course selected."
       },
       {
         ok: bandCheck.valid && ungraded.length === 0,
-        label: "<b>Every mark from 0 to 100 has exactly one grade.</b>",
+        strong: "Every mark from 0 to 100 has exactly one grade.",
+        rest: "",
         detail: ungraded.length
           ? ungraded.length + " students fall outside every band."
           : "Bands cover 0–100 with no gaps and no overlaps."
       },
       {
         ok: !state.isDemo,
-        label: "<b>Source</b> is a real workbook, not the demo class.",
-        detail: state.isDemo ? "This is demo data — do not submit it." : state.analysis.meta.name,
-        soft: state.isDemo
+        soft: state.isDemo,
+        strong: "Source",
+        rest: "is a real workbook, not the demo class.",
+        detail: state.isDemo ? "This is demo data — do not submit it." : state.analysis.meta.name
       }
     ];
-    return { list: list, bandCheck: bandCheck, ungraded: ungraded, ok: list.every(function (l) { return l.ok || l.soft; }) };
+    var blocking = list.filter(function (l) { return !l.ok && !l.soft; });
+    return {
+      list: list,
+      bandCheck: bandCheck,
+      ungraded: ungraded,
+      blocking: blocking,
+      ok: blocking.length === 0
+    };
   }
 
   function render(host, state, handlers) {
@@ -126,12 +138,13 @@
       D.el("section", null, [
         D.el("h4.sheet__section-title", null, [
           "Before you finalize",
-          D.el("span", { text: chk.ok ? "All checks passed" : chk.list.filter(function (l) { return !l.ok; }).length + " to resolve" })
+          D.el("span", { text: chk.ok ? "All checks passed" : chk.blocking.length + " to resolve" })
         ]),
         D.el("div.checklist", null,
           chk.list.map(function (l) {
             var label = D.el("span", null, [
-              D.el("span", { text: l.label }),
+              D.el("b", { text: l.strong }),
+              l.rest ? D.el("span", { text: " " + l.rest }) : null,
               D.el("span", { style: { display: "block", "font-size": "var(--fs-xs)", color: "var(--c-ink-500)" }, text: l.detail })
             ]);
             if (!l.ok && l.fix) label.appendChild(l.fix);
@@ -259,9 +272,14 @@
       );
     }
     if (state.analysis.counts.normalised > 0) {
+      var policy = state.analysis.rounding || "nearest";
+      var rule =
+        policy === "up" ? "always rounded up" : policy === "down" ? "always rounded down" : "rounded to the nearest whole mark";
       attention.push(
         state.analysis.counts.normalised +
-          " value(s) were rounded to whole marks under the challenge's file guidance. The originals are listed in the Data health report."
+          " value(s) were " +
+          rule +
+          ". The originals are listed in the Data health report."
       );
     }
     if (state.isDemo) {
@@ -272,8 +290,12 @@
     }
     if (state.history.length) {
       attention.push(
-        state.history.length + " grading change(s) were made this session" +
-          (state.history.length === 1 ? "" : "s") + " and are recorded in the exported summary."
+        state.history.length +
+          " grading " +
+          (state.history.length === 1 ? "change was" : "changes were") +
+          " made this session and " +
+          (state.history.length === 1 ? "is" : "are") +
+          " recorded in the exported summary."
       );
     }
     if (attention.length) {
@@ -300,7 +322,7 @@
           "The student-grade file has one row per student with the grade shown in the table above. " +
             "The summary file records the instructor, course, source sheet, statistics, the exact cutoffs used and every change made this session."
         ]),
-        D.el("div.cluster", null, [
+        D.el("div.cluster", { style: { gap: "var(--sp-3)" } }, [
           D.button({ label: "Back to bands", variant: "secondary", icon: "sliders", onClick: handlers.onBack }),
           D.button({ label: "Print report", variant: "secondary", icon: "printer", onClick: handlers.onPrint }),
           D.button({
@@ -315,6 +337,7 @@
       ])
     );
 
+    sheet.lastElementChild.classList.add("no-print-actions");
     host.appendChild(sheet);
 
     if (state.finalized) host.appendChild(receipt(state, handlers));

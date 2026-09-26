@@ -18,6 +18,8 @@
     info: "info"
   };
 
+  var MAX_VISIBLE = 3;
+
   function show(opts) {
     var region = document.getElementById("toastRegion");
     if (!region) return;
@@ -42,6 +44,11 @@
     }
 
     region.appendChild(node);
+    // Never let the stack cover the workspace.
+    while (region.children.length > MAX_VISIBLE) {
+      dismiss(region.firstElementChild);
+      if (region.children.length > MAX_VISIBLE) region.removeChild(region.firstElementChild);
+    }
     var ttl = opts.ttl === 0 ? 0 : opts.ttl || (opts.actionLabel ? 8000 : 4200);
     if (ttl > 0) setTimeout(function () { dismiss(node); }, ttl);
     return node;

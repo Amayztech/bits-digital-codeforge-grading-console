@@ -331,8 +331,13 @@
           "All " + c.accepted + " rows are valid",
           D.el("p", {
             text:
-              "Every row has a BITS ID, a course and a whole-number mark between 0 and 100. Nothing " +
-              "was changed."
+              c.normalised +
+              " " +
+              U.pluralise(c.normalised, "value") +
+              " " +
+              (c.normalised === 1 ? "was" : "were") +
+              " read or rounded rather than taken at face value. " +
+              "The original and the value used are both listed below."
           })
         );
 
@@ -359,7 +364,7 @@
       D.el("div.metric-row", null, [
         D.metric("Rows accepted", String(c.accepted), "ready to grade", c.accepted ? "success" : "danger"),
         D.metric("Rows rejected", String(c.rejected), hasErrors ? "not graded" : "none", hasErrors ? "warning" : null),
-        D.metric("Marks normalised", String(c.normalised), c.normalised ? "rounded per spec" : "none", c.normalised ? "info" : null),
+        D.metric("Values normalised", String(c.normalised), c.normalised ? "rounded or reformatted" : "none", c.normalised ? "info" : null),
         D.metric("Courses found", String(a.courses.length), plural(a.courses.length, "course", "courses")),
         D.metric("Students", String(c.accepted), "total across all courses"),
         D.metric("Mark range", a.stats.count ? a.stats.min + "–" + a.stats.max : "—", a.stats.count ? "out of 100" : "no data")
@@ -505,7 +510,7 @@
       D.el("div", { style: { display: "flex", gap: "10px", "align-items": "flex-start" } }, [
         D.el("span", { style: { color: "var(--c-info)", "margin-top": "2px" }, "aria-hidden": "true" }, [D.icon("info", 17)]),
         D.el("div", { style: { flex: "1 1 auto", "min-width": "0" } }, [
-          D.el("p", { style: { "font-weight": "650", color: "var(--c-ink-900)" }, text: a.fractionalCount + " fractional " + plural(a.fractionalCount, "mark", "marks") + " found" }),
+          D.el("p", { style: { "font-weight": "650", color: "var(--c-ink-900)" }, text: a.fractionalCount + " fractional " + plural(a.fractionalCount, "mark needs", "marks need") + " a rounding rule" }),
           D.el("p.field__hint", {
             style: { "margin-top": "4px" },
             text:

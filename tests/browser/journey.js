@@ -92,6 +92,20 @@ function section(t) {
   check('no chart drawn before data', (await page.locator('#chartAnalyse svg').count()) === 0);
   check('template and sample links exist', (await page.locator('a[href$="template-marks.xlsx"]').count()) >= 1
     && (await page.locator('a[href$="sample-marks.xlsx"]').count()) >= 1);
+
+  // Keyboard reachability of the primary controls, before anything is loaded.
+  await page.evaluate(() => document.querySelector('.skip-link').focus());
+  const order = [];
+  for (let i = 0; i < 12; i++) {
+    await page.keyboard.press('Tab');
+    order.push(await page.evaluate(() => {
+      const el = document.activeElement;
+      return el.id || el.tagName + (el.textContent ? ':' + el.textContent.trim().slice(0, 18) : '');
+    }));
+  }
+  check('skip link is the first tab stop', order[0] === 'fileInput' || order.indexOf('fileInput') >= 0, JSON.stringify(order));
+  check('tab order reaches the file input', order.includes('fileInput'), JSON.stringify(order));
+  check('tab order reaches the demo loader', order.some((o) => o === 'loadDemo'), JSON.stringify(order));
   await shot('01-empty-import');
 
   /* ================================================================ *
@@ -473,22 +487,29 @@ function section(t) {
   check('cutoffs exposed as sliders', a11y.sliders === 7, String(a11y.sliders));
   check('no dialogs left open', a11y.dialogs === 0);
 
-  // Keyboard-only reachability of the primary controls.
+  // With a file loaded, the collapsed onboarding must not trap tab order.
   await page.evaluate(() => document.querySelector('.skip-link').focus());
-  const order = [];
+  const order2 = [];
   for (let i = 0; i < 12; i++) {
     await page.keyboard.press('Tab');
-    order.push(await page.evaluate(() => {
+    order2.push(await page.evaluate(() => {
       const el = document.activeElement;
-      return (el.id || el.tagName + (el.textContent ? ':' + el.textContent.trim().slice(0, 18) : ''));
+      return el.id || el.tagName;
     }));
   }
-  check('tab order reaches the dropzone control', order.some((o) => o === 'fileInput'), JSON.stringify(order));
+  check('collapsed onboarding is skipped by tab order', !order2.includes('fileInput') && !order2.includes('loadDemo'), JSON.stringify(order2));
 
   /* ================================================================ *
    * 13. Responsive
    * ================================================================ */
   section('13. Responsive layout');
+  // A loaded file collapses the onboarding; the "File format help" affordance
+  // brings it back, which is also what we assert here.
+  check('onboarding is collapsed once a file is loaded', !(await page.locator('#importOnboarding').isVisible()));
+  check('file format help is offered', await page.locator('#showOnboarding').isVisible());
+  await page.click('#showOnboarding');
+  await page.waitForTimeout(400);
+  check('file format help restores the dropzone', await page.locator('#dropzone').isVisible());
   await page.click('#loadDemo');
   await page.waitForTimeout(600);
   await page.click('#coursePicker .course-card >> nth=0');
@@ -540,6 +561,55 @@ function section(t) {
   check('reduced-motion journey runs without errors', rmErrors.length === 0, rmErrors.join('|'));
   await rmPage.screenshot({ path: path.join(SHOTS, '11-reduced-motion.png'), fullPage: true });
   await rm.close();
+
+  /* ================================================================ *
+   * 16. Optional local draft
+   * ================================================================ */
+  section('16. Optional local draft recovery');
+  await page.click('.stage-step[data-stage="import"]');
+  await page.waitForTimeout(300);
+  check('draft toggle exists and is off by default', (await page.locator('#persistDraft').isChecked()) === false);
+  check('no draft is stored before opting in', await page.evaluate(() => localStorage.getItem('codeforge.grading.draft.v1') === null));
+
+  await page.locator('#persistDraft').check();
+  await page.waitForTimeout(300);
+  await page.click('#coursePicker .course-card >> nth=1');
+  await page.waitForTimeout(600);
+  await page.click('text=Configure grade bands');
+  await page.waitForTimeout(600);
+  await page.fill('#cutoff-A', '77');
+  await page.locator('#cutoff-A').blur();
+  await page.waitForTimeout(600);
+  check('opting in stores a draft', await page.evaluate(() => !!localStorage.getItem('codeforge.grading.draft.v1')));
+  check('the draft records the cutoffs', await page.evaluate(() => {
+    const d = JSON.parse(localStorage.getItem('codeforge.grading.draft.v1'));
+    return d.cutoffs[0] === 77 && d.courseKey === d.courses.find((c) => c.key === d.courseKey).key;
+  }));
+  check('the draft records the change history', await page.evaluate(() => {
+    const d = JSON.parse(localStorage.getItem('codeforge.grading.draft.v1'));
+    return d.history.length > 0 && d.history[0].previous.length === 7;
+  }));
+  check('the draft is stored under one known key', await page.evaluate(() => Object.keys(localStorage).length === 1));
+
+  // Reload and take the offer.
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForTimeout(500);
+  const offer = await page.locator('#importError').innerText();
+  check('a saved draft is offered on return', /saved in this browser/i.test(offer), offer.slice(0, 140));
+  check('the offer states when it was saved', /\d{2}:\d{2}|\d{4}/.test(offer));
+  await page.click('#importError button:has-text("Restore session")');
+  await page.waitForTimeout(800);
+  check('restoring returns to the saved course', await page.evaluate(() => window.CF.app.state.cutoffs[0] === 77));
+  check('restoring reports the course', (await page.locator('#toastRegion').innerText()).includes('Session restored'));
+  check('a draft-restore notice is shown', (await page.locator('#draftNotice').innerText()).includes('restored'));
+
+  // Discard.
+  await page.click('.stage-step[data-stage="import"]');
+  await page.waitForTimeout(300);
+  await page.click('#discardDraft');
+  await page.waitForTimeout(300);
+  check('discarding removes the stored draft', await page.evaluate(() => localStorage.getItem('codeforge.grading.draft.v1') === null));
+  check('discarding unticks the toggle', (await page.locator('#persistDraft').isChecked()) === false);
 
   await browser.close();
   server.close();

@@ -178,11 +178,19 @@
     var rows = cohort.map(function (r) {
       var grade = CF.grading.gradeFor(r.marks, cutoffs);
       var before = baseline ? CF.grading.gradeFor(r.marks, baseline) : null;
+      var band = null;
+      for (var i = 0; i < cutoffs.length; i++) {
+        if (r.marks >= cutoffs[i]) {
+          band = i;
+          break;
+        }
+      }
       return {
         id: r.id,
         marks: r.marks,
         row: r.row,
         grade: grade,
+        band: band,
         before: before,
         changed: !!(before && before !== grade)
       };
@@ -220,26 +228,31 @@
     var thead = D.el("thead");
     var tr = D.el("tr");
     [
-      { key: "id", label: "BITS ID", num: false },
-      { key: "marks", label: "Marks", num: true },
-      { key: "grade", label: "Grade", num: false }
+      { key: "id", label: "BITS ID", num: false, width: "26%" },
+      { key: "marks", label: "Marks", num: true, width: "12%" },
+      { key: "grade", label: "Grade", num: false, width: "22%" },
+      { key: "band", label: "Band", num: false, width: "18%" }
     ].forEach(function (col) {
       var active = sort.key === col.key;
       var th = D.el("th", {
         scope: "col",
         class: col.num ? "num" : "",
-        dataset: { sortable: "true" },
+        dataset: { sortable: col.key !== "band" ? "true" : null },
         "aria-sort": active ? (sort.dir === "asc" ? "ascending" : "descending") : "none",
-        tabindex: "0",
+        style: { width: col.width },
+        tabindex: col.key !== "band" ? "0" : null,
         role: "columnheader"
       });
       var inner = D.el("span.th-sort", null, [
         D.el("span", { text: col.label }),
-        D.el("span.th-sort__ind", { "aria-hidden": "true" }, [
-          D.icon(active ? (sort.dir === "asc" ? "arrow-up" : "arrow-down") : "chevron-down", 11)
-        ])
+        col.key !== "band"
+          ? D.el("span.th-sort__ind", { "aria-hidden": "true" }, [
+              D.icon(active ? (sort.dir === "asc" ? "arrow-up" : "arrow-down") : "chevron-down", 11)
+            ])
+          : null
       ]);
       th.appendChild(inner);
+      if (col.key === "band") return;
       var activate = function () {
         opts.onSort(col.key);
       };
@@ -257,6 +270,7 @@
 
     var tbody = D.el("tbody");
     var shown = Math.min(rows.length, 500);
+    var bands = CF.grading.bandsFromCutoffs(cutoffs);
     for (var i = 0; i < shown; i++) {
       var r = rows[i];
       var gi = CF.grading.GRADES.indexOf(r.grade);
@@ -273,7 +287,11 @@
                 ])
               : null
           ])
-        ])
+        ]),
+        D.el("td.num", {
+          style: { color: "var(--c-ink-500)", "font-size": "var(--fs-xs)" },
+          text: r.band === null || r.band === undefined ? "—" : CF.grading.rangeLabel(bands[r.band])
+        })
       ]);
       tbody.appendChild(row);
     }

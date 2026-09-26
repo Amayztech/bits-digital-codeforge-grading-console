@@ -64,12 +64,7 @@
           }
         }, [
           D.el("div.band-row__grade", null, [
-            CF.analysePanel.gradeChip(band.grade, i),
-            band.max === U.MAX_MARK
-              ? D.el("span", { class: "band-row__flag", title: "The top band always reaches 100", text: "to 100" })
-              : band.min === U.MIN_MARK
-              ? D.el("span", { class: "band-row__flag", title: "The bottom band always starts at 0", text: "from 0" })
-              : null
+            CF.analysePanel.gradeChip(band.grade, i)
           ]),
           D.el("div.band-row__range-cell", { style: { "min-width": "0" } }, [
             D.el("div.band-row__range", {

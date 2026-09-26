@@ -71,6 +71,12 @@
     print-color-adjust: exact;
   }
 
+  /* The report is a document, not an interface: the actions are not part of it. */
+  .no-print-actions,
+  .no-print-actions .cluster {
+    display: none !important;
+  }
+
   .panel,
   .table-wrap,
   .notice {

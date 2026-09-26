@@ -364,20 +364,22 @@ select.input {
   position: relative;
   display: grid;
   place-items: center;
-  gap: var(--sp-3);
-  padding: var(--sp-10) var(--sp-6);
+  gap: var(--sp-4);
+  padding: var(--sp-8) var(--sp-6);
   text-align: center;
   border: 1.5px dashed var(--c-ink-300);
-  border-radius: var(--r-lg);
+  border-radius: var(--r-xl);
   background:
     radial-gradient(
-      120% 100% at 50% 0%,
+      130% 120% at 50% -10%,
       var(--c-primary-soft) 0%,
-      rgba(233, 240, 249, 0) 62%
+      rgba(233, 240, 249, 0) 60%
     ),
     var(--c-white);
+  box-shadow: var(--sh-sm);
   transition: border-color var(--dur-3) var(--ease-out),
-    background-color var(--dur-3) var(--ease-out), transform var(--dur-2) var(--ease-out);
+    background-color var(--dur-3) var(--ease-out), transform var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-3) var(--ease-out);
 }
 
 .dropzone[data-dragging="true"] {
@@ -415,8 +417,15 @@ select.input {
   display: flex;
   gap: var(--sp-2);
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   margin-top: var(--sp-1);
+}
+
+.dropzone__formats-note {
+  font-size: var(--fs-xs);
+  color: var(--c-ink-500);
+  margin-left: var(--sp-2);
 }
 
 .filechip {

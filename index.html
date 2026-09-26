@@ -259,9 +259,9 @@
               </button>
             </li>
           </ol>
-          <div class="stagebar__progress" role="presentation">
-            <div class="stagebar__fill" id="stageFill"></div>
-          </div>
+        </div>
+        <div class="stagebar__rail" aria-hidden="true">
+          <div class="stagebar__fill" id="stageFill"></div>
         </div>
       </nav>
 
@@ -283,187 +283,172 @@
               </div>
             </div>
 
-            <div class="split">
-              <div class="stack">
+            <div id="importOnboarding">
+              <div class="dropzone" id="dropzone" data-dragging="false">
+              <div class="dropzone__icon" aria-hidden="true">
+                <svg width="24" height="24"><use href="#i-upload"></use></svg>
+              </div>
+              <div>
+                <p class="dropzone__title" id="dropzoneTitle">Drop your marks workbook here</p>
+                <p class="dropzone__sub">
+                  or choose a file from this computer. Nothing is uploaded &mdash; the file is read
+                  entirely inside this browser tab.
+                </p>
+              </div>
+              <div class="cluster" style="justify-content: center">
+                <label class="btn btn--lg" for="fileInput">
+                  <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#i-sheet"></use></svg>
+                  Choose marks file
+                </label>
+                <button class="btn btn--ghost btn--lg" type="button" id="loadDemo">
+                  <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#i-sparkle"></use></svg>
+                  Load demo class
+                </button>
+                <input
+                  class="visually-hidden"
+                  type="file"
+                  id="fileInput"
+                  accept=".xlsx,.xls,.xlsm,.csv,text/csv"
+                  aria-describedby="dropzoneFormats"
+                />
+              </div>
+              <p class="dropzone__formats" id="dropzoneFormats">
+                <span class="badge badge--neutral">.xlsx</span>
+                <span class="badge badge--neutral">.xls</span>
+                <span class="badge badge--neutral">.xlsm</span>
+                <span class="badge badge--neutral">.csv</span>
+                <span class="dropzone__formats-note">Students absent for the exam and to be awarded NC must be left out.</span>
+              </p>
+            </div>
+
+              <div class="grid grid--2" style="margin-top: var(--sp-4); align-items: start">
                 <section class="panel">
-                  <div class="panel__head">
-                    <div>
-                      <h3 class="panel__title">This grading session</h3>
-                      <p class="panel__hint">Whether to keep your work if you close this tab.</p>
-                    </div>
-                  </div>
-                  <div class="panel__body" style="display: flex; flex-direction: column; gap: var(--sp-4)">
-                    <div class="notice notice--info" style="font-size: var(--fs-xs)">
-                      <span class="notice__icon" aria-hidden="true">
-                        <svg width="16" height="16"><use href="#i-users"></use></svg>
-                      </span>
-                      <div class="notice__body">
-                        <strong class="notice__title">Instructor name</strong>
-                        Type it in the field at the top right. It is printed on the final report and
-                        written into both exported files, so the grade set can always be attributed.
-                      </div>
-                    </div>
-
-                    <div style="padding-top: var(--sp-3); border-top: 1px solid var(--c-ink-100)">
-                      <label class="checkbox" for="persistDraft">
-                        <input type="checkbox" id="persistDraft" />
-                        <span>
-                          <span class="checkbox__title">Keep this session on this device</span>
-                          <span style="display: block; font-size: var(--fs-xs); color: var(--c-ink-500); margin-top: 2px">
-                            Saves your cutoffs and course locally so an accidental refresh does not lose
-                            them. Nothing is uploaded. Large classes may be too big to save.
-                          </span>
-                        </span>
-                      </label>
-                      <button class="btn btn--ghost btn--sm" type="button" id="discardDraft" style="margin-top: var(--sp-2); margin-left: -8px">
-                        Discard saved session
-                      </button>
-                    </div>
-                  </div>
-                </section>
-
-                <div class="dropzone" id="dropzone" data-dragging="false">
-                  <div class="dropzone__icon" aria-hidden="true">
-                    <svg width="24" height="24"><use href="#i-upload"></use></svg>
-                  </div>
+                <div class="panel__head">
                   <div>
-                    <p class="dropzone__title" id="dropzoneTitle">Drop your marks workbook here</p>
-                    <p class="dropzone__sub">
-                      or choose a file from this computer. Nothing is uploaded &mdash; the file is
-                      read entirely inside this browser tab.
-                    </p>
+                    <h3 class="panel__title">The file must look like this</h3>
+                    <p class="panel__hint">Three columns, one row per student.</p>
                   </div>
-                  <div class="cluster" style="justify-content: center">
-                    <label class="btn btn--lg" for="fileInput">
-                      <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#i-sheet"></use></svg>
-                      Choose marks file
-                    </label>
-                    <input
-                      class="visually-hidden"
-                      type="file"
-                      id="fileInput"
-                      accept=".xlsx,.xls,.xlsm,.csv,text/csv"
-                      aria-describedby="dropzoneFormats"
-                    />
-                  </div>
-                  <p class="dropzone__formats" id="dropzoneFormats">
-                    <span class="badge badge--neutral">.xlsx</span>
-                    <span class="badge badge--neutral">.xls</span>
-                    <span class="badge badge--neutral">.xlsm</span>
-                    <span class="badge badge--neutral">.csv</span>
+                </div>
+                <div class="panel__body panel__body--tight">
+                  <table class="spec-table">
+                    <caption class="visually-hidden">Required columns for the marks workbook</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Column</th>
+                        <th scope="col">Rule</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>BITS ID</code></td>
+                        <td>Required. Must be unique within a course.</td>
+                      </tr>
+                      <tr>
+                        <td><code>Course</code></td>
+                        <td>Required. The course code as it should appear on the transcript.</td>
+                      </tr>
+                      <tr>
+                        <td><code>Total Marks</code></td>
+                        <td>Required. Whole number from 0 to 100.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p class="field__hint" style="margin-top: var(--sp-3)">
+                    Header matching ignores capitalisation and surrounding spaces, and accepts the
+                    common variants (<code>Student&rsquo;s BITS ID</code>, <code>Course Code</code>,
+                    <code>Marks</code>).
                   </p>
                 </div>
+                <div class="panel__foot cluster">
+                  <a class="btn btn--secondary btn--sm" href="samples/template-marks.xlsx" download>
+                    <svg class="btn__icon" width="15" height="15" aria-hidden="true"><use href="#i-download"></use></svg>
+                    Template
+                  </a>
+                  <a class="btn btn--secondary btn--sm" href="samples/sample-marks.xlsx" download>
+                    <svg class="btn__icon" width="15" height="15" aria-hidden="true"><use href="#i-download"></use></svg>
+                    Sample data
+                  </a>
+                </div>
+              </section>
 
-                <div id="fileStatus" aria-live="polite"></div>
-                <div id="draftNotice" hidden></div>
-                <div id="importError" aria-live="assertive"></div>
-              </div>
-
-              <div class="stack">
-                <section class="panel">
-                  <div class="panel__head">
-                    <div>
-                      <h3 class="panel__title">The file must look like this</h3>
-                      <p class="panel__hint">Three columns, one row per student.</p>
+              <section class="panel">
+                <div class="panel__head">
+                  <h3 class="panel__title">What this console checks</h3>
+                </div>
+                <div class="panel__body panel__body--tight">
+                  <div class="checklist">
+                    <div class="checklist__item" data-ok="true">
+                      <span class="checklist__mark" aria-hidden="true">
+                        <svg width="11" height="11"><use href="#i-check"></use></svg>
+                      </span>
+                      <span class="checklist__label">
+                        <b>Required columns</b> are mapped, and the sheet that actually holds the
+                        marks is found even if it is not the first one.
+                      </span>
+                    </div>
+                    <div class="checklist__item" data-ok="true">
+                      <span class="checklist__mark" aria-hidden="true">
+                        <svg width="11" height="11"><use href="#i-check"></use></svg>
+                      </span>
+                      <span class="checklist__label">
+                        <b>Every mark</b> is a whole number from 0 to 100. Anything else is listed
+                        with its row number and never guessed at.
+                      </span>
+                    </div>
+                    <div class="checklist__item" data-ok="true">
+                      <span class="checklist__mark" aria-hidden="true">
+                        <svg width="11" height="11"><use href="#i-check"></use></svg>
+                      </span>
+                      <span class="checklist__label">
+                        <b>Duplicate and blank BITS IDs</b> are caught per course, so one student
+                        cannot be graded twice.
+                      </span>
+                    </div>
+                    <div class="checklist__item" data-ok="true">
+                      <span class="checklist__mark" aria-hidden="true">
+                        <svg width="11" height="11"><use href="#i-check"></use></svg>
+                      </span>
+                      <span class="checklist__label">
+                        <b>Every mark from 0 to 100</b> is guaranteed exactly one grade, so no
+                        student can silently vanish from the export.
+                      </span>
                     </div>
                   </div>
-                  <div class="panel__body panel__body--tight">
-                    <table class="spec-table">
-                      <caption class="visually-hidden">Required columns for the marks workbook</caption>
-                      <thead>
-                        <tr>
-                          <th scope="col">Column</th>
-                          <th scope="col">Rule</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><code>BITS ID</code></td>
-                          <td>Required. Must be unique within a course.</td>
-                        </tr>
-                        <tr>
-                          <td><code>Course</code></td>
-                          <td>Required. The course code as it should appear on the transcript.</td>
-                        </tr>
-                        <tr>
-                          <td><code>Total Marks</code></td>
-                          <td>
-                            Required. Whole number from 0 to 100. Fractional values are rounded to
-                            the nearest whole mark and reported.
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <p class="field__hint" style="margin-top: var(--sp-3)">
-                      Header matching ignores capitalisation and surrounding spaces, and accepts the
-                      common variants (<code>Student&rsquo;s BITS ID</code>, <code>Course Code</code>,
-                      <code>Marks</code>). Students absent for the exam and to be awarded
-                      <b>NC</b> must be left out of the file.
-                    </p>
-                  </div>
-                  <div class="panel__foot cluster">
-                    <a class="btn btn--secondary btn--sm" href="samples/template-marks.xlsx" download>
-                      <svg class="btn__icon" width="15" height="15" aria-hidden="true"><use href="#i-download"></use></svg>
-                      Download template
-                    </a>
-                    <a class="btn btn--secondary btn--sm" href="samples/sample-marks.xlsx" download>
-                      <svg class="btn__icon" width="15" height="15" aria-hidden="true"><use href="#i-download"></use></svg>
-                      Download sample data
-                    </a>
-                    <button class="btn btn--ghost btn--sm" type="button" id="loadDemo">
-                      <svg class="btn__icon" width="15" height="15" aria-hidden="true"><use href="#i-sparkle"></use></svg>
-                      Load demo class
-                    </button>
-                  </div>
-                </section>
-
-                <section class="panel">
-                  <div class="panel__head">
-                    <h3 class="panel__title">What this console checks</h3>
-                  </div>
-                  <div class="panel__body panel__body--tight">
-                    <div class="checklist">
-                      <div class="checklist__item" data-ok="true">
-                        <span class="checklist__mark" aria-hidden="true">
-                          <svg width="11" height="11"><use href="#i-check"></use></svg>
-                        </span>
-                        <span class="checklist__label">
-                          <b>Required columns</b> are present and mapped, and the sheet that actually
-                          holds the marks is identified.
-                        </span>
-                      </div>
-                      <div class="checklist__item" data-ok="true">
-                        <span class="checklist__mark" aria-hidden="true">
-                          <svg width="11" height="11"><use href="#i-check"></use></svg>
-                        </span>
-                        <span class="checklist__label">
-                          <b>Every mark</b> is a whole number from 0 to 100. Anything else is listed
-                          with its row number and never guessed at.
-                        </span>
-                      </div>
-                      <div class="checklist__item" data-ok="true">
-                        <span class="checklist__mark" aria-hidden="true">
-                          <svg width="11" height="11"><use href="#i-check"></use></svg>
-                        </span>
-                        <span class="checklist__label">
-                          <b>Duplicate and blank BITS IDs</b> are caught per course, so one student
-                          cannot be graded twice.
-                        </span>
-                      </div>
-                      <div class="checklist__item" data-ok="true">
-                        <span class="checklist__mark" aria-hidden="true">
-                          <svg width="11" height="11"><use href="#i-check"></use></svg>
-                        </span>
-                        <span class="checklist__label">
-                          <b>Every mark from 0 to 100</b> is guaranteed exactly one grade, so no
-                          student can silently vanish from the export.
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </section>
+                </div>
+              </section>
               </div>
             </div>
+
+            <div id="fileStatus" aria-live="polite"></div>
+            <div id="draftNotice" hidden></div>
+            <div id="importError" aria-live="assertive"></div>
+
+            <section class="panel" id="sessionPanel" style="margin-top: var(--sp-4)">
+              <div class="panel__body panel__body--tight" style="display: flex; align-items: center; gap: var(--sp-5); flex-wrap: wrap">
+                <p class="field__hint" style="margin: 0; flex: 1 1 260px">
+                  <b style="color: var(--c-ink-800)">Instructor name</b> goes in the field at the top
+                  of the screen. It is printed on the report and written into both exported files, so
+                  the grade set can always be attributed.
+                </p>
+                <label class="checkbox" for="persistDraft" style="flex: 1 1 300px">
+                  <input type="checkbox" id="persistDraft" />
+                  <span>
+                    <span class="checkbox__title">Keep this session on this device</span>
+                    <span style="display: block; font-size: var(--fs-xs); color: var(--c-ink-500); margin-top: 2px">
+                      Survives an accidental refresh. Stored only in this browser; never uploaded.
+                    </span>
+                  </span>
+                </label>
+                <span class="session-action">
+                  <button class="btn btn--ghost btn--sm" type="button" id="discardDraft" style="flex: none">
+                    Discard saved session
+                  </button>
+                  <button class="btn btn--ghost btn--sm" type="button" id="showOnboarding" style="flex: none" hidden>
+                    File format help
+                  </button>
+                </span>
+              </div>
+            </section>
 
             <div id="importReport" class="stack" style="margin-top: var(--sp-4)" hidden></div>
             <div id="coursePicker" class="stack" style="margin-top: var(--sp-4)" hidden></div>
@@ -473,7 +458,7 @@
           <section class="stage" id="stage-analyse" data-stage="analyse" aria-labelledby="analyseTitle" hidden>
             <div class="stage__head">
               <div>
-                <p class="eyebrow">Step 3 of 6</p>
+                <p class="eyebrow stage__eyebrow">Step 3 of 6<span class="stage__context" hidden></span></p>
                 <h2 class="stage__title" id="analyseTitle">Understand the class</h2>
                 <p class="stage__desc" id="analyseDesc">
                   Descriptive statistics for the selected course, exactly as they will be used.
@@ -552,7 +537,7 @@
           <section class="stage" id="stage-configure" data-stage="configure" aria-labelledby="configureTitle" hidden>
             <div class="stage__head">
               <div>
-                <p class="eyebrow">Step 4 of 6</p>
+                <p class="eyebrow stage__eyebrow">Step 4 of 6<span class="stage__context" hidden></span></p>
                 <h2 class="stage__title" id="configureTitle">Design the grade bands</h2>
                 <p class="stage__desc">
                   Move a cutoff and watch the distribution, the counts and the affected students
@@ -580,16 +565,31 @@
               </section>
 
               <div class="split split--even">
-                <section class="panel panel--flush">
-                  <div class="panel__head">
-                    <div>
-                      <h3 class="panel__title">Cutoffs</h3>
-                      <p class="panel__hint">Each cutoff is the lowest mark for the grade below A.</p>
+                <div class="stack">
+                  <section class="panel panel--flush">
+                    <div class="panel__head">
+                      <div>
+                        <h3 class="panel__title">Cutoffs</h3>
+                        <p class="panel__hint">Each cutoff is the lowest mark for the grade below A.</p>
+                      </div>
+                      <span class="badge badge--neutral" id="cutoffBadge">Defaults</span>
                     </div>
-                    <span class="badge badge--neutral" id="cutoffBadge">Defaults</span>
-                  </div>
-                  <div class="bands" id="bandEditor"></div>
-                </section>
+                    <div class="bands" id="bandEditor"></div>
+                  </section>
+
+                  <section class="panel">
+                    <div class="panel__head">
+                      <div>
+                        <h3 class="panel__title">Change history</h3>
+                        <p class="panel__hint">
+                          Kept for this session only, so you can see exactly what you changed and undo it.
+                        </p>
+                      </div>
+                      <div class="cluster" id="historyActions"></div>
+                    </div>
+                    <div class="panel__body panel__body--tight" id="auditBody"></div>
+                  </section>
+                </div>
 
                 <div class="stack">
                   <section class="panel">
@@ -611,27 +611,14 @@
                   </section>
                 </div>
               </div>
-
-              <section class="panel">
-                <div class="panel__head">
-                  <div>
-                    <h3 class="panel__title">Change history</h3>
-                    <p class="panel__hint">
-                      Kept for this session only, so you can see exactly what you changed and undo it.
-                    </p>
-                  </div>
-                  <div class="cluster" id="historyActions"></div>
-                </div>
-                <div class="panel__body panel__body--tight" id="auditBody"></div>
-              </section>
             </div>
           </section>
 
           <!-- ============ STAGE 5 : REVIEW ============ -->
           <section class="stage" id="stage-review" data-stage="review" aria-labelledby="reviewTitle" hidden>
-            <div class="stage__head">
+            <div class="stage__head no-print">
               <div>
-                <p class="eyebrow">Step 5 of 6</p>
+                <p class="eyebrow stage__eyebrow">Step 5 of 6<span class="stage__context" hidden></span></p>
                 <h2 class="stage__title" id="reviewTitle">Final review</h2>
                 <p class="stage__desc">
                   This is exactly what will be exported, and it is also the report you can print.

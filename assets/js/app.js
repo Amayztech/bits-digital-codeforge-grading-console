@@ -154,6 +154,10 @@
       node.dataset.active = active ? "true" : "false";
       if (active) node.removeAttribute("hidden");
       else node.setAttribute("hidden", "");
+      // The review stage is the printable report; the print stylesheet hides
+      // every stage that is not marked printable.
+      if (next === "review") node.setAttribute("data-printable", "true");
+      else node.removeAttribute("data-printable");
     });
     renderStageBar();
     if (opts.announce !== false) {
@@ -209,6 +213,25 @@
     }).length;
     var fill = document.getElementById("stageFill");
     if (fill) fill.style.width = (doneCount / 6) * 100 + "%";
+    renderStageContext();
+  }
+
+  /**
+   * The course is named in the stage eyebrow so it stays visible on narrow
+   * screens where the header chip is hidden.
+   */
+  function renderStageContext() {
+    D.$$(".stage__context").forEach(function (node) {
+      if (!state.courseKey) {
+        node.textContent = "";
+        node.hidden = true;
+        return;
+      }
+      node.hidden = false;
+      node.textContent =
+        "  \u00b7  " + state.courseName + "  \u00b7  " + state.cohort.length + " " +
+        U.pluralise(state.cohort.length, "student");
+    });
   }
 
   function renderContext() {
@@ -240,6 +263,13 @@
    * Import flow
    * ==================================================================== */
 
+  function setOnboarding(visible) {
+    var board = document.getElementById("importOnboarding");
+    var help = document.getElementById("showOnboarding");
+    if (board) board.hidden = !visible;
+    if (help) help.hidden = visible;
+  }
+
   function adoptAnalysis(analysis, file) {
     state.analysis = analysis;
     state.isDemo = !!(analysis.meta && analysis.meta.demo);
@@ -256,6 +286,9 @@
     state.visited.configure = false;
     state.visited.review = false;
     lastRange = null;
+    // Once a file is in, the format guidance has done its job and the course
+    // picker is what matters.
+    setOnboarding(false);
     // Anything belonging to the previous grade set must not survive.
     D.clear(document.getElementById("reviewBody"));
     D.clear(document.getElementById("draftNotice"));
@@ -824,14 +857,16 @@
         marks: state.cohort.map(function (r) { return r.marks; }),
         stats: S.describe(state.cohort.map(function (r) { return r.marks; })),
         bands: G.bandsFromCutoffs(state.cutoffs),
-        cutoffs: null
+        cutoffs: state.cutoffs,
+        readOnly: true
       });
     } else {
       charts.review.update({
         marks: state.cohort.map(function (r) { return r.marks; }),
         stats: S.describe(state.cohort.map(function (r) { return r.marks; })),
         bands: G.bandsFromCutoffs(state.cutoffs),
-        cutoffs: null
+        cutoffs: state.cutoffs,
+        readOnly: true
       });
     }
   }
@@ -997,22 +1032,30 @@
   }
 
   function restoreDraft(draft) {
+    var records = draft.records || [];
     var analysis = {
       ok: true,
       meta: draft.meta,
       sheet: draft.sheet,
       headerRow: draft.headerRow,
       columns: draft.columns,
-      records: draft.records,
+      records: records,
       issues: draft.issues || [],
       courses: draft.courses,
       counts: draft.counts,
-        ignoredColumns: draft.ignoredColumns || [],
-        blankRows: draft.blankRows || 0,
-        rounding: draft.rounding || "nearest",
-        fractionalCount: draft.fractionalCount || 0,
-        sourceRows: draft.sourceRows || null
-      };
+      // Recomputed rather than stored: derived values must not be trusted
+      // across a reload when they can be rebuilt from the source rows.
+      stats: S.describe(
+        records.map(function (r) {
+          return r.marks;
+        })
+      ),
+      ignoredColumns: draft.ignoredColumns || [],
+      blankRows: draft.blankRows || 0,
+      rounding: draft.rounding || "nearest",
+      fractionalCount: draft.fractionalCount || 0,
+      sourceRows: draft.sourceRows || null
+    };
     state.analysis = analysis;
     state.isDemo = !!draft.isDemo;
     state.instructor = draft.instructor || "";
@@ -1165,6 +1208,16 @@
     wireInstructor();
     wireStageBar();
 
+    var showHelp = document.getElementById("showOnboarding");
+    if (showHelp) {
+      showHelp.addEventListener("click", function () {
+        setOnboarding(true);
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+        var zone = document.getElementById("dropzone");
+        if (zone) zone.focus && zone.focus();
+      });
+    }
+
     var persist = document.getElementById("persistDraft");
     if (persist) {
       persist.addEventListener("change", function () {
@@ -1184,8 +1237,13 @@
         clearDraft();
         state.persist = false;
         if (persist) persist.checked = false;
-        D.clear(discard.closest(".notice") || discard.parentNode);
-        CF.toast.info("Saved session removed", "");
+        // Remove only this control: clearing the surrounding panel would take
+        // the draft toggle with it.
+        var row = discard.closest(".session-action");
+        if (row && row.parentNode) row.parentNode.removeChild(row);
+        else discard.parentNode.removeChild(discard);
+        CF.toast.info("Saved session removed", "Nothing was stored in this browser for this console.");
+        announce("The saved grading session was removed from this browser.");
       });
     }
 
@@ -1282,7 +1340,16 @@
             text: analysis.counts.accepted + " synthetic students · " + analysis.courses.length + " courses · no real records"
           })
         ]),
-        D.badge("Demo data", "info")
+        D.badge("Demo data", "info"),
+        D.button({
+          label: "Replace",
+          variant: "ghost",
+          size: "sm",
+          onClick: function () {
+            setOnboarding(true);
+            document.getElementById("fileInput").click();
+          }
+        })
       ])
     );
 

@@ -159,7 +159,7 @@
    */
   function niceMax(peak) {
     if (!isFinite(peak) || peak <= 0) return 1;
-    if (peak <= 4) return peak;
+    if (peak <= 4) return Math.max(1, Math.ceil(peak));
     var mag = Math.pow(10, Math.floor(Math.log10(peak)));
     var norm = peak / mag;
     return niceStep(norm) * mag;
@@ -180,9 +180,15 @@
   /** Number of gridlines that reads well at any class size. */
   function axisTicks(peak) {
     var top = niceMax(peak);
+    // Student counts are whole numbers: a 0.5 gridline is meaningless.
+    if (top <= 4) {
+      var whole = [];
+      for (var w = 0; w <= top; w++) whole.push(w);
+      return { top: top, ticks: whole };
+    }
     var raw = top / 4;
     var mag = Math.pow(10, Math.floor(Math.log10(raw || 1)));
-    var step = niceStep(raw / mag) * mag;
+    var step = Math.max(1, niceStep(raw / mag) * mag);
     var ticks = [];
     for (var v = 0; v <= top + 1e-9; v += step) ticks.push(Math.round(v * 1e6) / 1e6);
     return { top: top, ticks: ticks };

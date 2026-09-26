@@ -215,10 +215,13 @@
       .slice()
       .reverse()
       .forEach(function (h) {
+        // The compact summary is only worth a column when it says something the
+        // description does not.
+        var showSummary = h.summary && h.text.indexOf(h.summary) === -1;
         var item = D.el("div.audit-item", null, [
           D.el("span.audit-item__time", { text: h.time }),
           D.el("span.audit-item__text", { text: h.text }),
-          D.el("span.audit-item__change", { text: h.summary })
+          showSummary ? D.el("span.audit-item__change", { text: h.summary }) : null
         ]);
         if (opts.canUndo) {
           var btn = D.button({
