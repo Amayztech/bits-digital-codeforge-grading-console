@@ -28,7 +28,7 @@ Reproduce with `npm run test:all` and `npm run verify:live`.
 | Node.js | v22.23.0 on Windows 11 | `npm test` | 92 / 92 pass |
 | Static analysis | `tools/hygiene.js` | `npm run hygiene` | Clean: 24 shipped files, 46 sources scanned |
 | Static file server | `tools/serve.js`, no dependencies | `npm start` | Serves on :4173, no caching |
-| GitHub Pages (production) | `amayztech.github.io` | `npm run verify:live` | Full workflow incl. both downloads |
+| GitHub Pages (production) | `ayeshh11.github.io` | `npm run verify:live` | Full workflow incl. both downloads |
 
 **Not tested, and this is stated as a limitation rather than glossed over:**
 

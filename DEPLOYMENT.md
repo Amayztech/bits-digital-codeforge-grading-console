@@ -2,9 +2,9 @@
 
 ## Live URL
 
-**https://amayztech.github.io/bits-digital-codeforge-grading-console/**
+**https://ayeshh11.github.io/bits-digital-codeforge-grading-console/**
 
-Repository: https://github.com/Amayztech/bits-digital-codeforge-grading-console
+Repository: https://github.com/Ayeshh11/bits-digital-codeforge-grading-console
 
 Deployed from `main` by `.github/workflows/pages.yml`. The application is a plain
 static site, so the workflow publishes the repository root unchanged — there is no

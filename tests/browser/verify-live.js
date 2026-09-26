@@ -9,7 +9,7 @@
 
 const { chromium } = require('playwright');
 
-const URL = process.argv[2] || 'https://amayztech.github.io/bits-digital-codeforge-grading-console/';
+const URL = process.argv[2] || 'https://ayeshh11.github.io/bits-digital-codeforge-grading-console/';
 
 let pass = 0;
 let fail = 0;
