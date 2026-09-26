@@ -98,7 +98,9 @@
     var sheet = D.el("section.sheet", { dataset: { printable: "true" } });
 
     /* --- masthead ------------------------------------------------------ */
-    var statusBadge = chk.ok
+    var statusBadge = state.finalized
+      ? D.badge("Finalized", "success")
+      : chk.ok
       ? D.badge("Ready to finalize", "success")
       : D.badge("Needs attention", "danger");
     sheet.appendChild(
@@ -177,7 +179,9 @@
     );
 
     /* --- distribution -------------------------------------------------- */
-    var chartBox = D.el("div.chart", { id: "chartReview" });
+    // The chart element is owned by the caller and reused across re-renders, so
+    // rebuilding the sheet does not orphan it.
+    var chartBox = handlers.chartHost;
     body.appendChild(
       D.el("section", null, [
         D.el("h4.sheet__section-title", null, ["Final grade distribution", D.el("span", { text: "one bar per mark" })]),
@@ -192,17 +196,25 @@
 
     /* --- band table ----------------------------------------------------- */
     var bandTable = D.el("table.diff");
+    bandTable.classList.add("diff--report");
     var bt = D.el("thead");
     bt.appendChild(
       D.el("tr", null, [
         D.el("th", { scope: "col", text: "Grade" }),
         D.el("th", { scope: "col", text: "Marks" }),
         D.el("th.num", { scope: "col", text: "Students" }),
-        D.el("th.num", { scope: "col", text: "Share" })
+        D.el("th.num", { scope: "col", text: "Share" }),
+        D.el("th", { scope: "col", class: "visually-hidden", text: "Share of the class" })
       ])
     );
     bandTable.appendChild(bt);
     var bb = D.el("tbody");
+    var peakShare = Math.max.apply(
+      null,
+      result.counts.map(function (n) {
+        return U.percent(n, state.cohort.length);
+      })
+    );
     bands.forEach(function (b, i) {
       var pct = U.percent(result.counts[i], state.cohort.length);
       bb.appendChild(
@@ -210,7 +222,17 @@
           D.el("td", null, [CF.analysePanel.gradeChip(b.grade, i)]),
           D.el("td.num", { text: G.rangeLabel(b) }),
           D.el("td.num", { style: { "font-weight": "650" }, text: String(result.counts[i]) }),
-          D.el("td.num", { text: pct.toFixed(1) + "%" })
+          D.el("td.num", { text: pct.toFixed(1) + "%" }),
+          D.el("td", { style: { width: "38%" } }, [
+            D.el("div.share-track", { "aria-hidden": "true" }, [
+              D.el("div.share-track__fill", {
+                style: {
+                  width: (peakShare ? (pct / peakShare) * 100 : 0) + "%",
+                  background: "var(--grade-" + (i + 1) + ")"
+                }
+              })
+            ])
+          ])
         ])
       );
     });

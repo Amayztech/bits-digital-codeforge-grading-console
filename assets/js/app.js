@@ -44,6 +44,7 @@
   var charts = {};
   var editor = null;
   var importApi = null;
+  var reviewChart = null;
   var lastRange = null;
   var flashTimer = 0;
   var lastAnnounced = "";
@@ -837,9 +838,23 @@
     host.appendChild(body);
   }
 
+  /**
+   * The review sheet is rebuilt from state on every visit, so its chart element
+   * is created once here and handed to the panel to place. Re-creating it inside
+   * the panel would orphan the chart instance, which captures its container.
+   */
+  function reviewChartHost() {
+    if (!reviewChart) {
+      reviewChart = D.el("div.chart", { id: "chartReview" });
+    }
+    return reviewChart;
+  }
+
   function renderReview() {
     var host = document.getElementById("reviewBody");
+    var chartHost = reviewChartHost();
     CF.reviewPanel.render(host, reviewState(), {
+      chartHost: chartHost,
       onBack: function () {
         setStage("configure");
       },
@@ -852,22 +867,17 @@
         });
       }
     });
+    var model = {
+      marks: state.cohort.map(function (r) { return r.marks; }),
+      stats: S.describe(state.cohort.map(function (r) { return r.marks; })),
+      bands: G.bandsFromCutoffs(state.cutoffs),
+      cutoffs: state.cutoffs,
+      readOnly: true
+    };
     if (!charts.review) {
-      charts.review = CF.chart.create(document.getElementById("chartReview"), {
-        marks: state.cohort.map(function (r) { return r.marks; }),
-        stats: S.describe(state.cohort.map(function (r) { return r.marks; })),
-        bands: G.bandsFromCutoffs(state.cutoffs),
-        cutoffs: state.cutoffs,
-        readOnly: true
-      });
+      charts.review = CF.chart.create(chartHost, model);
     } else {
-      charts.review.update({
-        marks: state.cohort.map(function (r) { return r.marks; }),
-        stats: S.describe(state.cohort.map(function (r) { return r.marks; })),
-        bands: G.bandsFromCutoffs(state.cutoffs),
-        cutoffs: state.cutoffs,
-        readOnly: true
-      });
+      charts.review.update(model);
     }
   }
 

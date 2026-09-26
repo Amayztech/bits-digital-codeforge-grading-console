@@ -129,6 +129,12 @@
   fill: var(--c-accent);
   text-anchor: middle;
   pointer-events: none;
+  /* The label sits on the line it describes, so it needs a halo to stay
+     legible where the line passes through the glyphs. */
+  paint-order: stroke;
+  stroke: var(--c-white);
+  stroke-width: 3px;
+  stroke-linejoin: round;
 }
 
 .chart__stat-line {
@@ -591,6 +597,31 @@
 
 .diff .num {
   text-align: right;
+}
+
+.diff--report {
+  width: 100%;
+}
+
+.diff--report th:first-child,
+.diff--report td:first-child {
+  width: 84px;
+}
+
+.share-track {
+  position: relative;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--c-ink-100);
+  overflow: hidden;
+  min-width: 60px;
+}
+
+.share-track__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  transition: width var(--dur-3) var(--ease-out);
 }
 
 .diff__arrow {

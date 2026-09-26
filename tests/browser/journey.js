@@ -327,6 +327,7 @@ function section(t) {
   check('sheet review chart drawn', (await page.locator('#chartReview svg').count()) === 1);
   check('no NaN on the sheet', !/NaN|undefined|Infinity/.test(sheet), sheet.slice(0, 200));
   check('finalize is enabled', !(await page.locator('#reviewBody button:has-text("Finalize & export")').isDisabled()));
+  check('review chart is drawn', (await page.locator('#chartReview svg').count()) === 1);
   await shot('07-review', true);
 
   /* ================================================================ *
@@ -386,6 +387,13 @@ function section(t) {
 
   check('receipt is shown after export', (await page.locator('#reviewBody .receipt').count()) === 1);
   check('receipt lists both files', (await page.locator('#reviewBody .receipt__file').count()) === 2);
+  // The sheet is rebuilt after export, so the chart must not be orphaned by it.
+  check('the review chart survives the re-render', (await page.locator('#chartReview svg').count()) === 1);
+  check('the review chart is still attached', await page.evaluate(() => {
+    const c = document.getElementById('chartReview');
+    return !!(c && c.isConnected && document.getElementById('reviewBody').contains(c));
+  }));
+  check('the sheet badge reflects the finalized state', (await page.locator('.sheet__status').innerText()).includes('Finalized'));
   check('timer stopped after finalize', ['stopped'].includes(await page.locator('#timer').getAttribute('data-state')));
   check('export stage marked done', (await page.locator('.stage-step[data-stage="export"]').getAttribute('data-state')) === 'done');
   await page.locator('.modal button:has-text("Done")').click();
