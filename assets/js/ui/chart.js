@@ -292,7 +292,7 @@
         var scale = L.width / rect.width;
         var px = (e.clientX - rect.left) * scale;
         var mark = Math.max(0, Math.min(100, Math.floor((px - x0) / binW)));
-        showTip(container, tip, mark, hist, current, x(mark) / scale, (y(hist.bins[mark]) / scale) - 2, rect, L);
+        showTip(tip, mark, hist, current, x(mark) / scale, (y(hist.bins[mark]) / scale) - 2, rect);
       });
       hit.addEventListener("mouseleave", function () {
         if (tip) tip.dataset.visible = "false";
@@ -301,7 +301,7 @@
       container.appendChild(svg);
 
       /* ---- accessible data table ---------------------------------------- */
-      container.appendChild(dataTable(stats, hist, current.bands, current.cutoffs));
+      container.appendChild(dataTable(stats, hist, current.bands));
 
       if (reduceMotion) svg.classList.add("chart--static");
 
@@ -435,7 +435,7 @@
     );
   }
 
-  function showTip(container, tip, mark, hist, m, xPx, yPx, svgRect, L) {
+  function showTip(tip, mark, hist, m, xPx, yPx, svgRect) {
     if (!tip) return;
     var count = hist.bins[mark];
     D.clear(tip);
@@ -453,11 +453,9 @@
       ])
     );
     tip.dataset.visible = "true";
-    var scale = svgRect.width / L.width;
     var left = U.clamp(xPx, 70, svgRect.width - 70);
-    var top = Math.max(56, yPx);
     tip.style.left = left + "px";
-    tip.style.top = top + "px";
+    tip.style.top = Math.max(56, yPx) + "px";
   }
 
   function gradeForMark(mark, bands) {
@@ -496,7 +494,7 @@
     return s;
   }
 
-  function dataTable(stats, hist, bands, cutoffs) {
+  function dataTable(stats, hist, bands) {
     var rows = [];
     for (var m = 0; m <= 100; m++) {
       if (!hist.bins[m]) continue;
