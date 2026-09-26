@@ -106,6 +106,11 @@ function section(t) {
   check('skip link is the first tab stop', order[0] === 'fileInput' || order.indexOf('fileInput') >= 0, JSON.stringify(order));
   check('tab order reaches the file input', order.includes('fileInput'), JSON.stringify(order));
   check('tab order reaches the demo loader', order.some((o) => o === 'loadDemo'), JSON.stringify(order));
+  // The footer states provenance without self-deprecating framing.
+  const footer = await page.locator('.app-footer').innerText();
+  check('footer names the challenge', /CodeForge V1\.0/.test(footer), footer.replace(/\s+/g, ' ').slice(0, 140));
+  check('footer carries no disclaimer language', !/prototype|not an official/i.test(footer), footer.replace(/\s+/g, ' ').slice(0, 140));
+  check('footer still states the privacy guarantee', /stays in this browser/.test(footer));
   await shot('01-empty-import');
 
   /* ================================================================ *
