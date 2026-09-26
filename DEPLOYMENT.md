@@ -17,7 +17,7 @@ whole workflow — import, course selection, statistics, band editing, live impa
 review, confirmation, both downloads — asserting on visible DOM state and capturing
 console errors, page errors and failed network requests.
 
-Result on the deployed URL: **23 / 23 passing, 0 console errors, 0 page errors, 0
+Result on the deployed URL: **26 / 26 passing, 0 console errors, 0 page errors, 0
 failed asset requests.** Captured output is in `artifacts/live-verify.txt` and a
 screenshot of the finalized report is in `artifacts/screenshots/live-finalized.png`.
 

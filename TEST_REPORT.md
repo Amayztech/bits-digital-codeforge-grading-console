@@ -4,7 +4,7 @@ Everything below was executed. The raw captured output is committed alongside
 this report:
 
 - `artifacts/test-run-unit.txt` — 92 unit and integration tests
-- `artifacts/test-run-browser.txt` — 174 browser assertions
+- `artifacts/test-run-browser.txt` — 181 browser assertions
 - `artifacts/test-run-print.txt` — printable report rendering
 - `artifacts/live-verify.txt` — 23 assertions against the deployed URL
 - `artifacts/recon/starter-probe.json` — the starter's recorded behaviour across 33 scenarios
@@ -21,7 +21,7 @@ Reproduce with `npm run test:all` and `npm run verify:live`.
 | Environment | Version | How | Result |
 | --- | --- | --- | --- |
 | Chromium (Playwright headless shell) | 153.0.8010.12 | `npm run test:browser` | 174 / 174 pass, 0 console errors, 0 page errors |
-| Chromium, **deployed URL** | same | `npm run verify:live` | 23 / 23 pass, 0 failed asset requests, 0 console errors |
+| Chromium, **deployed URL** | same | `npm run verify:live` | 26 / 26 pass, 0 failed asset requests, 0 console errors |
 | Chromium, **`file://` protocol** | same | `npm run verify:file` | 8 / 8 pass — the console works opened directly from disk |
 | Chromium with `prefers-reduced-motion: reduce` | same | Playwright context option | Full journey completes, 0 errors |
 | Print rendering (A4 portrait) | Chromium print pipeline | `npm run test:print` → PDF | Clean single-document report |
@@ -195,8 +195,9 @@ generator.
 | E16 | Confirmation count | Exactly one | 1 dialog, 2 actions | Pass |
 | E17 | Confirmation content | Names course, instructor, files, distribution | All present | Pass |
 | E18 | No native dialogs anywhere | Zero | 0 across 174 assertions | Pass |
-| E19 | Deployed site | Full workflow from the public URL | 23 / 23 pass, both files downloaded from `amayztech.github.io` | Pass |
+| E19 | Deployed site | Full workflow from the public URL | 26 / 26 pass, both files downloaded from `ayeshh11.github.io` | Pass |
 | E20 | Assets resolve from a `/<repo>/` subdirectory | Yes | Verified against the live URL; the workflow fails the build on any absolute path | Pass |
+| E21 | Brand assets on the live site | Crest, favicon and apple-touch-icon all load | Verified over the network on the deployed URL | Pass |
 
 ### UX
 
@@ -295,11 +296,11 @@ caught by the tests and fixed:
 | --- | --- | --- | --- |
 | Unit and integration (`npm test`) | 92 | 92 | 0 |
 | Browser journey (`npm run test:browser`) | 174 | 174 | 0 |
-| Deployed site (`npm run verify:live`) | 23 | 23 | 0 |
+| Deployed site (`npm run verify:live`) | 26 | 26 | 0 |
 | `file://` protocol (`npm run verify:file`) | 8 | 8 | 0 |
 | Static hygiene (`npm run hygiene`) | 24 files | clean | 0 |
 | Print rendering | 1 document | 1 | 0 |
-| **Total behavioural tests** | **298** | **298** | **0** |
+| **Total behavioural tests** | **304** | **304** | **0** |
 
 Uncaught page errors: **0**. Console errors: **0**. Native dialogs: **0**.
 Failed network requests on the deployed site: **0**. Static hygiene findings: **0**.

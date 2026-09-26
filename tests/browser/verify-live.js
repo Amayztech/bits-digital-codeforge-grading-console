@@ -56,8 +56,26 @@ function check(name, ok, detail) {
   check('vendored SheetJS loaded', await page.evaluate(() => typeof window.XLSX === 'object' && !!window.XLSX.read));
   check('app namespace present', await page.evaluate(() => !!(window.CF && window.CF.grading && window.CF.app)));
   check('favicon resolves', await page.evaluate(async () => {
-    const r = await fetch(new URL('assets/favicon.svg', document.baseURI).href);
+    const link = document.querySelector('link[rel="icon"]');
+    if (!link) return false;
+    const r = await fetch(link.href);
+    return r.ok && r.headers.get('content-type').indexOf('image/') === 0;
+  }));
+  check('apple-touch-icon resolves', await page.evaluate(async () => {
+    const link = document.querySelector('link[rel="apple-touch-icon"]');
+    if (!link) return false;
+    const r = await fetch(link.href);
     return r.ok;
+  }));
+  check('brand crest loads', await page.evaluate(() => {
+    const img = document.querySelector('.brand__mark img');
+    return !!(img && img.complete && img.naturalWidth > 0);
+  }));
+  check('brand crest is served as WebP with a PNG fallback', await page.evaluate(() => {
+    const picture = document.querySelector('.brand__mark');
+    const src = picture.querySelector('source');
+    const img = picture.querySelector('img');
+    return !!(src && src.getAttribute('type') === 'image/webp' && img && img.getAttribute('src').endsWith('.png'));
   }));
   check('template workbook downloads', await page.evaluate(async () => {
     const r = await fetch(new URL('samples/template-marks.xlsx', document.baseURI).href);

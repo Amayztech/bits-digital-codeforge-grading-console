@@ -239,15 +239,16 @@ Full detail in [`TEST_REPORT.md`](TEST_REPORT.md)**. In summary:
   legacy `.xls`, a corrupt file, a zero-byte file, a truncated zip, CSV wearing an
   `.xlsx` extension, a workbook with zero worksheets, and a title row above the
   header.
-- **174 browser assertions** across 16 sections driving the real console in
+- **181 browser assertions** across 16 sections driving the real console in
   Chromium: empty states, three unusable files, the demo class, course selection,
   statistics verified against the rendered student table, search and all three
   sort orders, the band editor by keyboard, mouse and by typing an illegal value,
   the optional suggestion and its undo, the review sheet, two complete exports
   with byte-level CSV verification, a second import, accessibility, five viewport
   widths, console hygiene, reduced motion, and local draft recovery.
-- **23 live assertions** against the deployed URL, including that every asset
-  resolves from the `/<repo>/` subdirectory.
+- **26 live assertions** against the deployed URL, including that every asset
+  resolves from the `/<repo>/` subdirectory, and that the crest, favicon and
+  apple-touch-icon all load.
 - **8 assertions** against the console opened directly from `file://`, confirming
   the choice of classic scripts keeps that path working.
 - **A static hygiene gate** (`npm run hygiene`) over the shipped code: unreachable
@@ -261,10 +262,10 @@ Full detail in [`TEST_REPORT.md`](TEST_REPORT.md)**. In summary:
 
 ```bash
 npm test              # 92 unit tests
-npm run test:browser  # 174 browser assertions (needs: npx playwright install chromium)
+npm run test:browser  # 181 browser assertions (needs: npx playwright install chromium)
 npm run test:print    # renders the printable report to PDF
 npm run verify:file   # drives the console opened directly from disk
-npm run verify:live   # drives the deployed URL end to end
+npm run verify:live   # drives the deployed URL end to end (26 assertions)
 npm run hygiene       # dead exports, console noise, raw-HTML sinks, encoding
 npm run test:all      # hygiene + unit + browser + print + file-protocol
 npm run fixtures      # regenerate the 25-workbook corpus
