@@ -1,109 +1,159 @@
 /* ==========================================================================
    Design tokens - the single source of truth for the visual language.
-   Every colour, space, radius, shadow and type size in the app resolves here.
+   Every colour, surface, space, radius, shadow, type size, control height and
+   motion curve in the app resolves here. Components never invent values.
    ========================================================================== */
 
+/*
+ * Inter 4 (SIL Open Font License, see assets/fonts/OFL.txt), vendored so the
+ * workspace renders identically on every platform and never requests a font
+ * from a third party. The optical-size axis gives large figures the tighter
+ * display cut automatically.
+ */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/inter-latin.woff2") format("woff2-variations"),
+    url("../fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/inter-latin-ext.woff2") format("woff2-variations"),
+    url("../fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
-  /* --- Neutral ramp: cool paper greys, not pure black ------------------ */
+  /* --- Surfaces: a cool canvas with layered working planes ------------- */
   --c-white: #ffffff;
-  --c-paper: #f5f6f8;
-  --c-paper-2: #eef0f4;
-  --c-ink-900: #0d1526;
-  --c-ink-800: #1a2337;
-  --c-ink-700: #2c3852;
-  --c-ink-600: #47546d;
-  --c-ink-500: #64708a;
-  --c-ink-400: #8b95a9;
-  --c-ink-300: #b6bdcc;
-  --c-ink-200: #d9dee7;
-  --c-ink-100: #e8ecf2;
-  --c-ink-050: #f3f5f9;
+  --c-canvas: #f2f4f7; /* page */
+  --c-surface: #ffffff; /* primary working plane */
+  --c-surface-2: #f9fafb; /* recessed plane inside a surface */
+  --c-surface-3: #f3f5f8; /* wells, hover fills */
+  --c-paper: var(--c-canvas);
+  --c-paper-2: var(--c-surface-3);
 
-  /* --- Brand: deep academic navy + copper accent ---------------------- */
-  --c-brand-900: #0a1a2f;
-  --c-brand-800: #10294a;
-  --c-brand-700: #17395f;
-  --c-primary: #1b4d8f;
-  --c-primary-hover: #163d72;
-  --c-primary-active: #12325d;
-  --c-primary-soft: #e9f0f9;
-  --c-primary-soft-2: #d6e4f3;
-  --c-primary-ring: rgba(27, 77, 143, 0.28);
+  /* --- Lines: separation comes from hairlines, not shadows ------------- */
+  --c-line: #e2e6ec;
+  --c-line-soft: #edf0f4;
+  --c-line-strong: #cfd5de;
 
-  --c-accent: #a96718;
-  --c-accent-hover: #8d5613;
-  --c-accent-soft: #fdf3e4;
-  --c-accent-line: #e8c489;
+  /* --- Ink: deep navy-black, never pure black --------------------------- */
+  --c-ink-900: #0b1322;
+  --c-ink-800: #19223a;
+  --c-ink-700: #2f3a50;
+  --c-ink-600: #4a5569;
+  --c-ink-500: #636d80;
+  --c-ink-400: #8a92a3;
+  --c-ink-300: #b6bcc8;
+  --c-ink-200: #d9dde4;
+  --c-ink-150: #e4e7ed;
+  --c-ink-100: #ebeef2;
+  --c-ink-050: #f5f6f9;
 
-  /* --- Semantic status ------------------------------------------------ */
-  --c-success: #0b6b4f;
-  --c-success-soft: #e4f4ed;
-  --c-success-line: #a8d8c4;
-  --c-warning: #a2560a;
-  --c-warning-soft: #fdf1e0;
-  --c-warning-line: #edc68a;
-  --c-danger: #a52218;
-  --c-danger-hover: #8a1c13;
-  --c-danger-soft: #fdecea;
-  --c-danger-line: #f2b8b1;
-  --c-info: #1b4d8f;
-  --c-info-soft: #e9f0f9;
-  --c-info-line: #b9cfe8;
+  /* --- Brand: academic navy; copper is the instrument colour ------------ */
+  --c-brand-900: #0a1830;
+  --c-brand-800: #102545;
+  --c-brand-700: #17355f;
+  --c-primary: #1c4a86;
+  --c-primary-hover: #163c6e;
+  --c-primary-active: #11305a;
+  --c-primary-soft: #eef3f9;
+  --c-primary-soft-2: #d9e4f1;
+  --c-primary-ring: rgba(28, 74, 134, 0.26);
+  --c-focus: #2f6bd0;
 
-  /* --- Ordinal grade ramp -------------------------------------------- *
-   * Grades are ordered, so the ramp is ordered too: one hue, descending
-   * lightness. Every band is also labelled with its letter and range, so
-   * colour is reinforcement rather than the only signal.                  */
-  --grade-1: #10395f;
-  --grade-2: #17527f;
-  --grade-3: #1f6d94;
-  --grade-4: #2f89a3;
-  --grade-5: #4ea5ac;
-  --grade-6: #82bfb4;
-  --grade-7: #b6d3c6;
-  --grade-8: #dfe8e2;
+  /* Copper marks every boundary the instructor controls. */
+  --c-accent: #ad6417;
+  --c-accent-hover: #8f5212;
+  --c-accent-strong: #7d470f;
+  --c-accent-soft: #fbf4ea;
+  --c-accent-wash: rgba(173, 100, 23, 0.07);
+  --c-accent-line: #e9cfa8;
 
-  /* --- Chart ramp: one hue, eight ordered steps ------------------------ *
-   * Used for per-mark bars. Every step clears 3:1 against white so no band
-   * becomes invisible, and lightness carries the ordering.                  */
-  --chart-g1: #123a5e;
-  --chart-g2: #17527d;
-  --chart-g3: #1d6a9b;
-  --chart-g4: #2b83b0;
-  --chart-g5: #4d9bc0;
-  --chart-g6: #74b2cd;
-  --chart-g7: #9cc6d9;
-  --chart-g8: #c4dbe6;
+  /* --- Semantic status: restrained, legible, never neon ----------------- */
+  --c-success: #11704f;
+  --c-success-soft: #edf6f1;
+  --c-success-line: #c4e2d3;
+  --c-warning: #9a5a0c;
+  --c-warning-soft: #fcf5e9;
+  --c-warning-line: #eed7ae;
+  --c-danger: #b0271c;
+  --c-danger-hover: #8f1f16;
+  --c-danger-soft: #fdf2f0;
+  --c-danger-line: #f2cdc7;
+  --c-info: #1c4a86;
+  --c-info-soft: #f0f4fa;
+  --c-info-line: #d3e0f0;
 
-  /* --- Typography ----------------------------------------------------- */
+  /* --- Ordinal grade ramp ----------------------------------------------- *
+   * Grades are ordered, so the ramp is too: one navy hue, descending
+   * lightness. Chips, bars and the chart share it, so a colour on the chart
+   * means the same thing in every table. Steps 1-4 carry white text, 5-8 ink;
+   * every grade is also labelled, so colour is reinforcement, never the only
+   * signal.                                                                  */
+  --grade-1: #102f58;
+  --grade-2: #1b4476;
+  --grade-3: #295b93;
+  --grade-4: #3a71a9;
+  --grade-5: #6a93c2;
+  --grade-6: #8fb0d5;
+  --grade-7: #b8cde5;
+  --grade-8: #dbe5f1;
+
+  --chart-g1: var(--grade-1);
+  --chart-g2: var(--grade-2);
+  --chart-g3: var(--grade-3);
+  --chart-g4: var(--grade-4);
+  --chart-g5: var(--grade-5);
+  --chart-g6: var(--grade-6);
+  --chart-g7: var(--grade-7);
+  --chart-g8: #c6d6ea;
+
+  /* --- Typography ------------------------------------------------------- */
   --font-sans: "Inter", "Segoe UI Variable Text", "Segoe UI", -apple-system,
     BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
-    "Times New Roman", serif;
-  --font-mono: "SFMono-Regular", "Cascadia Mono", Consolas, "Liberation Mono",
-    Menlo, monospace;
+  --font-serif: var(--font-sans);
+  --font-mono: "SFMono-Regular", "Cascadia Mono", Consolas,
+    "Liberation Mono", Menlo, monospace;
 
-  --fs-2xs: 0.6875rem; /* 11px - micro labels */
-  --fs-xs: 0.75rem; /* 12px */
-  --fs-sm: 0.8125rem; /* 13px */
-  --fs-base: 0.875rem; /* 14px - app body */
-  --fs-md: 0.9375rem; /* 15px */
+  --fs-2xs: 0.6875rem; /* 11px  micro labels */
+  --fs-xs: 0.75rem; /* 12px  metadata */
+  --fs-sm: 0.8125rem; /* 13px  tables, controls */
+  --fs-base: 0.875rem; /* 14px  body */
+  --fs-md: 0.9375rem; /* 15px  section titles */
   --fs-lg: 1.0625rem; /* 17px */
-  --fs-xl: 1.3125rem; /* 21px */
-  --fs-2xl: 1.625rem; /* 26px */
-  --fs-3xl: 2.125rem; /* 34px - stat numerals */
-  --fs-4xl: 2.75rem; /* 44px - rare display */
+  --fs-xl: 1.375rem; /* 22px  page titles */
+  --fs-2xl: 1.625rem; /* 26px  metric values */
+  --fs-3xl: 2.125rem; /* 34px  hero figures */
+  --fs-4xl: 2.75rem; /* 44px */
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
 
   --lh-tight: 1.15;
   --lh-snug: 1.35;
-  --lh-normal: 1.55;
-  --lh-loose: 1.7;
+  --lh-normal: 1.5;
+  --lh-loose: 1.65;
 
-  --tracking-eyebrow: 0.09em;
-  --tracking-tight: -0.014em;
-  --tracking-tighter: -0.022em;
+  --tracking-eyebrow: 0.06em;
+  --tracking-tight: -0.011em;
+  --tracking-tighter: -0.02em;
+  --tracking-display: -0.028em;
 
-  /* --- Spacing: 4px base ---------------------------------------------- */
+  /* --- Spacing: 4px base ------------------------------------------------ */
   --sp-0: 0;
   --sp-1: 0.25rem;
   --sp-2: 0.5rem;
@@ -118,37 +168,43 @@
   --sp-16: 4rem;
   --sp-20: 5rem;
 
-  /* --- Radii ----------------------------------------------------------- */
-  --r-xs: 4px;
-  --r-sm: 6px;
-  --r-md: 9px;
-  --r-lg: 13px;
-  --r-xl: 18px;
-  --r-2xl: 24px;
+  /* --- Control heights: three sizes, used everywhere -------------------- */
+  --h-sm: 28px;
+  --h-md: 32px;
+  --h-lg: 38px;
+
+  /* --- Radii: disciplined, never pill-by-default ------------------------ */
+  --r-xs: 3px;
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 8px;
+  --r-xl: 10px;
+  --r-2xl: 12px;
   --r-pill: 999px;
 
-  /* --- Elevation: soft, layered, never muddy --------------------------- */
-  --sh-xs: 0 1px 2px rgba(13, 21, 38, 0.05);
-  --sh-sm: 0 1px 2px rgba(13, 21, 38, 0.05), 0 2px 6px rgba(13, 21, 38, 0.04);
-  --sh-md: 0 1px 2px rgba(13, 21, 38, 0.04), 0 6px 16px rgba(13, 21, 38, 0.07);
-  --sh-lg: 0 2px 4px rgba(13, 21, 38, 0.04), 0 14px 34px rgba(13, 21, 38, 0.1);
-  --sh-xl: 0 4px 8px rgba(13, 21, 38, 0.05), 0 28px 60px rgba(13, 21, 38, 0.14);
+  /* --- Elevation: almost flat; only floating layers lift ---------------- */
+  --sh-xs: 0 1px 1px rgba(11, 19, 34, 0.035);
+  --sh-sm: 0 1px 2px rgba(11, 19, 34, 0.05);
+  --sh-md: 0 1px 2px rgba(11, 19, 34, 0.04), 0 4px 12px -2px rgba(11, 19, 34, 0.08);
+  --sh-lg: 0 2px 4px rgba(11, 19, 34, 0.04), 0 12px 28px -6px rgba(11, 19, 34, 0.16);
+  --sh-xl: 0 4px 10px rgba(11, 19, 34, 0.06), 0 28px 64px -12px rgba(11, 19, 34, 0.28);
   --sh-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
   --ring: 0 0 0 3px var(--c-primary-ring);
+  --ring-focus: 0 0 0 1px var(--c-surface), 0 0 0 3px var(--c-focus);
 
-  /* --- Motion ---------------------------------------------------------- */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
-  --dur-1: 110ms;
-  --dur-2: 170ms;
+  /* --- Motion: restrained, explanatory, never bouncy -------------------- */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.55, 0, 0.35, 1);
+  --ease-spring: var(--ease-out);
+  --dur-1: 120ms;
+  --dur-2: 180ms;
   --dur-3: 240ms;
   --dur-4: 320ms;
 
-  /* --- Layout ---------------------------------------------------------- */
-  --shell-max: 1360px;
+  /* --- Layout ----------------------------------------------------------- */
+  --shell-max: 1392px;
   --rail-w: 396px;
-  --header-h: 60px;
+  --header-h: 56px;
   --z-sticky: 20;
   --z-drawer: 40;
   --z-toast: 60;

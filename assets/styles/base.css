@@ -12,6 +12,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + var(--sp-4));
 }
 
 body {
@@ -21,10 +22,11 @@ body {
   font-size: var(--fs-base);
   line-height: var(--lh-normal);
   color: var(--c-ink-800);
-  background: var(--c-paper);
+  background: var(--c-canvas);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "cv05" 1, "ss01" 1;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
 }
 
 h1,
@@ -46,7 +48,7 @@ h3,
 h4,
 h5 {
   color: var(--c-ink-900);
-  font-weight: 650;
+  font-weight: var(--fw-semibold);
   line-height: var(--lh-tight);
   letter-spacing: var(--tracking-tight);
 }
@@ -60,9 +62,11 @@ ol {
 
 a {
   color: var(--c-primary);
-  text-decoration-color: color-mix(in srgb, var(--c-primary) 35%, transparent);
-  text-underline-offset: 2px;
-  transition: color var(--dur-1) var(--ease-out);
+  text-decoration-color: color-mix(in srgb, var(--c-primary) 30%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-1) var(--ease-out),
+    text-decoration-color var(--dur-1) var(--ease-out);
 }
 
 a:hover {
@@ -76,6 +80,7 @@ select,
 textarea {
   font: inherit;
   color: inherit;
+  letter-spacing: inherit;
 }
 
 button {
@@ -91,8 +96,12 @@ img {
   height: auto;
 }
 
+::selection {
+  background: color-mix(in srgb, var(--c-primary) 18%, transparent);
+}
+
 :focus-visible {
-  outline: 2px solid var(--c-primary);
+  outline: 2px solid var(--c-focus);
   outline-offset: 2px;
   border-radius: var(--r-xs);
 }
@@ -115,11 +124,11 @@ input:-webkit-autofill:focus {
   left: var(--sp-4);
   top: -100px;
   z-index: var(--z-modal);
-  padding: var(--sp-3) var(--sp-5);
-  background: var(--c-brand-900);
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--c-ink-900);
   color: var(--c-white);
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: var(--fw-medium);
   border-radius: var(--r-md);
   text-decoration: none;
   box-shadow: var(--sh-lg);
@@ -134,12 +143,12 @@ input:-webkit-autofill:focus {
 /* --- Scrollbars --------------------------------------------------------- */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--c-ink-300) transparent;
+  scrollbar-color: var(--c-ink-200) transparent;
 }
 
 *::-webkit-scrollbar {
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 10px;
 }
 
 *::-webkit-scrollbar-track {
@@ -147,19 +156,20 @@ input:-webkit-autofill:focus {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: var(--c-ink-300);
-  border: 3px solid var(--c-paper);
+  background: var(--c-ink-200);
+  border: 3px solid transparent;
+  background-clip: padding-box;
   border-radius: var(--r-pill);
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: var(--c-ink-400);
+  background-color: var(--c-ink-300);
 }
 
 /* --- Typographic helpers ------------------------------------------------ */
 .eyebrow {
   font-size: var(--fs-2xs);
-  font-weight: 700;
+  font-weight: var(--fw-medium);
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--c-ink-500);
@@ -195,4 +205,19 @@ input:-webkit-autofill:focus {
 
 [hidden] {
   display: none !important;
+}
+
+/* --- Reduced motion: state changes are instant, never animated ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
 }

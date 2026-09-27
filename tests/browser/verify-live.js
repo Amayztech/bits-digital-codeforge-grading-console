@@ -51,7 +51,7 @@ function check(name, ok, detail) {
 
   // Subdirectory asset resolution
   check('stylesheet loaded from the subdirectory', await page.evaluate(() => {
-    return getComputedStyle(document.body).backgroundColor === 'rgb(245, 246, 248)';
+    return getComputedStyle(document.body).backgroundColor === 'rgb(242, 244, 247)';
   }));
   check('vendored SheetJS loaded', await page.evaluate(() => typeof window.XLSX === 'object' && !!window.XLSX.read));
   check('app namespace present', await page.evaluate(() => !!(window.CF && window.CF.grading && window.CF.app)));

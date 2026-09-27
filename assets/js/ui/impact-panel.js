@@ -15,6 +15,11 @@
   var U = CF.util;
   var G = CF.grading;
 
+  // What the previous render showed, so only genuinely new information
+  // animates: a figure that changed, a student who has just started moving.
+  var lastFigure = null;
+  var lastMoved = null;
+
   function renderImpact(host, opts) {
     var state = opts;
     D.clear(host);
@@ -23,72 +28,74 @@
     var bands = G.bandsFromCutoffs(state.cutoffs);
     var isDefault = U.deepEqual(state.cutoffs, G.defaults());
 
-    /* --- headline banner --------------------------------------------- */
+    /* --- headline ------------------------------------------------------ */
     if (!state.cohort.length) {
       host.appendChild(D.emptyState("users", "No students to affect", "Select a course to see the effect of a cutoff change."));
       return;
     }
 
     if (impact.changed === 0) {
+      lastFigure = 0;
       host.appendChild(
         D.el("div.impact__banner", { dataset: { state: "clean" } }, [
-          D.el("div", { style: { flex: "none" } }, [
-            D.el("span", { style: { color: "var(--c-success)", display: "inline-flex" }, "aria-hidden": "true" }, [D.icon("check-circle", 24)])
-          ]),
+          D.el("span.impact__mark", { "aria-hidden": "true" }, [D.icon("check", 12)]),
           D.el("div", null, [
-            D.el("p.impact__caption", { style: { "font-size": "var(--fs-base)", "font-weight": "650", color: "var(--c-ink-900)" }, text: "No students are affected" }),
+            D.el("p.impact__title", { text: "No students are affected" }),
             D.el("p.impact__caption", {
               text: isDefault
-                ? "These are the challenge's default bands, so no student has moved yet."
-                : "Compared with the previous configuration, every student keeps the same grade."
+                ? "These are the default bands, so no student has moved yet."
+                : "Against the previous configuration, every student keeps the same grade."
             })
           ])
         ])
       );
     } else {
+      var bumped = lastFigure !== null && lastFigure !== impact.changed;
+      lastFigure = impact.changed;
       host.appendChild(
         D.el("div.impact__banner", { dataset: { state: "changed" } }, [
-          D.el("div.impact__figure", { text: String(impact.changed) }),
-          D.el("div", null, [
-            D.el("p.impact__caption", { style: { "font-size": "var(--fs-base)", "font-weight": "650", color: "var(--c-ink-900)" } }, [
-              U.pluralise(impact.changed, "student") + " change grade"
-            ]),
+          D.el("div.impact__figure", { dataset: bumped ? { bump: "true" } : null, text: String(impact.changed) }),
+          D.el("div.impact__lead", null, [
+            D.el("p.impact__title", { text: impact.changed === 1 ? "student changes grade" : "students change grade" }),
             D.el("p.impact__caption", {
-              text:
-                "of " +
-                impact.total +
-                " compared with the " +
-                (opts.baselineLabel || "previous configuration") +
-                "."
+              text: "of " + impact.total + " · against the " + (opts.baselineLabel || "previous configuration")
             })
-          ])
-        ])
-      );
-      host.appendChild(
-        D.el("div.impact-split", null, [
-          D.el("div.impact-split__item", { dataset: { dir: "up" } }, [
-            D.el("p.impact-split__n", { text: String(impact.up) }),
-            D.el("p.impact-split__label", { text: "moved up" })
           ]),
-          D.el("div.impact-split__item", { dataset: { dir: "down" } }, [
-            D.el("p.impact-split__n", { text: String(impact.down) }),
-            D.el("p.impact-split__label", { text: "moved down" })
+          D.el("div.impact-split", null, [
+            D.el("div.impact-split__item", { dataset: { dir: "up", zero: impact.up ? "false" : "true" } }, [
+              D.el("span.impact-split__icon", { "aria-hidden": "true" }, [D.icon("arrow-up", 11)]),
+              D.el("p.impact-split__n", { text: String(impact.up) }),
+              D.el("p.impact-split__label", { text: "moved up" })
+            ]),
+            D.el("div.impact-split__item", { dataset: { dir: "down", zero: impact.down ? "false" : "true" } }, [
+              D.el("span.impact-split__icon", { "aria-hidden": "true" }, [D.icon("arrow-down", 11)]),
+              D.el("p.impact-split__n", { text: String(impact.down) }),
+              D.el("p.impact-split__label", { text: "moved down" })
+            ])
           ])
         ])
       );
     }
 
-    /* --- before / after table ---------------------------------------- */
+    /* --- before / after distribution ----------------------------------- */
     if (opts.baseline) {
       var baseBands = G.bandsFromCutoffs(opts.baseline);
-      var table = D.el("table.diff");
+      var peak = 1;
+      impact.bandDelta.forEach(function (d) {
+        peak = Math.max(peak, d.count || 0, d.before || 0);
+      });
+      var table = D.el("table.diff.diff--impact");
+      table.appendChild(D.el("caption.visually-hidden", { text: "Students per band, before and after the last change" }));
       var thead = D.el("thead");
       thead.appendChild(
         D.el("tr", null, [
           D.el("th", { scope: "col", text: "Grade" }),
           D.el("th.num", { scope: "col", text: "Marks" }),
+          D.el("th.diff__dist", { scope: "col" }, [
+            D.el("span.diff__key", null, [D.el("i.diff__key-before", { "aria-hidden": "true" }), "Before"]),
+            D.el("span.diff__key", null, [D.el("i.diff__key-now", { "aria-hidden": "true" }), "Now"])
+          ]),
           D.el("th.num", { scope: "col", text: "Before" }),
-          D.el("th.diff__arrow", { "aria-hidden": "true", text: "" }),
           D.el("th.num", { scope: "col", text: "Now" }),
           D.el("th.num", { scope: "col", text: "Change" })
         ])
@@ -96,99 +103,113 @@
       table.appendChild(thead);
       var tbody = D.el("tbody");
       bands.forEach(function (b, i) {
-        var beforeRange = G.rangeLabel(baseBands[i]);
-        var nowRange = G.rangeLabel(b);
+        var beforeRange = CF.analysePanel.range(baseBands[i]);
+        var nowRange = CF.analysePanel.range(b);
         var rangeChanged = beforeRange !== nowRange;
         var d = impact.bandDelta[i];
+        var before = d && d.before !== null ? d.before : 0;
         tbody.appendChild(
           D.el("tr", { dataset: { changed: rangeChanged ? "true" : "false" } }, [
             D.el("td", null, [CF.analysePanel.gradeChip(b.grade, i)]),
             D.el("td.num", null, [
               rangeChanged
-                ? D.el("span", null, [
-                    D.el("span", { style: { color: "var(--c-ink-400)" }, text: beforeRange }),
-                    D.el("span.diff__arrow", { text: " → " }),
-                    D.el("span", { style: { "font-weight": "650" }, text: nowRange })
+                ? D.el("span.diff__range", null, [
+                    D.el("span.diff__was", { text: beforeRange }),
+                    D.el("span.diff__arrow", { "aria-hidden": "true", text: "→" }),
+                    D.el("span.diff__is", { text: nowRange })
                   ])
                 : D.el("span", { text: nowRange })
             ]),
-            D.el("td.num", { text: d && d.before !== null ? String(d.before) : "—" }),
-            D.el("td.diff__arrow", { "aria-hidden": "true" }, [D.icon("arrow-right", 12)]),
-            D.el("td.num", { style: { "font-weight": "650" }, text: String(impact.bandDelta[i].count) }),
+            D.el("td.diff__dist", { "aria-hidden": "true" }, [
+              D.el("span.diff__bar.diff__bar--before", { style: { width: (before / peak) * 100 + "%" } }),
+              D.el("span.diff__bar.diff__bar--now", {
+                style: { width: (d.count / peak) * 100 + "%", background: "var(--grade-" + (i + 1) + ")" }
+              })
+            ]),
+            D.el("td.num.diff__before", { text: d && d.before !== null ? String(d.before) : "—" }),
+            D.el("td.num.diff__now", { text: String(d.count) }),
             D.el("td.num", null, [
               d && d.delta
-                ? D.el("span", {
-                    style: { color: d.delta > 0 ? "var(--c-success)" : "var(--c-danger)", "font-weight": "700" },
-                    text: (d.delta > 0 ? "+" : "") + d.delta
-                  })
-                : D.el("span", { style: { color: "var(--c-ink-400)" }, text: "—" })
+                ? D.el("span.diff__delta", { dataset: { dir: d.delta > 0 ? "up" : "down" }, text: (d.delta > 0 ? "+" : "−") + Math.abs(d.delta) })
+                : D.el("span.diff__none", { text: "—" })
             ])
           ])
         );
       });
       table.appendChild(tbody);
-      // Six columns do not fit a phone; scroll the table, not the page.
-      host.appendChild(D.el("div", { style: { "overflow-x": "auto" } }, table));
+      // Scroll the table, not the page, where six columns do not fit.
+      host.appendChild(D.el("div.diff-wrap", null, table));
     } else {
       host.appendChild(
-        D.el("p.field__hint", {
-          text: "Change a cutoff and this table will show every band's marks and student count against the previous configuration."
+        D.el("p.impact__hint", {
+          text: "Move a boundary to compare every band's range and count with the previous configuration."
         })
       );
     }
 
-    /* --- affected students ------------------------------------------- */
+    /* --- affected students -------------------------------------------- */
     if (impact.moved.length) {
       var moved = impact.moved.slice().sort(function (a, b) {
         if (a.marks !== b.marks) return b.marks - a.marks;
         return a.id.localeCompare(b.id, undefined, { numeric: true });
       });
-      var listTable = D.el("table.data");
+      var seen = lastMoved;
+      var listTable = D.el("table.data.data--compact");
       var lt = D.el("thead");
       lt.appendChild(
         D.el("tr", null, [
           D.el("th", { scope: "col", text: "BITS ID" }),
           D.el("th.num", { scope: "col", text: "Marks" }),
-          D.el("th", { scope: "col", text: "Change" })
+          D.el("th", { scope: "col", text: "Grade" }),
+          D.el("th", { scope: "col" }, [D.el("span.visually-hidden", { text: "Direction" })])
         ])
       );
       listTable.appendChild(lt);
       var lb = D.el("tbody");
       moved.slice(0, 60).forEach(function (m) {
+        var key = m.id + ":" + m.from + ">" + m.to;
         lb.appendChild(
-          D.el("tr", null, [
+          D.el("tr", { dataset: seen && !seen[key] ? { fresh: "true" } : null }, [
             D.el("td.cell-id", { text: m.id }),
             D.el("td.num.cell-strong", { text: String(m.marks) }),
             D.el("td", null, [
-              D.el("span.cluster", { style: { gap: "6px" } }, [
+              D.el("span.grade-move", null, [
                 CF.analysePanel.gradeChip(m.from, G.GRADES.indexOf(m.from)),
-                D.el("span", { "aria-hidden": "true", style: { color: "var(--c-ink-400)" } }, [D.icon("arrow-right", 12)]),
-                CF.analysePanel.gradeChip(m.to, G.GRADES.indexOf(m.to)),
-                D.el("span.row-marker", { style: { color: m.dir === "up" ? "var(--c-success)" : "var(--c-danger)" } }, [
-                  D.icon(m.dir === "up" ? "arrow-up" : "arrow-down", 11),
-                  m.dir === "up" ? "up" : "down"
-                ])
+                D.el("span.grade-move__arrow", { "aria-hidden": "true" }, [D.icon("arrow-right", 11)]),
+                CF.analysePanel.gradeChip(m.to, G.GRADES.indexOf(m.to))
+              ])
+            ]),
+            D.el("td.impact__dir", { dataset: { dir: m.dir } }, [
+              D.el("span.row-marker", null, [
+                D.icon(m.dir === "up" ? "arrow-up" : "arrow-down", 11),
+                m.dir === "up" ? "up" : "down"
               ])
             ])
           ])
         );
       });
+      lastMoved = {};
+      moved.forEach(function (m) {
+        lastMoved[m.id + ":" + m.from + ">" + m.to] = true;
+      });
       listTable.appendChild(lb);
       host.appendChild(
-        D.el("details.disclosure", { open: impact.moved.length <= 8 ? true : null }, [
+        D.el("details.disclosure.impact__students", { open: impact.moved.length <= 8 ? true : null }, [
           D.el("summary.disclosure__summary", null, [
             D.el("span.disclosure__chev", { "aria-hidden": "true" }, [D.icon("chevron", 14)]),
             "Students whose grade changes",
             D.el("span.disclosure__count", { text: String(impact.moved.length) })
           ]),
           D.el("div.disclosure__body", null, [
-            D.el("div.table-wrap.table-scroll", null, listTable),
+            D.el("div.table-scroll.impact__list", null, listTable),
             impact.moved.length > 60
-              ? D.el("p.field__hint", { style: { "margin-top": "var(--sp-3)" }, text: "Showing the first 60. The export and the final review always list every student." })
+              ? D.el("p.table-foot", { text: "Showing the first 60. The export and the final review always list every student." })
               : null
           ])
         ])
       );
+    } else {
+      lastMoved = {};
     }
 
     return impact;
@@ -202,27 +223,39 @@
     D.clear(host);
     if (!history.length) {
       host.appendChild(
-        D.el("div", { style: { display: "flex", "align-items": "center", gap: "var(--sp-3)", padding: "var(--sp-2) 0" } }, [
-          D.el("span", { style: { color: "var(--c-ink-400)", display: "inline-flex" }, "aria-hidden": "true" }, [D.icon("info", 17)]),
-          D.el("p.field__hint", {
-            text: "No changes yet. Every cutoff you move will be listed here, with the option to undo it."
-          })
+        D.el("p.audit-empty", null, [
+          D.el("span", { "aria-hidden": "true" }, [D.icon("clock", 14)]),
+          "No changes yet. Every boundary you move is logged here and can be undone."
         ])
       );
       return;
     }
-    var list = D.el("div.audit-list");
+    var list = D.el("ol.audit-list", { "aria-label": "Changes, newest first" });
     history
       .slice()
       .reverse()
-      .forEach(function (h) {
+      .forEach(function (h, n) {
+        // "A minimum: 80 → 81" is set as a label and a transition so the
+        // numbers line up down the log. Other entries keep their sentence.
+        var parts = /^(.+?):\s*(\d+)\s*→\s*(\d+)(.*)$/.exec(h.text || "");
+        var text = parts
+          ? D.el("span.audit-item__text", null, [
+              D.el("span.audit-item__what", { text: parts[1] }),
+              D.el("span.audit-item__change", null, [
+                D.el("span.audit-item__from", { text: parts[2] }),
+                D.el("span.audit-item__arrow", { "aria-hidden": "true", text: "→" }),
+                D.el("span.audit-item__to", { text: parts[3] })
+              ]),
+              parts[4] ? D.el("span.audit-item__note", { text: parts[4].trim() }) : null
+            ])
+          : D.el("span.audit-item__text", { text: h.text });
         // The compact summary is only worth a column when it says something the
         // description does not.
-        var showSummary = h.summary && h.text.indexOf(h.summary) === -1;
-        var item = D.el("div.audit-item", null, [
+        var showSummary = !parts && h.summary && h.text.indexOf(h.summary) === -1;
+        var item = D.el("li.audit-item", { dataset: n === 0 ? { latest: "true" } : null }, [
           D.el("span.audit-item__time", { text: h.time }),
-          D.el("span.audit-item__text", { text: h.text }),
-          showSummary ? D.el("span.audit-item__change", { text: h.summary }) : null
+          text,
+          showSummary ? D.el("span.audit-item__summary", { text: h.summary, title: h.summary }) : null
         ]);
         if (opts.canUndo) {
           var btn = D.button({
@@ -233,7 +266,8 @@
               opts.onUndo(h.id);
             }
           });
-          btn.style.color = "var(--c-ink-600)";
+          btn.classList.add("audit-item__undo");
+          btn.setAttribute("aria-label", "Undo: " + h.text);
           item.appendChild(btn);
         }
         list.appendChild(item);

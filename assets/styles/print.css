@@ -23,6 +23,7 @@
 
   .app-header,
   .stagebar,
+  .stage__head,
   .app-footer,
   .toast-region,
   .modal-backdrop,
@@ -48,19 +49,38 @@
   }
 
   .sheet__masthead {
-    background: #0a1a2f !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    padding: 8mm 6mm !important;
+    padding: 0 0 5mm !important;
     border-radius: 0 !important;
   }
 
-  .sheet__masthead::after {
+  .sheet__masthead::before {
     display: none !important;
   }
 
+  .stamp,
+  .checklist--strip .checklist__item,
+  .sheet__note,
+  .receipt {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .receipt {
+    display: none !important;
+  }
+
+  .sheet__grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) !important;
+  }
+
+  .sheet__chart,
+  .sheet__note,
+  .checklist--strip {
+    break-inside: avoid;
+  }
+
   .sheet__body {
-    padding: 6mm !important;
+    padding: 5mm 0 !important;
     gap: 5mm !important;
   }
 

@@ -71,56 +71,91 @@
       reportBox.hidden = true;
       D.clear(errorBox);
       var f = analysis.fatal || {};
-      var body = D.el("div", null, [
-        D.el("p", { text: f.detail || "The file could not be used." }),
-        D.el("p", { style: { "margin-top": "6px" }, text: f.remedy || "" })
-      ]);
-      var extra = D.el("div");
-      if (f.foundHeaders && f.foundHeaders.length) {
-        extra.appendChild(
-          D.el("p", { style: { "margin-top": "10px", "font-size": "var(--fs-xs)" } }, [
-            D.el("b", { text: "Headers found: " })
-          ])
-        );
-        extra.appendChild(
-          D.el("p", {
-            style: { "margin-top": "4px", "font-family": "var(--font-mono)", "font-size": "var(--fs-xs)", color: "var(--c-ink-600)" },
-            text: f.foundHeaders.map(function (h) { return h.text; }).join("  |  ")
-          })
-        );
+      var rows = [["What happened", f.detail || "The file could not be used."]];
+
+      // Where: the header row that was read, with every header it holds and
+      // each required column that is absent called out beside them.
+      if (f.foundHeaders) {
+        var chips = D.el("div.diagnostic__headers");
+        f.foundHeaders.forEach(function (h) {
+          chips.appendChild(D.el("code", { text: h.text }));
+        });
+        if (f.columns) {
+          ["id", "course", "marks"].forEach(function (key) {
+            if (f.columns[key]) return;
+            chips.appendChild(
+              D.el("code", {
+                dataset: { missing: "true" },
+                title: "Required column not found",
+                text: CF.workbook.FIELD_LABEL[key]
+              })
+            );
+          });
+        }
+        rows.push([
+          f.headerRow !== undefined ? "Header row " + (f.headerRow + 1) : "Headers found",
+          chips
+        ]);
       }
       if (f.sheets && f.sheets.length) {
-        extra.appendChild(
-          D.el("p", {
-            style: { "margin-top": "10px", "font-size": "var(--fs-xs)" },
-            text: "Sheets in this file: " + f.sheets.map(function (s) { return s.name + " (" + s.rows + " rows)"; }).join(", ")
-          })
-        );
+        rows.push([
+          "Sheets",
+          f.sheets.map(function (s) { return s.name + " (" + s.rows + " " + (s.rows === 1 ? "row" : "rows") + ")"; }).join(", ")
+        ]);
       }
-      body.appendChild(extra);
+      if (f.remedy) rows.push(["How to fix", f.remedy]);
 
       errorBox.appendChild(
-        D.notice("danger", "error", (f.title || "That file could not be used") + (file ? " — " + file.name : ""), body)
+        diagnostic(f.title || "That file could not be used", file, rows, [
+          D.button({
+            label: "Choose a different file",
+            size: "sm",
+            icon: "sheet",
+            onClick: function () {
+              input.click();
+            }
+          }),
+          D.el("a.btn.btn--ghost.btn--sm", { href: "samples/template-marks.xlsx", download: true }, [
+            D.icon("download", 13),
+            "Download template"
+          ]),
+          D.button({
+            label: "Load demo class instead",
+            variant: "ghost",
+            size: "sm",
+            icon: "sparkle",
+            onClick: opts.onLoadDemo
+          })
+        ])
       );
-      var actions = D.el("div.cluster", { style: { "margin-top": "var(--sp-3)" } }, [
-        D.button({
-          label: "Choose a different file",
-          variant: "secondary",
-          size: "sm",
-          icon: "sheet",
-          onClick: function () {
-            input.click();
-          }
-        }),
-        D.button({
-          label: "Load demo class instead",
-          variant: "ghost",
-          size: "sm",
-          icon: "sparkle",
-          onClick: opts.onLoadDemo
-        })
+    }
+
+    /**
+     * A failure described as an instrument would report it: what happened,
+     * where in the file, and how to fix it - with the recovery actions
+     * attached, rather than a wall of red text.
+     */
+    function diagnostic(title, file, rows, actions) {
+      var grid = D.el("dl.diagnostic__grid");
+      rows.forEach(function (r) {
+        grid.appendChild(D.el("dt", { text: r[0] }));
+        grid.appendChild(D.el("dd", null, r[1]));
+      });
+      return D.el("section.diagnostic", { "aria-label": title }, [
+        D.el("div.diagnostic__head", null, [
+          D.el("span.diagnostic__icon", { "aria-hidden": "true" }, [D.icon("error", 16)]),
+          D.el("div", { style: { "min-width": "0" } }, [
+            D.el("p.diagnostic__title", { text: title }),
+            file
+              ? D.el("p.diagnostic__file", {
+                  text: file.name + (file.size !== undefined ? "  ·  " + U.formatBytes(file.size) : "")
+                })
+              : null
+          ])
+        ]),
+        grid,
+        actions && actions.length ? D.el("div.diagnostic__foot", null, actions) : null
       ]);
-      errorBox.appendChild(actions);
     }
 
     function showSuccess(analysis, file) {
@@ -163,16 +198,12 @@
         D.clear(reportBox);
         reportBox.hidden = true;
         errorBox.appendChild(
-          D.notice(
-            "danger",
-            "error",
-            "\"" + file.name + "\" is not a spreadsheet this console can read",
-            D.el("p", {
-              text:
-                "Supported file types are .xlsx, .xls, .xlsm and .csv. If your file has another " +
-                "extension, re-export the marks sheet from your spreadsheet as one of those."
-            })
-          )
+          diagnostic("This is not a spreadsheet the workspace can read", file, [
+            ["What happened", "\"" + file.name + "\" does not have a spreadsheet extension."],
+            ["How to fix", "Supported file types are .xlsx, .xls, .xlsm and .csv. Re-export the marks sheet from your spreadsheet as one of those."]
+          ], [
+            D.button({ label: "Choose a different file", size: "sm", icon: "sheet", onClick: function () { input.click(); } })
+          ])
         );
         return;
       }
@@ -204,7 +235,12 @@
             showIdle();
             D.clear(statusBox);
             errorBox.appendChild(
-              D.notice("danger", "error", "The file could not be read", D.el("p", { text: err.message }))
+              diagnostic("The file could not be read", file, [
+                ["What happened", err.message],
+                ["How to fix", "Choose the file again. If it keeps failing, re-save it from your spreadsheet as .xlsx and retry."]
+              ], [
+                D.button({ label: "Choose a different file", size: "sm", icon: "sheet", onClick: function () { input.click(); } })
+              ])
             );
             opts.onFailed && opts.onFailed({ fatal: { title: "Unreadable file" } }, file);
           });
@@ -357,7 +393,9 @@
     ]);
     panel.appendChild(head);
 
-    var body = D.el("div.panel__body", { style: { display: "flex", "flex-direction": "column", gap: "var(--sp-4)" } });
+    var body = D.el("div.panel__body.report-body");
+    // A clean import is stated in one line; only rejected rows earn a box.
+    if (!hasErrors) headline.classList.add("notice--inline");
     body.appendChild(headline);
 
     body.appendChild(
@@ -405,7 +443,9 @@
       dl.appendChild(D.el("dt", { text: r[0] }));
       dl.appendChild(D.el("dd", { text: r[1] }));
     });
-    body.appendChild(
+    // The detail layers share one bordered list instead of stacking cards.
+    var group = D.el("div.disclosure-group");
+    group.appendChild(
       D.el("details.disclosure", null, [
         D.el("summary.disclosure__summary", null, [
           D.el("span.disclosure__chev", { "aria-hidden": "true" }, [D.icon("chevron", 14)]),
@@ -418,12 +458,12 @@
     /* --- rejected rows ----------------------------------------------- */
     var errors = a.issues.filter(function (i) { return i.severity === "error"; });
     if (errors.length) {
-      body.appendChild(issueTable("Rejected rows", errors, "danger", "These rows were not graded. Fix them in the source file and upload it again."));
+      group.appendChild(issueTable("Rejected rows", errors, "danger", "These rows were not graded. Fix them in the source file and upload it again."));
     }
 
     var warnings = a.issues.filter(function (i) { return i.severity === "warning"; });
     if (warnings.length) {
-      body.appendChild(
+      group.appendChild(
         issueTable("Normalised values", warnings, "warning", "Kept, but the value used differs from the value in the file. Both are shown.")
       );
     }
@@ -439,7 +479,7 @@
           ])
         );
       });
-      body.appendChild(
+      group.appendChild(
         D.el("details.disclosure", null, [
           D.el("summary.disclosure__summary", null, [
             D.el("span.disclosure__chev", { "aria-hidden": "true" }, [D.icon("chevron", 14)]),
@@ -451,7 +491,9 @@
       );
     }
 
-    var actions = D.el("div.cluster", { style: { "margin-top": "var(--sp-4)" } });
+    body.appendChild(group);
+
+    var actions = D.el("div.cluster.report-actions");
     if (errors.length || warnings.length) {
       actions.appendChild(
         D.button({
@@ -499,29 +541,19 @@
       if (onRounding) onRounding(select.value);
     });
 
-    return D.el("div", {
-      style: {
-        padding: "var(--sp-4)",
-        "border-radius": "var(--r-md)",
-        background: "var(--c-white)",
-        border: "1px solid var(--c-info-line)"
-      }
-    }, [
-      D.el("div", { style: { display: "flex", gap: "10px", "align-items": "flex-start" } }, [
-        D.el("span", { style: { color: "var(--c-info)", "margin-top": "2px" }, "aria-hidden": "true" }, [D.icon("info", 17)]),
-        D.el("div", { style: { flex: "1 1 auto", "min-width": "0" } }, [
-          D.el("p", { style: { "font-weight": "650", color: "var(--c-ink-900)" }, text: a.fractionalCount + " fractional " + plural(a.fractionalCount, "mark needs", "marks need") + " a rounding rule" }),
-          D.el("p.field__hint", {
-            style: { "margin-top": "4px" },
-            text:
-              "Marks must be whole numbers, so these need a rounding decision. The challenge brief " +
-              "describes this as rounding “to the nearest integer” but illustrates it with 80.2 → 81, " +
-              "which is not the nearest integer. Choose the rule your institution uses — every " +
-              "original and rounded value is listed below either way."
-          })
-        ])
+    return D.el("div.decision", null, [
+      D.el("span.decision__icon", { "aria-hidden": "true" }, [D.icon("scale", 16)]),
+      D.el("div.decision__text", null, [
+        D.el("p.decision__title", {
+          text: a.fractionalCount + " fractional " + plural(a.fractionalCount, "mark needs", "marks need") + " a rounding rule"
+        }),
+        D.el("p.decision__hint", {
+          text:
+            "The brief says “nearest integer” but illustrates it with 80.2 → 81, which is not the nearest " +
+            "integer. Choose the rule your institution uses — every original and rounded value is listed below either way."
+        })
       ]),
-      D.el("div.field", { style: { "margin-top": "var(--sp-3)" } }, [
+      D.el("div.field.decision__field", null, [
         D.el("label.field__label", { for: id, text: "Rounding rule" }),
         select
       ])
@@ -550,7 +582,7 @@
         ]);
       });
 
-    var table = D.el("table.data");
+    var table = D.el("table.data.issue-table");
     var thead = D.el("thead");
     thead.appendChild(
       D.el("tr", null, [

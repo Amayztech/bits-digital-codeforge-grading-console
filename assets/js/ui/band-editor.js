@@ -22,6 +22,10 @@
     var inputs = [];
     var activeBand = -1;
     var refreshers = [];
+    // Counts from the previous render, so a count that just changed can be
+    // marked for a moment: the consequence of a move is shown where it lands.
+    var lastCounts = null;
+    var lastCohort = null;
 
     function render(state) {
       // Typing must not lose the caret, so remember where focus was.
@@ -41,6 +45,18 @@
       D.clear(host);
       inputs = [];
       refreshers = [];
+      var sameCohort = lastCohort === state.cohort;
+
+      host.appendChild(
+        D.el("div.band-head", { "aria-hidden": "true" }, [
+          D.el("span", { text: "Grade" }),
+          D.el("span", { text: "Marks" }),
+          D.el("span.band-head__stats", { text: "Students" }),
+          D.el("span.band-head__num", { text: "Share" }),
+          D.el("span.band-head__num", { text: "" }),
+          D.el("span.band-head__cut", { text: "Minimum" })
+        ])
+      );
 
       bands.forEach(function (band, i) {
         var count = result.counts[i];
@@ -68,7 +84,7 @@
           ]),
           D.el("div.band-row__range-cell", { style: { "min-width": "0" } }, [
             D.el("div.band-row__range", {
-              text: G.rangeLabel(band),
+              text: CF.analysePanel.range(band),
               title:
                 band.min === band.max
                   ? "Only the mark " + band.min + " falls in this band"
@@ -85,7 +101,10 @@
                 }
               })
             ]),
-            D.el("span.band-count.num", { text: String(count) }),
+            D.el("span.band-count.num", {
+              text: String(count),
+              dataset: sameCohort && lastCounts && lastCounts[i] !== count ? { bump: "true" } : null
+            }),
             D.el("span.band-pct.num", { text: state.cohort.length ? pct.toFixed(pct < 10 ? 1 : 0) + "%" : "—" }),
             delta && delta.delta
               ? D.el("span.band-delta.num", {
@@ -121,7 +140,6 @@
             "Arrow keys change the cutoff by one mark; hold Shift for five. The legal range for " +
             G.GRADES[idx] + " is shown by the step buttons.";
 
-          var stepper = D.el("div.cutoff__pair");
           var dec = D.el("button.cutoff__step", {
             type: "button",
             tabindex: "-1",
@@ -129,7 +147,7 @@
             onClick: function () {
               submit(idx, currentValue() - 1, "button");
             }
-          }, [D.icon("chevron-down", 13)]);
+          }, [D.icon("minus", 12)]);
           var inc = D.el("button.cutoff__step", {
             type: "button",
             tabindex: "-1",
@@ -137,9 +155,7 @@
             onClick: function () {
               submit(idx, currentValue() + 1, "button");
             }
-          }, [D.el("span", { style: { transform: "rotate(-90deg)", display: "inline-flex" } }, [D.icon("chevron", 13)])]);
-          stepper.appendChild(dec);
-          stepper.appendChild(inc);
+          }, [D.icon("plus", 12)]);
 
           function currentValue() {
             var live = opts.getCutoffs();
@@ -185,21 +201,22 @@
             sync(opts.getCutoffs());
           });
 
-          var box = D.el("div.cutoff", null, [stepper, input, help]);
+          var box = D.el("div.cutoff", null, [dec, input, inc, help]);
           box._sync = sync;
           refreshers.push(box);
           cutoffCell.appendChild(box);
         } else {
           cutoffCell.appendChild(
-            D.el("div", { style: { display: "flex", "justify-content": "flex-end" } }, [
-              D.el("span.cutoff__locked", { title: "The bottom band always starts at 0", text: "Min 0" })
-            ])
+            D.el("span.cutoff__locked", { title: "The bottom band always starts at 0", text: "Min 0" })
           );
         }
 
         row.appendChild(cutoffCell);
         host.appendChild(row);
       });
+
+      lastCounts = result.counts.slice();
+      lastCohort = state.cohort;
 
       function refreshAll() {
         var live = opts.getCutoffs();

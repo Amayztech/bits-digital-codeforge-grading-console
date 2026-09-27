@@ -74,7 +74,16 @@
         var v = attrs[k];
         if (v === null || v === undefined || v === false) continue;
         if (k === "text") node.textContent = String(v);
-        else node.setAttribute(k, String(v));
+        // SVG elements need their data-* attributes set too; stringifying the
+        // object left every cutoff grip without its data-cutoff hook, so
+        // pointer dragging could never find the handle it started on.
+        else if (k === "dataset") {
+          for (var d in v) {
+            if (Object.prototype.hasOwnProperty.call(v, d) && v[d] !== null && v[d] !== undefined) node.dataset[d] = v[d];
+          }
+        } else if (k === "style" && typeof v === "object") {
+          for (var s in v) if (Object.prototype.hasOwnProperty.call(v, s)) node.style.setProperty(s, v[s]);
+        } else node.setAttribute(k, String(v));
       }
     }
     append(node, children);

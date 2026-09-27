@@ -678,16 +678,16 @@
     D.clear(host);
     if (withBands) {
       D.append(host, CF.chart.legend([
-        { colour: "var(--chart-g1)", label: "Higher bands" },
-        { colour: "var(--chart-g8)", label: "Lower band" },
-        { cut: true, colour: "var(--c-accent)", label: "Cutoff" },
-        { line: true, colour: "var(--c-ink-400)", label: "Median" }
+        { ramp: true, label: "Grades A → E" },
+        { cut: true, label: "Cutoff" },
+        { line: true, dashed: true, colour: "var(--c-ink-400)", label: "Median" },
+        { colour: "var(--c-accent)", label: "Just moved" }
       ]));
     } else {
       D.append(host, CF.chart.legend([
-        { colour: "var(--c-primary)", label: "Students per mark" },
-        { line: true, colour: "var(--c-ink-500)", label: "Median" },
-        { line: true, colour: "var(--c-ink-400)", label: "Mean" }
+        { colour: "var(--chart-g3)", label: "Students per mark" },
+        { line: true, colour: "var(--c-ink-700)", label: "Median" },
+        { line: true, dashed: true, colour: "var(--c-ink-400)", label: "Mean" }
       ]));
     }
   }
@@ -766,6 +766,10 @@
       })
     );
 
+    var impactMeta = document.getElementById("impactMeta");
+    if (impactMeta) {
+      impactMeta.textContent = state.baseline ? "Against the previous configuration" : "Against the default bands";
+    }
     CF.impactPanel.renderImpact(document.getElementById("impactPanel"), {
       cohort: state.cohort,
       cutoffs: state.cutoffs,
@@ -826,44 +830,40 @@
     var isCurrent = U.deepEqual(proposal.cutoffs, state.cutoffs);
     var preview = CF.suggest.preview(state.cohort, state.cutoffs, proposal.cutoffs);
 
-    var body = D.el("div", { style: { display: "flex", "flex-direction": "column", gap: "var(--sp-3)" } }, [
-      D.el("p.field__hint", { text: proposal.method }),
-      D.el("div", null, [
-        D.el("p.eyebrow", { style: { "margin-bottom": "6px" }, text: "Suggested cutoffs" }),
-        D.el("div.cluster", { style: { gap: "5px" } },
-          proposal.cutoffs.map(function (c, i) {
-            return D.el("span", { style: { display: "inline-flex", "align-items": "center", gap: "4px" } }, [
-              CF.analysePanel.gradeChip(G.GRADES[i + 1], i + 1),
-              D.el("span.num", { style: { "font-size": "var(--fs-xs)", "font-weight": "700" }, text: String(c) })
-            ]);
-          })
-        )
-      ]),
-      D.notice(
-        preview.changed ? "warning" : "info",
-        preview.changed ? "alert" : "info",
-        preview.changed
-          ? preview.changed + " " + U.pluralise(preview.changed, "student") + " would get a different grade"
-          : "Applying this would not change any student's grade",
-        D.el("p", {
-          text:
-            preview.changed
-              ? preview.up + " would move up and " + preview.down + " would move down."
-              : "These cutoffs differ from yours but land on the same grades."
+    // cutoffs[i] is the minimum mark for GRADES[i], exactly as in the editor.
+    var body = D.el("div.suggest", null, [
+      D.el("ul.suggest__cuts", { "aria-label": "Suggested minimum mark for each grade" },
+        proposal.cutoffs.map(function (c, i) {
+          var differs = c !== state.cutoffs[i];
+          return D.el("li.suggest__cut", { dataset: { differs: differs ? "true" : "false" } }, [
+            CF.analysePanel.gradeChip(G.GRADES[i], i),
+            D.el("span.suggest__value.num", { text: String(c) })
+          ]);
         })
       ),
-      D.button({
-        label: isCurrent ? "Already using these cutoffs" : "Apply these cutoffs",
-        variant: isCurrent ? "secondary" : null,
-        icon: isCurrent ? "check" : "sparkle",
-        disabled: isCurrent,
-        block: true,
-        onClick: function () {
-          applySuggestion(proposal.cutoffs);
-        }
-      }),
-      D.el("p.field__hint", {
-        text: "This is a starting point only. It is never applied unless you press the button, and every boundary stays yours to change."
+      D.el("div.suggest__row", null, [
+        D.el("p.suggest__impact", { dataset: { tone: preview.changed ? "warning" : "neutral" } }, [
+          D.el("span", { "aria-hidden": "true" }, [D.icon(preview.changed ? "alert" : "info", 14)]),
+          D.el("span", null, preview.changed
+            ? [
+                D.el("b", { text: preview.changed + " " + U.pluralise(preview.changed, "student") + " would get a different grade" }),
+                " · " + preview.up + " up, " + preview.down + " down"
+              ]
+            : ["Applying this would not change any student's grade."])
+        ]),
+        D.button({
+          label: isCurrent ? "Already using these cutoffs" : "Apply these cutoffs",
+          variant: "secondary",
+          size: "sm",
+          icon: isCurrent ? "check" : "sparkle",
+          disabled: isCurrent,
+          onClick: function () {
+            applySuggestion(proposal.cutoffs);
+          }
+        })
+      ]),
+      D.el("p.suggest__method", {
+        text: proposal.method + " A starting point only: never applied unless you press the button, and every boundary stays yours to change."
       })
     ]);
     host.appendChild(body);

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Layout - application shell, stage bar, stage sections, responsive reflow.
+   Layout - the product shell, stage headers, grids, responsive reflow.
    ========================================================================== */
 
 .app {
@@ -12,28 +12,34 @@
   width: 100%;
   max-width: var(--shell-max);
   margin-inline: auto;
-  padding-inline: var(--sp-6);
+  padding-inline: var(--sp-8);
 }
 
-/* --- Header ------------------------------------------------------------- */
+/* ==========================================================================
+   Shell - one integrated bar: identity, workflow, session.
+   ========================================================================== */
 .app-header {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  background: color-mix(in srgb, var(--c-white) 88%, transparent);
-  backdrop-filter: saturate(180%) blur(14px);
-  border-bottom: 1px solid var(--c-ink-100);
+  background: color-mix(in srgb, var(--c-surface) 97%, transparent);
+  backdrop-filter: saturate(160%) blur(12px);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--c-line);
 }
 
 .app-header__inner {
-  display: flex;
+  --stage-underline: -14px;
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
+  grid-template-areas: "brand nav tools";
   align-items: center;
-  gap: var(--sp-5);
+  column-gap: var(--sp-6);
   min-height: var(--header-h);
-  padding-block: var(--sp-2);
 }
 
 .brand {
+  grid-area: brand;
   display: flex;
   align-items: center;
   gap: var(--sp-3);
@@ -43,59 +49,199 @@
 /*
  * The institutional crest is a detailed circular emblem: the gold lettering
  * around the ring is unreadable below about 36 CSS pixels, so the mark is sized
- * for legibility rather than for a tidy 34px tile. It is a transparent cutout,
- * so it sits directly on the header with a soft shadow instead of a filled
- * background.
+ * for legibility rather than for a tidy tile. It is a transparent cutout, so it
+ * sits directly on the bar.
  */
 .brand__mark {
   flex: none;
   display: block;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
 }
 
 .brand__mark img {
   display: block;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 1px 2px rgba(10, 26, 47, 0.18));
+  filter: drop-shadow(0 1px 1px rgba(10, 24, 48, 0.16));
 }
 
 .brand__text {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  gap: 1px;
 }
 
 .brand__name {
-  font-size: var(--fs-md);
-  font-weight: 680;
-  letter-spacing: -0.02em;
-  color: var(--c-brand-900);
-  line-height: 1.15;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-tighter);
+  color: var(--c-ink-900);
+  line-height: 1.2;
   white-space: nowrap;
 }
 
 .brand__sub {
   font-size: var(--fs-2xs);
-  font-weight: 600;
+  font-weight: var(--fw-medium);
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--c-ink-500);
-  line-height: 1.3;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
-.app-header__spacer {
-  flex: 1 1 auto;
-}
-
-.app-header__tools {
+/* --- Workflow stepper --------------------------------------------------- */
+.stagebar {
+  grid-area: nav;
+  justify-self: center;
   display: flex;
   align-items: center;
-  gap: var(--sp-3);
+  min-width: 0;
+  max-width: 100%;
 }
 
-/* --- Session field: instructor name, always reachable ---------------- */
+.stages {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none;
+}
+
+.stages::-webkit-scrollbar {
+  display: none;
+}
+
+.stages > li {
+  position: static;
+  flex: none;
+}
+
+.stage-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 28px;
+  padding: 0 var(--sp-2) 0 6px;
+  border: 0;
+  border-radius: var(--r-md);
+  background: transparent;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-tight);
+  color: var(--c-ink-400);
+  white-space: nowrap;
+  transition: color var(--dur-2) var(--ease-out),
+    background-color var(--dur-2) var(--ease-out);
+}
+
+.stage-step:disabled {
+  cursor: default;
+}
+
+.stage-step:not(:disabled):hover {
+  background: var(--c-surface-3);
+  color: var(--c-ink-800);
+}
+
+.stage-step:focus-visible {
+  outline-offset: 0;
+}
+
+.stage-step__num {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--c-ink-200);
+  background: var(--c-surface);
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-ink-400);
+  transition: background-color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+
+.stage-step__num svg {
+  width: 10px;
+  height: 10px;
+}
+
+.stage-step[data-state="done"] {
+  color: var(--c-ink-600);
+}
+
+.stage-step[data-state="done"] .stage-step__num {
+  background: var(--c-primary-soft);
+  box-shadow: inset 0 0 0 1px var(--c-primary-soft-2);
+  color: var(--c-primary);
+}
+
+.stage-step[data-state="active"] {
+  color: var(--c-ink-900);
+  font-weight: var(--fw-semibold);
+}
+
+.stage-step[data-state="active"] .stage-step__num {
+  background: var(--c-ink-900);
+  box-shadow: none;
+  color: var(--c-white);
+}
+
+/* The current step is underlined on the bar's bottom edge, like a tab. */
+.stage-step[aria-current="step"]::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: var(--sp-2);
+  bottom: var(--stage-underline);
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--c-ink-900);
+}
+
+.stage-sep {
+  width: 14px;
+  height: 1px;
+  flex: none;
+  background: var(--c-ink-200);
+  transition: background-color var(--dur-3) var(--ease-out);
+}
+
+.stages > li:has(> .stage-step[data-state="done"]) + .stage-sep {
+  background: color-mix(in srgb, var(--c-primary) 45%, var(--c-ink-200));
+}
+
+/* Progress is carried by the step glyphs and connectors themselves. */
+.stagebar__rail {
+  display: none;
+}
+
+/* --- Session strip: instructor, course and timer as one control -------- */
+.app-header__tools {
+  grid-area: tools;
+  display: flex;
+  align-items: stretch;
+  height: 34px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  background: var(--c-surface);
+  box-shadow: var(--sh-xs);
+  min-width: 0;
+}
+
+.app-header__tools > * + * {
+  border-left: 1px solid var(--c-line-soft);
+}
+
 .session-action {
   display: flex;
   align-items: center;
@@ -108,35 +254,28 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--sp-2);
-  height: 34px;
-  padding: 0 var(--sp-2) 0 var(--sp-3);
-  border: 1px solid var(--c-ink-200);
-  border-radius: var(--r-pill);
-  background: var(--c-white);
-  box-shadow: var(--sh-xs);
-  transition: border-color var(--dur-2) var(--ease-out),
-    box-shadow var(--dur-2) var(--ease-out), background-color var(--dur-2) var(--ease-out);
-  max-width: 220px;
+  gap: 7px;
+  width: 200px;
+  padding: 0 var(--sp-3) 0 10px;
+  border-radius: var(--r-lg) 0 0 var(--r-lg);
+  background: transparent;
+  transition: background-color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out);
 }
 
 .session-field:hover {
-  border-color: var(--c-ink-300);
+  background: var(--c-surface-2);
 }
 
 .session-field:focus-within {
-  border-color: var(--c-primary);
-  box-shadow: var(--ring);
-}
-
-.session-field[data-filled="true"] {
-  border-color: var(--c-primary-soft-2);
-  background: var(--c-primary-soft);
+  background: var(--c-surface);
+  box-shadow: inset 0 0 0 1px var(--c-focus), 0 0 0 3px color-mix(in srgb, var(--c-focus) 18%, transparent);
+  z-index: 1;
 }
 
 .session-field[data-invalid="true"] {
-  border-color: var(--c-warning-line);
   background: var(--c-warning-soft);
+  box-shadow: inset 0 0 0 1px var(--c-warning-line);
 }
 
 .session-field__icon {
@@ -156,13 +295,14 @@
 .session-field__input {
   width: 100%;
   min-width: 0;
+  height: 100%;
   border: 0;
   background: transparent;
-  font-size: var(--fs-xs);
-  font-weight: 620;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
   color: var(--c-ink-900);
-  letter-spacing: var(--tracking-tight);
   padding: 0;
+  text-overflow: ellipsis;
 }
 
 .session-field__input:focus {
@@ -171,27 +311,23 @@
 
 .session-field__input::placeholder {
   color: var(--c-ink-400);
-  font-weight: 550;
+  font-weight: var(--fw-regular);
 }
 
+/* It is a text field, not a menu, so it does not wear a dropdown caret. */
 .session-field__caret {
-  display: inline-flex;
-  color: var(--c-ink-300);
-  flex: none;
+  display: none;
 }
 
-/* --- Active-course chip ------------------------------------------------- */
 .context-chip {
   display: none;
   align-items: center;
-  gap: var(--sp-2);
-  padding: var(--sp-1) var(--sp-2) var(--sp-1) var(--sp-3);
-  border: 1px solid var(--c-primary-soft-2);
-  background: var(--c-primary-soft);
-  border-radius: var(--r-pill);
-  font-size: var(--fs-xs);
-  color: var(--c-brand-800);
-  max-width: 260px;
+  gap: 7px;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-sm);
+  color: var(--c-ink-700);
+  max-width: 240px;
+  min-width: 0;
 }
 
 .context-chip[data-visible="true"] {
@@ -201,68 +337,72 @@
 .context-chip__dot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: 2px;
   background: var(--c-primary);
   flex: none;
 }
 
 .context-chip__course {
-  font-weight: 680;
+  font-weight: var(--fw-semibold);
+  color: var(--c-ink-900);
   letter-spacing: var(--tracking-tight);
 }
 
 .context-chip__meta {
-  color: var(--c-ink-600);
+  color: var(--c-ink-500);
+  font-size: var(--fs-xs);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 /* --- Session timer ------------------------------------------------------ */
 .timer {
   display: flex;
   align-items: center;
-  gap: var(--sp-2);
-  padding: var(--sp-1) var(--sp-3) var(--sp-1) var(--sp-1);
-  border: 1px solid var(--c-ink-200);
-  border-radius: var(--r-pill);
-  background: var(--c-white);
-  font-size: var(--fs-xs);
-  box-shadow: var(--sh-xs);
+  gap: 7px;
+  padding: 0 var(--sp-3) 0 10px;
+  font-size: var(--fs-sm);
+  border-radius: 0 var(--r-lg) var(--r-lg) 0;
 }
 
 .timer__dial {
   position: relative;
-  width: 26px;
-  height: 26px;
+  width: 14px;
+  height: 14px;
   flex: none;
 }
 
 .timer__dial svg {
+  width: 14px;
+  height: 14px;
   transform: rotate(-90deg);
 }
 
 .timer__track {
   fill: none;
-  stroke: var(--c-ink-100);
+  stroke: var(--c-ink-150);
+  stroke-width: 3.5;
 }
 
 .timer__arc {
   fill: none;
   stroke: var(--c-accent);
+  stroke-width: 3.5;
   stroke-linecap: round;
   transition: stroke-dashoffset var(--dur-4) var(--ease-out);
 }
 
 .timer__value {
   font-variant-numeric: tabular-nums;
-  font-weight: 680;
+  font-weight: var(--fw-semibold);
   letter-spacing: var(--tracking-tight);
-  color: var(--c-ink-800);
-  min-width: 42px;
+  color: var(--c-ink-900);
+  min-width: 38px;
 }
 
 .timer__state {
-  font-size: var(--fs-2xs);
-  font-weight: 650;
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--c-ink-400);
@@ -276,152 +416,31 @@
   color: var(--c-warning);
 }
 
-.timer[data-state="stopped"] {
-  opacity: 0.55;
-}
-
-/* --- Stage bar ---------------------------------------------------------- */
-.stagebar {
-  position: sticky;
-  top: var(--header-h);
-  z-index: calc(var(--z-sticky) - 1);
-  background: color-mix(in srgb, var(--c-paper) 92%, transparent);
-  backdrop-filter: saturate(180%) blur(14px);
-  border-bottom: 1px solid var(--c-ink-100);
-}
-
-.stagebar__inner {
-  display: flex;
-  align-items: center;
-  min-height: 46px;
-  padding-block: var(--sp-2);
-}
-
-.stages {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-1);
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.stages::-webkit-scrollbar {
-  display: none;
-}
-
-.stage-step {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
-  padding: var(--sp-1) var(--sp-2);
-  border: 0;
-  border-radius: var(--r-pill);
-  background: transparent;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--c-ink-400);
-  white-space: nowrap;
-  transition: color var(--dur-2) var(--ease-out),
-    background-color var(--dur-2) var(--ease-out);
-}
-
-.stage-step:disabled {
-  cursor: default;
-}
-
-.stage-step:not(:disabled):hover {
-  background: var(--c-ink-100);
-  color: var(--c-ink-700);
-}
-
-.stage-step__num {
-  display: grid;
-  place-items: center;
-  width: 19px;
-  height: 19px;
-  flex: none;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  font-size: 10px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  transition: all var(--dur-2) var(--ease-out);
-}
-
-.stage-step__label {
-  letter-spacing: var(--tracking-tight);
-}
-
-.stage-step[data-state="done"] {
+.timer[data-state="stopped"] .timer__state {
   color: var(--c-success);
 }
 
-.stage-step[data-state="done"] .stage-step__num {
-  background: var(--c-success);
-  border-color: var(--c-success);
-  color: var(--c-white);
+.timer[data-state="stopped"] .timer__arc {
+  stroke: var(--c-success);
 }
 
-.stage-step[data-state="active"] {
-  color: var(--c-brand-900);
-  background: var(--c-white);
-  box-shadow: var(--sh-xs);
-}
-
-.stage-step[data-state="active"] .stage-step__num {
-  background: var(--c-brand-900);
-  border-color: var(--c-brand-900);
-  color: var(--c-white);
-}
-
-.stage-step[aria-current="step"]::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 -1px 0;
-  height: 2px;
-  background: var(--c-brand-900);
-}
-
-.stages > li {
-  position: relative;
-}
-
-.stage-sep {
-  width: 14px;
-  height: 1px;
-  flex: none;
-  background: var(--c-ink-200);
-}
-
-/* Progress rail: a hairline along the bottom edge reads as a progress
-   indicator; a floating pill in the corner read as a stray element. */
-.stagebar__rail {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px;
-  background: transparent;
-}
-
-.stagebar__fill {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, var(--c-primary) 0%, var(--c-accent) 100%);
-  transition: width var(--dur-4) var(--ease-out);
-}
-
-/* --- Main --------------------------------------------------------------- */
+/* ==========================================================================
+   Main and stage headers
+   ========================================================================== */
 .main {
   flex: 1 1 auto;
-  padding-block: var(--sp-7) var(--sp-16);
+  padding-block: var(--sp-8) var(--sp-16);
+}
+
+.main:focus {
+  outline: none;
 }
 
 .stage {
   display: none;
-  animation: stage-in var(--dur-4) var(--ease-out) both;
+  /* backwards, not both: a retained transform would make the stage the
+     containing block for fixed children such as the phone action bar. */
+  animation: stage-in var(--dur-3) var(--ease-out) backwards;
 }
 
 .stage[data-active="true"] {
@@ -431,7 +450,7 @@
 @keyframes stage-in {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -443,9 +462,13 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: var(--sp-5);
+  gap: var(--sp-4) var(--sp-6);
   flex-wrap: wrap;
   margin-bottom: var(--sp-5);
+}
+
+.stage__head > div:first-child {
+  min-width: 0;
 }
 
 .stage__eyebrow {
@@ -453,24 +476,43 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 0;
+  margin-bottom: 6px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--c-ink-500);
+  font-variant-numeric: tabular-nums;
+  white-space: pre-wrap;
+}
+
+.stage__head .eyebrow {
+  margin-bottom: 6px;
+}
+
+.stage__context {
+  color: var(--c-ink-700);
 }
 
 .stage__title {
   font-size: var(--fs-xl);
-  letter-spacing: var(--tracking-tighter);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.2;
 }
 
 .stage__desc {
-  margin-top: var(--sp-1);
+  margin-top: 6px;
   font-size: var(--fs-base);
   color: var(--c-ink-500);
-  max-width: 68ch;
+  max-width: 74ch;
+  line-height: var(--lh-snug);
 }
 
 .stage__actions {
   display: flex;
   align-items: center;
-  gap: var(--sp-3);
+  gap: var(--sp-2);
   flex-wrap: wrap;
 }
 
@@ -490,7 +532,7 @@
 
 .split {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   gap: var(--sp-4);
   align-items: start;
 }
@@ -512,29 +554,39 @@
 .cluster {
   display: flex;
   align-items: center;
-  gap: var(--sp-3);
+  gap: var(--sp-2);
   flex-wrap: wrap;
 }
 
 /* --- Footer ------------------------------------------------------------- */
 .app-footer {
-  border-top: 1px solid var(--c-ink-100);
-  background: var(--c-white);
-  padding-block: var(--sp-5) var(--sp-6);
+  border-top: 1px solid var(--c-line);
+  padding-block: var(--sp-5);
   font-size: var(--fs-xs);
   color: var(--c-ink-500);
 }
 
 .app-footer__inner {
   display: flex;
-  gap: var(--sp-6);
+  gap: var(--sp-3) var(--sp-8);
   justify-content: space-between;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: baseline;
+}
+
+.app-footer__inner > div {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2) var(--sp-5);
+  flex-wrap: wrap;
 }
 
 .app-footer p {
-  max-width: 62ch;
+  max-width: 78ch;
+}
+
+.app-footer b {
+  font-weight: var(--fw-semibold);
 }
 
 .footer-links {
@@ -543,53 +595,77 @@
   flex-wrap: wrap;
 }
 
+.footer-links a {
+  color: var(--c-ink-600);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--c-ink-900);
+  text-decoration: underline;
+}
+
 /* ==========================================================================
-   Responsive - deliberate reflow, not uniform shrinking.
+   Responsive - each breakpoint is designed, not just shrunk.
    ========================================================================== */
 
+/* Laptop: the stepper moves to its own row beneath identity and session. */
+@media (max-width: 1240px) {
+  .app-header__inner {
+    --stage-underline: -8px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand tools"
+      "nav nav";
+  }
+
+  .brand,
+  .app-header__tools {
+    margin-block: 10px;
+  }
+
+  .stagebar {
+    justify-self: stretch;
+    max-width: none;
+    height: 44px;
+    margin-inline: calc(var(--sp-8) * -1);
+    padding-inline: calc(var(--sp-8) - 6px);
+    border-top: 1px solid var(--c-line-soft);
+  }
+
+  html {
+    scroll-padding-top: 130px;
+  }
+}
+
 @media (max-width: 1180px) {
-  .split {
+  .split:not(.split--even) {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 900px) {
-  :root {
-    --header-h: 62px;
+  .split--even {
+    grid-template-columns: minmax(0, 1fr);
   }
+}
 
+@media (max-width: 900px) {
   .shell {
-    padding-inline: var(--sp-4);
+    padding-inline: var(--sp-5);
   }
 
-  .brand__mark {
-    width: 38px;
-    height: 38px;
-  }
-
-  .session-field {
-    max-width: 150px;
+  .stagebar {
+    margin-inline: calc(var(--sp-5) * -1);
+    padding-inline: calc(var(--sp-5) - 6px);
   }
 
   .grid--3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  /* Keep only the current step's name: a six-item labelled bar does not fit. */
-  .stage-step__label {
-    display: none;
-  }
-
-  .stage-step[aria-current="step"] .stage-step__label {
-    display: inline;
-  }
-
-  .stage-sep {
-    width: 8px;
-  }
-
   .main {
-    padding-block: var(--sp-5) var(--sp-12);
+    padding-block: var(--sp-6) var(--sp-12);
   }
 }
 
@@ -603,62 +679,98 @@
     display: none;
   }
 
+  .brand__mark {
+    width: 40px;
+    height: 40px;
+  }
+
   .session-field {
-    max-width: 128px;
-    padding-left: var(--sp-2);
-  }
-
-  .session-field__caret {
-    display: none;
-  }
-
-  .context-chip {
-    max-width: 120px;
+    width: 150px;
   }
 
   .context-chip__meta {
     display: none;
   }
 
-  .stagebar__inner {
-    justify-content: center;
+  /* Only the current step keeps its name; the others are numbered glyphs. */
+  .stage-step__label {
+    display: none;
+  }
+
+  .stage-step[aria-current="step"] .stage-step__label {
+    display: inline;
+  }
+
+  .stage-step {
+    padding-right: 6px;
+  }
+
+  .stage-step[aria-current="step"] {
+    padding-right: var(--sp-2);
+  }
+
+  .stage-step[aria-current="step"]::after {
+    right: 6px;
+  }
+
+  .stages {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .stage-sep {
+    flex: 1 1 8px;
+    min-width: 6px;
+    max-width: 40px;
   }
 
   .stage__head {
-    align-items: flex-start;
+    align-items: stretch;
     flex-direction: column;
     gap: var(--sp-3);
+    margin-bottom: var(--sp-4);
+  }
+
+  .stage__title {
+    font-size: 1.25rem;
+  }
+
+  .stage__desc {
+    font-size: var(--fs-sm);
   }
 
   .stage__actions {
     width: 100%;
   }
+
+  .app-footer__inner,
+  .app-footer__inner > div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 560px) {
   .shell {
-    padding-inline: var(--sp-3);
+    padding-inline: var(--sp-4);
   }
 
-  .app-header__inner {
-    gap: var(--sp-2);
+  .stagebar {
+    margin-inline: calc(var(--sp-4) * -1);
+    padding-inline: calc(var(--sp-4) - 6px);
   }
 
   .brand {
-    gap: var(--sp-2);
-  }
-
-  .brand__mark {
-    width: 32px;
-    height: 32px;
+    gap: 10px;
   }
 
   .brand__name {
     font-size: var(--fs-sm);
   }
 
-  .app-header__tools {
-    gap: var(--sp-2);
+  .session-field {
+    width: 118px;
+    padding-right: var(--sp-2);
   }
 
   /* The course is named in each stage's eyebrow, so the chip is redundant here. */
@@ -671,6 +783,21 @@
   }
 
   .timer {
-    padding-right: var(--sp-3);
+    padding-right: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Visually hidden, not removed: it is still the page heading. */
+  .brand__text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .session-field {
+    width: 136px;
   }
 }
