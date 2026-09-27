@@ -679,7 +679,9 @@
       if (!hist.bins[m]) continue;
       rows.push([m, hist.bins[m], gradeForMark(m, bands || [])]);
     }
-    var table = D.el("table", { class: "visually-hidden" });
+    // Wrapped, not hidden itself: engines ignore overflow on table boxes, so a
+    // hidden table's rows would still stretch the page's scroll height.
+    var table = D.el("table");
     var caption = D.el("caption", {
       text: "Marks distribution" + (stats.count ? "" : " - no data")
     });
@@ -704,7 +706,7 @@
       );
     });
     table.appendChild(tbody);
-    return table;
+    return D.el("div.visually-hidden", null, table);
   }
 
   function fmt(v, dp) {

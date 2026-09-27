@@ -16,12 +16,12 @@
     <link rel="icon" href="assets/favicon.png" sizes="64x64" type="image/png" />
     <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" sizes="180x180" />
-    <link rel="stylesheet" href="assets/styles/tokens.css?v=2" />
-    <link rel="stylesheet" href="assets/styles/base.css?v=2" />
-    <link rel="stylesheet" href="assets/styles/components.css?v=2" />
-    <link rel="stylesheet" href="assets/styles/layout.css?v=2" />
-    <link rel="stylesheet" href="assets/styles/workspace.css?v=2" />
-    <link rel="stylesheet" href="assets/styles/print.css?v=2" />
+    <link rel="stylesheet" href="assets/styles/tokens.css?v=3" />
+    <link rel="stylesheet" href="assets/styles/base.css?v=3" />
+    <link rel="stylesheet" href="assets/styles/components.css?v=3" />
+    <link rel="stylesheet" href="assets/styles/layout.css?v=3" />
+    <link rel="stylesheet" href="assets/styles/workspace.css?v=3" />
+    <link rel="stylesheet" href="assets/styles/print.css?v=3" />
   </head>
 
   <body>
@@ -139,6 +139,10 @@
       <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
         <path d="M12 6v12M6 12h12" />
       </symbol>
+      <symbol id="i-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 20h16" />
+        <path d="M7 16v-5M12 16V6M17 16v-8" />
+      </symbol>
       <symbol id="i-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 4v16M6 8h12M4 20h16" />
         <path d="M6 8 3 14.5h6L6 8Zm12 0-3 6.5h6L18 8Z" />
@@ -146,94 +150,116 @@
     </svg>
 
     <div class="app">
-      <!-- ===================== Header ===================== -->
-      <header class="app-header">
-        <div class="shell app-header__inner">
-          <div class="brand">
-            <picture class="brand__mark">
-              <source srcset="assets/brand/bits-pilani-crest.webp" type="image/webp" />
-              <img
-                src="assets/brand/bits-pilani-crest.png"
-                alt=""
-                width="256"
-                height="256"
-                decoding="async"
-              />
-            </picture>
-            <div class="brand__text">
-              <h1 class="brand__name">BITS Pilani Digital</h1>
-              <p class="brand__sub">Grading Workspace</p>
-            </div>
+      <!-- ===================== Navigation rail ===================== -->
+      <aside class="rail app-header" aria-label="Workspace navigation">
+        <div class="brand">
+          <picture class="brand__mark">
+            <source srcset="assets/brand/bits-pilani-crest.webp" type="image/webp" />
+            <img
+              src="assets/brand/bits-pilani-crest.png"
+              alt=""
+              width="256"
+              height="256"
+              decoding="async"
+            />
+          </picture>
+          <div class="brand__text">
+            <h1 class="brand__name">BITS Pilani Digital</h1>
+            <p class="brand__sub">Grading Workspace</p>
           </div>
+        </div>
 
-          <!-- ===================== Workflow progress ===================== -->
-          <nav class="stagebar" aria-label="Grading workflow progress">
-            <ol class="stages" id="stages">
-              <li>
-                <button class="stage-step" type="button" data-stage="import" data-state="active">
-                  <span class="stage-step__num">1</span><span class="stage-step__label stage-step__label--keep">Import</span>
-                </button>
-              </li>
-              <li class="stage-sep" aria-hidden="true"></li>
-              <li>
-                <button class="stage-step" type="button" data-stage="validate" data-state="pending" disabled>
-                  <span class="stage-step__num">2</span><span class="stage-step__label">Validate</span>
-                </button>
-              </li>
-              <li class="stage-sep" aria-hidden="true"></li>
-              <li>
-                <button class="stage-step" type="button" data-stage="analyse" data-state="pending" disabled>
-                  <span class="stage-step__num">3</span><span class="stage-step__label">Analyse</span>
-                </button>
-              </li>
-              <li class="stage-sep" aria-hidden="true"></li>
-              <li>
-                <button class="stage-step" type="button" data-stage="configure" data-state="pending" disabled>
-                  <span class="stage-step__num">4</span><span class="stage-step__label">Configure</span>
-                </button>
-              </li>
-              <li class="stage-sep" aria-hidden="true"></li>
-              <li>
-                <button class="stage-step" type="button" data-stage="review" data-state="pending" disabled>
-                  <span class="stage-step__num">5</span><span class="stage-step__label">Review</span>
-                </button>
-              </li>
-              <li class="stage-sep" aria-hidden="true"></li>
-              <li>
-                <button class="stage-step" type="button" data-stage="export" data-state="pending" disabled>
-                  <span class="stage-step__num">6</span><span class="stage-step__label">Export</span>
-                </button>
-              </li>
-            </ol>
-            <div class="stagebar__rail" aria-hidden="true">
-              <div class="stagebar__fill" id="stageFill"></div>
+        <nav class="stagebar" aria-label="Grading workflow progress">
+          <p class="rail__label">Workflow</p>
+          <ol class="stages" id="stages">
+            <li>
+              <button class="stage-step" type="button" data-stage="import" data-state="active" title="Import">
+                <span class="stage-step__icon" aria-hidden="true"><svg width="16" height="16"><use href="#i-upload"></use></svg></span>
+                <span class="stage-step__label stage-step__label--keep">Import</span>
+                <span class="stage-step__num">1</span>
+              </button>
+            </li>
+            <li class="stage-sep" aria-hidden="true"></li>
+            <li>
+              <button class="stage-step" type="button" data-stage="validate" data-state="pending" disabled title="Validate">
+                <span class="stage-step__icon" aria-hidden="true"><svg width="16" height="16"><use href="#i-shield"></use></svg></span>
+                <span class="stage-step__label">Validate</span>
+                <span class="stage-step__num">2</span>
+              </button>
+            </li>
+            <li class="stage-sep" aria-hidden="true"></li>
+            <li>
+              <button class="stage-step" type="button" data-stage="analyse" data-state="pending" disabled title="Analyse">
+                <span class="stage-step__icon" aria-hidden="true"><svg width="16" height="16"><use href="#i-bars"></use></svg></span>
+                <span class="stage-step__label">Analyse</span>
+                <span class="stage-step__num">3</span>
+              </button>
+            </li>
+            <li class="stage-sep" aria-hidden="true"></li>
+            <li>
+              <button class="stage-step" type="button" data-stage="configure" data-state="pending" disabled title="Configure">
+                <span class="stage-step__icon" aria-hidden="true"><svg width="16" height="16"><use href="#i-sliders"></use></svg></span>
+                <span class="stage-step__label">Configure</span>
+                <span class="stage-step__num">4</span>
+              </button>
+            </li>
+            <li class="stage-sep" aria-hidden="true"></li>
+            <li>
+              <button class="stage-step" type="button" data-stage="review" data-state="pending" disabled title="Review">
+                <span class="stage-step__icon" aria-hidden="true"><svg width="16" height="16"><use href="#i-doc"></use></svg></span>
+                <span class="stage-step__label">Review</span>
+                <span class="stage-step__num">5</span>
+              </button>
+            </li>
+            <li class="stage-sep" aria-hidden="true"></li>
+            <li>
+              <button class="stage-step" type="button" data-stage="export" data-state="pending" disabled title="Export">
+                <span class="stage-step__icon" aria-hidden="true"><svg width="16" height="16"><use href="#i-download"></use></svg></span>
+                <span class="stage-step__label">Export</span>
+                <span class="stage-step__num">6</span>
+              </button>
+            </li>
+          </ol>
+          <div class="stagebar__rail" aria-hidden="true">
+            <div class="stagebar__fill" id="stageFill"></div>
+          </div>
+        </nav>
+
+        <div class="rail__foot">
+          <p class="rail__privacy">
+            <svg width="13" height="13" aria-hidden="true"><use href="#i-lock"></use></svg>
+            <span>Local only. Nothing is uploaded.</span>
+          </p>
+        </div>
+      </aside>
+
+      <div class="frame">
+        <!-- ===================== Command bar ===================== -->
+        <header class="commandbar" aria-label="Grading session">
+          <div class="commandbar__context">
+            <div class="context-chip" id="contextChip" data-visible="false">
+              <span class="context-chip__dot" aria-hidden="true"></span>
+              <span class="context-chip__course truncate" id="contextCourse">&mdash;</span>
+              <span class="context-chip__meta" id="contextMeta"></span>
             </div>
-          </nav>
+            <p class="commandbar__empty" id="contextEmpty">No course selected</p>
+            <span class="commandbar__status" id="contextStatus" hidden></span>
+          </div>
 
           <div class="app-header__tools">
             <div class="session-field" id="instructorField" data-invalid="false">
-              <label class="visually-hidden" for="instructor">Instructor name (required)</label>
-              <span class="session-field__icon" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="8" r="3.4" />
-                  <path d="M5.5 20a6.5 6.5 0 0 1 13 0" />
-                </svg>
-              </span>
+              <label class="session-field__label" for="instructor">Instructor</label>
+              <span class="visually-hidden">(required)</span>
               <input
                 class="session-field__input"
                 type="text"
                 id="instructor"
                 autocomplete="name"
                 spellcheck="false"
-                placeholder="Your name"
+                placeholder="Add your name"
                 aria-required="true"
                 aria-describedby="instructorHint instructorError"
               />
-              <span class="session-field__caret" aria-hidden="true">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </span>
               <p class="visually-hidden" id="instructorHint">
                 Printed on the final report and written into both exported files.
               </p>
@@ -242,13 +268,7 @@
               </p>
             </div>
 
-            <div class="context-chip" id="contextChip" data-visible="false">
-              <span class="context-chip__dot" aria-hidden="true"></span>
-              <span class="context-chip__course truncate" id="contextCourse">&mdash;</span>
-              <span class="context-chip__meta" id="contextMeta"></span>
-            </div>
-
-            <div class="timer" id="timer" data-state="idle">
+            <div class="timer" id="timer" data-state="idle" title="Active grading time">
               <span class="timer__dial" aria-hidden="true">
                 <svg width="26" height="26" viewBox="0 0 26 26">
                   <circle class="timer__track" cx="13" cy="13" r="10.5" stroke-width="2.5" />
@@ -268,117 +288,115 @@
               <span class="timer__state" id="timerState">Idle</span>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <!-- ===================== Main ===================== -->
-      <main class="main" id="main" tabindex="-1">
-        <div class="shell">
+        <!-- ===================== Workspace ===================== -->
+        <main class="main" id="main" tabindex="-1">
           <p class="visually-hidden" id="liveStatus" role="status" aria-live="polite"></p>
 
           <!-- ============ STAGE 1 : IMPORT ============ -->
-          <section class="stage" id="stage-import" data-stage="import" data-active="true" aria-labelledby="importTitle">
-            <div class="stage__head">
+          <section class="stage stage--import" id="stage-import" data-stage="import" data-active="true" aria-labelledby="importTitle">
+            <div class="stage__head import__head">
               <div>
                 <p class="eyebrow stage__eyebrow">Step 1 of 6</p>
                 <h2 class="stage__title" id="importTitle">Import marks</h2>
                 <p class="stage__desc">
-                  Every row is validated before grading begins, and nothing is changed without telling you.
+                  Upload a workbook. Its structure and every row are validated before any grade exists.
                 </p>
               </div>
             </div>
 
-            <div id="importOnboarding">
-              <section class="panel import-hero" aria-label="Upload a marks workbook">
-                <div class="dropzone" id="dropzone" data-dragging="false">
-                  <div class="dropzone__icon" aria-hidden="true">
-                    <svg width="20" height="20"><use href="#i-upload"></use></svg>
-                  </div>
-                  <div>
-                    <p class="dropzone__title" id="dropzoneTitle">Drop a marks workbook</p>
-                    <p class="dropzone__sub">
-                      Read entirely inside this browser tab &mdash; nothing is uploaded.
-                    </p>
-                  </div>
-                  <div class="dropzone__actions">
-                    <label class="btn btn--lg" for="fileInput">
-                      <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#i-sheet"></use></svg>
-                      Choose marks file
-                    </label>
-                    <button class="btn btn--secondary btn--lg" type="button" id="loadDemo">
-                      <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#i-sparkle"></use></svg>
-                      Load demo class
-                    </button>
-                    <input
-                      class="visually-hidden"
-                      type="file"
-                      id="fileInput"
-                      accept=".xlsx,.xls,.xlsm,.csv,text/csv"
-                      aria-describedby="dropzoneFormats"
-                    />
-                  </div>
-                  <p class="dropzone__formats" id="dropzoneFormats">
-                    <span class="badge badge--neutral">.xlsx</span>
-                    <span class="badge badge--neutral">.xls</span>
-                    <span class="badge badge--neutral">.xlsm</span>
-                    <span class="badge badge--neutral">.csv</span>
-                    <span class="dropzone__formats-note">Leave out students who were absent and will be awarded NC.</span>
-                  </p>
-                </div>
-
-                <aside class="import-guide" aria-label="How importing works">
-                  <ol class="flow">
-                    <li class="flow__step">
-                      <span class="flow__num" aria-hidden="true">1</span>
-                      <div>
-                        <p class="flow__title">Upload</p>
-                        <p class="flow__text">An Excel or CSV sheet, one row per student.</p>
-                      </div>
-                    </li>
-                    <li class="flow__step">
-                      <span class="flow__num" aria-hidden="true">2</span>
-                      <div>
-                        <p class="flow__title">Validate</p>
-                        <p class="flow__text">Every row is checked; problems are listed by row number.</p>
-                      </div>
-                    </li>
-                    <li class="flow__step">
-                      <span class="flow__num" aria-hidden="true">3</span>
-                      <div>
-                        <p class="flow__title">Continue</p>
-                        <p class="flow__text">Pick a course, set the grade bands, review and export.</p>
-                      </div>
-                    </li>
-                  </ol>
-
-                  <div class="import-guide__cols">
-                    <p class="import-guide__label">Required columns</p>
-                    <div class="import-guide__chips">
-                      <code class="code-chip">BITS ID</code>
-                      <code class="code-chip">Course</code>
-                      <code class="code-chip">Total Marks</code>
+            <div id="importOnboarding" class="import__onboarding">
+              <div class="import__spec" aria-label="How importing works">
+                <ol class="flow">
+                  <li class="flow__step">
+                    <span class="flow__num" aria-hidden="true">01</span>
+                    <div>
+                      <p class="flow__title">Upload</p>
+                      <p class="flow__text">An Excel or CSV sheet, one row per student.</p>
                     </div>
-                    <p class="import-guide__note">Marks are whole numbers from 0 to 100. Header spelling is forgiving.</p>
-                  </div>
+                  </li>
+                  <li class="flow__step">
+                    <span class="flow__num" aria-hidden="true">02</span>
+                    <div>
+                      <p class="flow__title">Validate</p>
+                      <p class="flow__text">Structure and every row checked; problems listed by row number.</p>
+                    </div>
+                  </li>
+                  <li class="flow__step">
+                    <span class="flow__num" aria-hidden="true">03</span>
+                    <div>
+                      <p class="flow__title">Grade</p>
+                      <p class="flow__text">Pick a course, set the boundaries, review and export.</p>
+                    </div>
+                  </li>
+                </ol>
 
-                  <div class="import-guide__links">
-                    <a class="btn btn--ghost btn--sm" href="samples/template-marks.xlsx" download>
-                      <svg class="btn__icon" width="14" height="14" aria-hidden="true"><use href="#i-download"></use></svg>
-                      Template
-                    </a>
-                    <a class="btn btn--ghost btn--sm" href="samples/sample-marks.xlsx" download>
-                      <svg class="btn__icon" width="14" height="14" aria-hidden="true"><use href="#i-download"></use></svg>
-                      Sample data
-                    </a>
+                <dl class="spec">
+                  <div class="spec__row">
+                    <dt><code>BITS ID</code></dt>
+                    <dd>Unique within a course</dd>
                   </div>
-                </aside>
-              </section>
+                  <div class="spec__row">
+                    <dt><code>Course</code></dt>
+                    <dd>Code as on the transcript</dd>
+                  </div>
+                  <div class="spec__row">
+                    <dt><code>Total Marks</code></dt>
+                    <dd>Whole number, 0&ndash;100</dd>
+                  </div>
+                </dl>
 
+                <div class="import__links">
+                  <a class="btn btn--ghost btn--sm" href="samples/template-marks.xlsx" download>
+                    <svg class="btn__icon" width="14" height="14" aria-hidden="true"><use href="#i-download"></use></svg>
+                    Template
+                  </a>
+                  <a class="btn btn--ghost btn--sm" href="samples/sample-marks.xlsx" download>
+                    <svg class="btn__icon" width="14" height="14" aria-hidden="true"><use href="#i-download"></use></svg>
+                    Sample data
+                  </a>
+                </div>
+              </div>
+
+              <div class="dropzone" id="dropzone" data-dragging="false">
+                <div class="dropzone__icon" aria-hidden="true">
+                  <svg width="22" height="22"><use href="#i-upload"></use></svg>
+                </div>
+                <div>
+                  <p class="dropzone__title" id="dropzoneTitle">Drop a marks workbook</p>
+                  <p class="dropzone__sub">Read inside this browser tab. Nothing is uploaded.</p>
+                </div>
+                <div class="dropzone__actions">
+                  <label class="btn btn--lg" for="fileInput">
+                    <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#i-sheet"></use></svg>
+                    Choose marks file
+                  </label>
+                  <button class="btn btn--secondary btn--lg" type="button" id="loadDemo">
+                    <svg class="btn__icon" width="16" height="16" aria-hidden="true"><use href="#i-sparkle"></use></svg>
+                    Load demo class
+                  </button>
+                  <input
+                    class="visually-hidden"
+                    type="file"
+                    id="fileInput"
+                    accept=".xlsx,.xls,.xlsm,.csv,text/csv"
+                    aria-describedby="dropzoneFormats"
+                  />
+                </div>
+                <p class="dropzone__formats" id="dropzoneFormats">
+                  <span class="badge badge--neutral">.xlsx</span>
+                  <span class="badge badge--neutral">.xls</span>
+                  <span class="badge badge--neutral">.xlsm</span>
+                  <span class="badge badge--neutral">.csv</span>
+                  <span class="dropzone__formats-note">Leave out students who were absent and will be awarded NC.</span>
+                </p>
+              </div>
             </div>
 
-            <div id="fileStatus" aria-live="polite"></div>
-            <div id="draftNotice" hidden></div>
-            <div id="importError" aria-live="assertive"></div>
+            <div id="fileStatus" class="import__status" aria-live="polite"></div>
+            <div id="draftNotice" class="import__draft" hidden></div>
+            <div id="importError" class="import__error" aria-live="assertive"></div>
 
             <details class="disclosure import-rules">
               <summary class="disclosure__summary">
@@ -461,13 +479,10 @@
               </div>
             </details>
 
-            <div id="importReport" class="stack" hidden></div>
-            <div id="coursePicker" class="stack" hidden></div>
+            <div id="importReport" class="import__report stack" hidden></div>
+            <div id="coursePicker" class="import__picker stack" hidden></div>
+
             <section class="session-bar" id="sessionPanel" aria-label="Session options">
-              <p class="session-bar__note">
-                <svg width="14" height="14" aria-hidden="true"><use href="#i-users"></use></svg>
-                <span><b>Instructor name</b> (top right) is printed on the report and written into both exports.</span>
-              </p>
               <label class="checkbox" for="persistDraft">
                 <input type="checkbox" id="persistDraft" />
                 <span>
@@ -487,7 +502,7 @@
           </section>
 
           <!-- ============ STAGE 3 : ANALYSE ============ -->
-          <section class="stage" id="stage-analyse" data-stage="analyse" aria-labelledby="analyseTitle" hidden>
+          <section class="stage stage--analyse" id="stage-analyse" data-stage="analyse" aria-labelledby="analyseTitle" hidden>
             <div class="stage__head">
               <div>
                 <p class="eyebrow stage__eyebrow">Step 3 of 6<span class="stage__context" hidden></span></p>
@@ -499,161 +514,148 @@
               <div class="stage__actions" id="analyseActions"></div>
             </div>
 
-            <div class="stack">
-              <div class="stats" id="statsGrid"></div>
-
-              <section class="panel board" aria-labelledby="distTitle">
-                <div class="board__main">
-                  <div class="board__head">
-                    <div>
-                      <h3 class="panel__title" id="distTitle">Marks distribution</h3>
-                      <p class="panel__hint" id="chartHintAnalyse">One bar per mark. Hover a bar for its count.</p>
-                    </div>
-                    <div class="chart-legend" id="chartLegendAnalyse"></div>
-                  </div>
-                  <div class="chart" id="chartAnalyse"></div>
-                </div>
-                <aside class="board__side">
-                  <section class="board__section" aria-labelledby="spreadTitle">
-                    <h3 class="section-label" id="spreadTitle">Class spread</h3>
-                    <div id="clusterPanel"></div>
-                  </section>
-                  <section class="board__section" id="previewPanel" aria-labelledby="previewTitle">
-                    <h3 class="section-label" id="previewTitle">
-                      Default bands
-                      <span class="section-label__meta">Preview &middot; nothing applied</span>
-                    </h3>
-                    <div id="defaultPreview"></div>
-                  </section>
-                </aside>
-              </section>
-
-              <section class="panel" id="studentPanel" aria-labelledby="studentsTitle">
-                <div class="panel__head">
+            <div class="canvas">
+              <section class="canvas__main" aria-labelledby="distTitle">
+                <div class="canvas__head">
                   <div>
-                    <h3 class="panel__title" id="studentsTitle">Student outcomes</h3>
-                    <p class="panel__hint" id="studentPanelHint"></p>
+                    <h3 class="section-title" id="distTitle">Marks distribution</h3>
+                    <p class="section-hint" id="chartHintAnalyse">One bar per mark. Hover for the count at any mark.</p>
                   </div>
-                  <div class="search">
-                    <label class="visually-hidden" for="studentSearch">Search students</label>
-                    <svg width="14" height="14" aria-hidden="true"><use href="#i-search"></use></svg>
-                    <input class="input" type="search" id="studentSearch" placeholder="Search ID, mark or grade" />
-                  </div>
+                  <div class="chart-legend" id="chartLegendAnalyse"></div>
                 </div>
-                <div class="panel__body panel__body--table" id="studentTable"></div>
+                <div class="chart" id="chartAnalyse"></div>
+
+                <section class="canvas__strip" id="previewPanel" aria-labelledby="previewTitle">
+                  <div class="canvas__strip-head">
+                    <h3 class="section-title" id="previewTitle">On the default bands</h3>
+                    <span class="section-hint">Preview &middot; nothing is applied</span>
+                  </div>
+                  <div id="defaultPreview"></div>
+                </section>
               </section>
+
+              <aside class="insight" aria-label="Class statistics">
+                <div class="insight__block">
+                  <h3 class="insight__title">Readout</h3>
+                  <div class="stats stats--readout" id="statsGrid"></div>
+                </div>
+                <div class="insight__block">
+                  <h3 class="insight__title" id="spreadTitle">Spread</h3>
+                  <div id="clusterPanel"></div>
+                </div>
+              </aside>
             </div>
+
+            <section class="ledger" id="studentPanel" aria-labelledby="studentsTitle">
+              <div class="ledger__head">
+                <div>
+                  <h3 class="section-title" id="studentsTitle">Student outcomes</h3>
+                  <p class="section-hint" id="studentPanelHint"></p>
+                </div>
+                <div class="search">
+                  <label class="visually-hidden" for="studentSearch">Search students</label>
+                  <svg width="14" height="14" aria-hidden="true"><use href="#i-search"></use></svg>
+                  <input class="input" type="search" id="studentSearch" placeholder="Search ID, mark or grade" />
+                </div>
+              </div>
+              <div class="ledger__body" id="studentTable"></div>
+            </section>
           </section>
 
           <!-- ============ STAGE 4 : CONFIGURE ============ -->
-          <section class="stage" id="stage-configure" data-stage="configure" aria-labelledby="configureTitle" hidden>
+          <section class="stage stage--configure" id="stage-configure" data-stage="configure" aria-labelledby="configureTitle" hidden>
             <div class="stage__head">
               <div>
                 <p class="eyebrow stage__eyebrow">Step 4 of 6<span class="stage__context" hidden></span></p>
-                <h2 class="stage__title" id="configureTitle">Design the grade bands</h2>
+                <h2 class="stage__title" id="configureTitle">Grade boundaries</h2>
                 <p class="stage__desc">
-                  Move a boundary and see the distribution, the counts and every affected student update at once.
+                  Move a boundary on the distribution. Counts and every affected student update at once.
                 </p>
               </div>
               <div class="stage__actions" id="configureActions"></div>
             </div>
 
-            <div class="stack">
-              <section class="panel workbench" aria-labelledby="boundsTitle">
-                <div class="workbench__head">
+            <div class="instrument">
+              <section class="instrument__main" aria-labelledby="boundsTitle">
+                <div class="instrument__head">
                   <div>
-                    <h3 class="panel__title" id="boundsTitle">Grade boundaries</h3>
-                    <p class="panel__hint" id="chartHintConfigure">
+                    <h3 class="section-title" id="boundsTitle">Distribution and boundaries</h3>
+                    <p class="section-hint" id="chartHintConfigure">
                       Drag a handle, or focus it and use the arrow keys. Every mark from 0 to 100 has exactly one grade.
                     </p>
                   </div>
                   <div class="chart-legend" id="chartLegendConfigure"></div>
                 </div>
-                <div class="workbench__chart">
-                  <div class="chart" id="chartConfigure"></div>
-                </div>
-                <div class="workbench__split">
-                  <section class="workbench__pane" aria-labelledby="bandsTitle">
-                    <div class="pane__head">
-                      <h3 class="section-label" id="bandsTitle">Grade bands</h3>
-                      <span class="badge badge--neutral" id="cutoffBadge">Defaults</span>
-                    </div>
-                    <div class="bands" id="bandEditor"></div>
-                  </section>
-                  <section class="workbench__pane workbench__pane--impact" aria-labelledby="impactTitle">
-                    <div class="pane__head">
-                      <h3 class="section-label" id="impactTitle">Impact</h3>
-                      <span class="pane__meta" id="impactMeta">Against the previous configuration</span>
-                    </div>
-                    <div class="impact" id="impactPanel"></div>
-                  </section>
-                </div>
+                <div class="chart instrument__chart" id="chartConfigure"></div>
+
+                <section class="scale" aria-labelledby="bandsTitle">
+                  <div class="scale__head">
+                    <h3 class="section-title" id="bandsTitle">Grade scale</h3>
+                    <span class="scale__hint">Minimum mark for each grade</span>
+                    <span class="badge badge--neutral" id="cutoffBadge">Defaults</span>
+                  </div>
+                  <div class="bands" id="bandEditor"></div>
+                </section>
+
               </section>
 
-              <div class="split split--even workbench-aux">
-                <section class="panel" aria-labelledby="historyTitle">
-                  <div class="panel__head">
-                    <div>
-                      <h3 class="panel__title" id="historyTitle">Change history</h3>
-                      <p class="panel__hint">This session only. Every boundary move can be undone.</p>
-                    </div>
+              <aside class="inspector" aria-label="Impact inspector">
+                <section class="inspector__section" aria-labelledby="impactTitle">
+                  <div class="inspector__head">
+                    <h3 class="inspector__title" id="impactTitle">Impact</h3>
+                    <span class="inspector__meta" id="impactMeta">Against the default bands</span>
+                  </div>
+                  <div class="impact" id="impactPanel"></div>
+                </section>
+                <section class="inspector__section inspector__section--log" aria-labelledby="historyTitle">
+                  <div class="inspector__head">
+                    <h3 class="inspector__title" id="historyTitle">Activity</h3>
                     <div class="cluster" id="historyActions"></div>
                   </div>
-                  <div class="panel__body panel__body--flush" id="auditBody"></div>
+                  <div id="auditBody"></div>
                 </section>
-
-                <section class="panel" id="suggestPanel" aria-labelledby="suggestTitle">
-                  <div class="panel__head">
-                    <div>
-                      <h3 class="panel__title" id="suggestTitle">Suggested cutoffs</h3>
-                      <p class="panel__hint">Optional. Nothing changes until you apply it.</p>
-                    </div>
+                <section class="inspector__section inspector__section--suggest" id="suggestPanel" aria-labelledby="suggestTitle">
+                  <div class="inspector__head">
+                    <h3 class="inspector__title" id="suggestTitle">Suggested cutoffs</h3>
+                    <span class="inspector__meta">Optional</span>
                   </div>
-                  <div class="panel__body" id="suggestBody"></div>
+                  <div id="suggestBody"></div>
                 </section>
-              </div>
+              </aside>
             </div>
           </section>
 
           <!-- ============ STAGE 5 : REVIEW ============ -->
-          <section class="stage" id="stage-review" data-stage="review" aria-labelledby="reviewTitle" hidden>
+          <section class="stage stage--review" id="stage-review" data-stage="review" aria-labelledby="reviewTitle" hidden>
             <div class="stage__head no-print">
               <div>
                 <p class="eyebrow stage__eyebrow">Step 5 of 6<span class="stage__context" hidden></span></p>
                 <h2 class="stage__title" id="reviewTitle">Final review</h2>
                 <p class="stage__desc">
-                  Exactly what will be exported, and the report you can print. Check it before you commit.
+                  Exactly what will be exported, and the report you can print.
                 </p>
               </div>
               <div class="stage__actions" id="reviewActions"></div>
             </div>
             <div id="reviewBody"></div>
           </section>
-        </div>
-      </main>
+        </main>
 
-      <!-- ===================== Footer ===================== -->
-      <footer class="app-footer">
-        <div class="shell app-footer__inner">
-          <div>
-            <p>
-              <b style="color: var(--c-ink-700)">Your grading data stays in this browser.</b>
-              Marks are read, validated, graded and exported locally. No student record is uploaded
-              to a server, and no analytics or trackers are included.
-            </p>
-          </div>
-          <div>
-            <p class="footer-links">
-              <a href="samples/sample-marks.xlsx" download>Sample data</a>
-              <a href="samples/template-marks.xlsx" download>Template</a>
-              <a href="README.md">Readme</a>
-            </p>
-            <p style="margin-top: var(--sp-2); max-width: 46ch">
-              Grading Workspace for the <b>BITS Digital CodeForge V1.0</b> challenge.
-            </p>
-          </div>
-        </div>
-      </footer>
+        <!-- ===================== Footer ===================== -->
+        <footer class="app-footer">
+          <p>
+            <b>Your grading data stays in this browser.</b>
+            Marks are read, validated, graded and exported locally. No student record is uploaded
+            to a server, and no analytics or trackers are included.
+          </p>
+          <p class="footer-links">
+            <a href="samples/sample-marks.xlsx" download>Sample data</a>
+            <a href="samples/template-marks.xlsx" download>Template</a>
+            <a href="README.md">Readme</a>
+            <span>Grading Workspace for the <b>BITS Digital CodeForge V1.0</b> challenge.</span>
+          </p>
+        </footer>
+      </div>
     </div>
 
     <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
@@ -663,22 +665,22 @@
     <!-- Classic scripts (not ES modules) so the console also works when index.html
          is opened directly from disk, which is how a judge may first try it. -->
     <script src="vendor/xlsx.full.min.js"></script>
-    <script src="assets/data/demo-class.js?v=2"></script>
-    <script src="assets/js/core/util.js?v=2"></script>
-    <script src="assets/js/core/statistics.js?v=2"></script>
-    <script src="assets/js/core/grading.js?v=2"></script>
-    <script src="assets/js/core/workbook.js?v=2"></script>
-    <script src="assets/js/core/exporters.js?v=2"></script>
-    <script src="assets/js/core/suggest.js?v=2"></script>
-    <script src="assets/js/ui/dom.js?v=2"></script>
-    <script src="assets/js/ui/toast.js?v=2"></script>
-    <script src="assets/js/ui/modal.js?v=2"></script>
-    <script src="assets/js/ui/chart.js?v=2"></script>
-    <script src="assets/js/ui/import-panel.js?v=2"></script>
-    <script src="assets/js/ui/analyse-panel.js?v=2"></script>
-    <script src="assets/js/ui/band-editor.js?v=2"></script>
-    <script src="assets/js/ui/impact-panel.js?v=2"></script>
-    <script src="assets/js/ui/review-panel.js?v=2"></script>
-    <script src="assets/js/app.js?v=2"></script>
+    <script src="assets/data/demo-class.js?v=3"></script>
+    <script src="assets/js/core/util.js?v=3"></script>
+    <script src="assets/js/core/statistics.js?v=3"></script>
+    <script src="assets/js/core/grading.js?v=3"></script>
+    <script src="assets/js/core/workbook.js?v=3"></script>
+    <script src="assets/js/core/exporters.js?v=3"></script>
+    <script src="assets/js/core/suggest.js?v=3"></script>
+    <script src="assets/js/ui/dom.js?v=3"></script>
+    <script src="assets/js/ui/toast.js?v=3"></script>
+    <script src="assets/js/ui/modal.js?v=3"></script>
+    <script src="assets/js/ui/chart.js?v=3"></script>
+    <script src="assets/js/ui/import-panel.js?v=3"></script>
+    <script src="assets/js/ui/analyse-panel.js?v=3"></script>
+    <script src="assets/js/ui/band-editor.js?v=3"></script>
+    <script src="assets/js/ui/impact-panel.js?v=3"></script>
+    <script src="assets/js/ui/review-panel.js?v=3"></script>
+    <script src="assets/js/app.js?v=3"></script>
   </body>
 </html>

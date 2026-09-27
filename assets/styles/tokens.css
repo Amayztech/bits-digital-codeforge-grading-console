@@ -37,42 +37,45 @@
 :root {
   /* --- Surfaces: a cool canvas with layered working planes ------------- */
   --c-white: #ffffff;
-  --c-canvas: #f2f4f7; /* page */
-  --c-surface: #ffffff; /* primary working plane */
-  --c-surface-2: #f9fafb; /* recessed plane inside a surface */
-  --c-surface-3: #f3f5f8; /* wells, hover fills */
+  --c-canvas: #f3f3f2; /* level 0: the desk the workspace sits on */
+  --c-surface: #ffffff; /* level 1: the workspace */
+  --c-surface-2: #fafafa; /* level 2: inspector and recessed regions */
+  --c-surface-3: #f2f2f3; /* wells, hover fills */
+  --c-rail: #f3f3f2;
   --c-paper: var(--c-canvas);
   --c-paper-2: var(--c-surface-3);
 
   /* --- Lines: separation comes from hairlines, not shadows ------------- */
-  --c-line: #e2e6ec;
-  --c-line-soft: #edf0f4;
-  --c-line-strong: #cfd5de;
+  --c-line: #e4e4e7;
+  --c-line-soft: #efeff1;
+  --c-line-strong: #d4d4d8;
 
   /* --- Ink: deep navy-black, never pure black --------------------------- */
-  --c-ink-900: #0b1322;
-  --c-ink-800: #19223a;
-  --c-ink-700: #2f3a50;
-  --c-ink-600: #4a5569;
-  --c-ink-500: #636d80;
-  --c-ink-400: #8a92a3;
-  --c-ink-300: #b6bcc8;
-  --c-ink-200: #d9dde4;
-  --c-ink-150: #e4e7ed;
-  --c-ink-100: #ebeef2;
-  --c-ink-050: #f5f6f9;
+  --c-ink-900: #0e121b;
+  --c-ink-800: #1b202c;
+  --c-ink-700: #343946;
+  --c-ink-600: #4f5563;
+  --c-ink-500: #6a6f7c;
+  --c-ink-400: #8e929d;
+  --c-ink-300: #b7bac2;
+  --c-ink-200: #dadbe0;
+  --c-ink-150: #e5e6e9;
+  --c-ink-100: #eeeef0;
+  --c-ink-050: #f6f6f7;
 
   /* --- Brand: academic navy; copper is the instrument colour ------------ */
   --c-brand-900: #0a1830;
   --c-brand-800: #102545;
   --c-brand-700: #17355f;
-  --c-primary: #1c4a86;
-  --c-primary-hover: #163c6e;
-  --c-primary-active: #11305a;
-  --c-primary-soft: #eef3f9;
-  --c-primary-soft-2: #d9e4f1;
-  --c-primary-ring: rgba(28, 74, 134, 0.26);
-  --c-focus: #2f6bd0;
+  --c-primary: #151a26; /* primary actions are set in ink, not colour */
+  --c-primary-hover: #262c3a;
+  --c-primary-active: #0b0e15;
+  --c-blue: #2f5fd0; /* the one accent: selection, focus, progress */
+  --c-blue-soft: #eef2fc;
+  --c-primary-soft: #eef2fc;
+  --c-primary-soft-2: #d8e1f7;
+  --c-primary-ring: rgba(47, 95, 208, 0.26);
+  --c-focus: #2f5fd0;
 
   /* Copper marks every boundary the instructor controls. */
   --c-accent: #ad6417;
@@ -93,9 +96,9 @@
   --c-danger-hover: #8f1f16;
   --c-danger-soft: #fdf2f0;
   --c-danger-line: #f2cdc7;
-  --c-info: #1c4a86;
-  --c-info-soft: #f0f4fa;
-  --c-info-line: #d3e0f0;
+  --c-info: #2f5fd0;
+  --c-info-soft: #f2f5fd;
+  --c-info-line: #d6e0f6;
 
   /* --- Ordinal grade ramp ----------------------------------------------- *
    * Grades are ordered, so the ramp is too: one navy hue, descending
@@ -128,16 +131,18 @@
   --font-mono: "SFMono-Regular", "Cascadia Mono", Consolas,
     "Liberation Mono", Menlo, monospace;
 
-  --fs-2xs: 0.6875rem; /* 11px  micro labels */
-  --fs-xs: 0.75rem; /* 12px  metadata */
-  --fs-sm: 0.8125rem; /* 13px  tables, controls */
-  --fs-base: 0.875rem; /* 14px  body */
-  --fs-md: 0.9375rem; /* 15px  section titles */
-  --fs-lg: 1.0625rem; /* 17px */
-  --fs-xl: 1.375rem; /* 22px  page titles */
-  --fs-2xl: 1.625rem; /* 26px  metric values */
-  --fs-3xl: 2.125rem; /* 34px  hero figures */
-  --fs-4xl: 2.75rem; /* 44px */
+  --fs-3xs: 0.625rem; /* 10px  micro caps */
+  --fs-2xs: 0.6875rem; /* 11px  metadata */
+  --fs-xs: 0.75rem; /* 12px  secondary */
+  --fs-sm: 0.8125rem; /* 13px  body, tables, controls */
+  --fs-base: 0.8125rem; /* 13px  the workstation reads dense */
+  --fs-md: 0.875rem; /* 14px  section titles */
+  --fs-lg: 1rem; /* 16px */
+  --fs-xl: 1.5rem; /* 24px  page titles */
+  --fs-2xl: 1.75rem; /* 28px  readouts */
+  --fs-3xl: 2.5rem; /* 40px  hero figures */
+  --fs-4xl: 3rem; /* 48px */
+  --num: "tnum" 1, "ss01" 1; /* instrument figures: tabular, open digits */
 
   --fw-regular: 400;
   --fw-medium: 500;
@@ -202,9 +207,11 @@
   --dur-4: 320ms;
 
   /* --- Layout ----------------------------------------------------------- */
-  --shell-max: 1392px;
-  --rail-w: 396px;
-  --header-h: 56px;
+  --shell-max: 1560px;
+  --rail-w: 224px;
+  --rail-w-compact: 60px;
+  --bar-h: 48px;
+  --header-h: 48px;
   --z-sticky: 20;
   --z-drawer: 40;
   --z-toast: 60;

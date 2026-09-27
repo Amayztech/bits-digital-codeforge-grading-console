@@ -42,7 +42,7 @@ function check(name, ok, detail) {
   await page.waitForTimeout(600);
 
   check('page loads from file://', (await page.title()).includes('Grading Workspace'));
-  check('stylesheet applied', await page.evaluate(() => getComputedStyle(document.body).backgroundColor === 'rgb(242, 244, 247)'));
+  check('stylesheet applied', await page.evaluate(() => getComputedStyle(document.body).backgroundColor === 'rgb(243, 243, 242)'));
   check('vendored SheetJS loaded', await page.evaluate(() => typeof window.XLSX === 'object' && !!window.XLSX.read));
   check('no script errors', errors.length === 0, errors.join(' | '));
 

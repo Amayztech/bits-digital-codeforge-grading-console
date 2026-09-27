@@ -1,56 +1,43 @@
 /* ==========================================================================
-   Layout - the product shell, stage headers, grids, responsive reflow.
+   Layout - the workstation shell: navigation rail, command bar, workspace.
+   Level 0 is the canvas the rail sits on; level 1 is the inset workspace.
    ========================================================================== */
 
 .app {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
   min-height: 100vh;
-}
-
-.shell {
-  width: 100%;
-  max-width: var(--shell-max);
-  margin-inline: auto;
-  padding-inline: var(--sp-8);
+  background: var(--c-canvas);
 }
 
 /* ==========================================================================
-   Shell - one integrated bar: identity, workflow, session.
+   Navigation rail
    ========================================================================== */
-.app-header {
+.rail {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  background: color-mix(in srgb, var(--c-surface) 97%, transparent);
-  backdrop-filter: saturate(160%) blur(12px);
-  -webkit-backdrop-filter: saturate(160%) blur(12px);
-  border-bottom: 1px solid var(--c-line);
-}
-
-.app-header__inner {
-  --stage-underline: -14px;
-  display: grid;
-  grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
-  grid-template-areas: "brand nav tools";
-  align-items: center;
-  column-gap: var(--sp-6);
-  min-height: var(--header-h);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  height: 100vh;
+  padding: 14px 10px 14px 12px;
+  background: var(--c-rail);
+  min-width: 0;
 }
 
 .brand {
-  grid-area: brand;
   display: flex;
   align-items: center;
-  gap: var(--sp-3);
+  gap: 10px;
   min-width: 0;
+  padding: 2px 6px 0 4px;
 }
 
 /*
  * The institutional crest is a detailed circular emblem: the gold lettering
  * around the ring is unreadable below about 36 CSS pixels, so the mark is sized
- * for legibility rather than for a tidy tile. It is a transparent cutout, so it
- * sits directly on the bar.
+ * for legibility rather than for a tidy tile.
  */
 .brand__mark {
   flex: none;
@@ -63,126 +50,143 @@
   display: block;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 1px 1px rgba(10, 24, 48, 0.16));
+  filter: drop-shadow(0 1px 1px rgba(14, 18, 27, 0.18));
 }
 
 .brand__text {
   display: flex;
   flex-direction: column;
+  gap: 2px;
   min-width: 0;
-  gap: 1px;
 }
 
 .brand__name {
-  font-size: var(--fs-base);
+  font-size: var(--fs-sm);
   font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-tighter);
+  letter-spacing: -0.01em;
   color: var(--c-ink-900);
-  line-height: 1.2;
+  line-height: 1.15;
   white-space: nowrap;
 }
 
 .brand__sub {
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-3xs);
   font-weight: var(--fw-medium);
-  letter-spacing: var(--tracking-eyebrow);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--c-ink-500);
+  color: var(--c-ink-400);
   line-height: 1.2;
   white-space: nowrap;
 }
 
-/* --- Workflow stepper --------------------------------------------------- */
+.rail__label {
+  padding: 0 10px 6px;
+  font-size: var(--fs-3xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink-400);
+}
+
 .stagebar {
-  grid-area: nav;
-  justify-self: center;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   min-width: 0;
-  max-width: 100%;
 }
 
 .stages {
   display: flex;
-  align-items: center;
-  gap: 2px;
-  min-width: 0;
-  overflow-x: auto;
-  overflow-y: visible;
-  scrollbar-width: none;
-}
-
-.stages::-webkit-scrollbar {
-  display: none;
+  flex-direction: column;
+  gap: 1px;
 }
 
 .stages > li {
-  position: static;
-  flex: none;
+  position: relative;
+}
+
+.stage-sep {
+  display: none;
 }
 
 .stage-step {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) 16px;
   align-items: center;
-  gap: 7px;
-  height: 28px;
-  padding: 0 var(--sp-2) 0 6px;
+  gap: 10px;
+  width: 100%;
+  height: 30px;
+  padding: 0 8px 0 10px;
   border: 0;
   border-radius: var(--r-md);
   background: transparent;
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
-  letter-spacing: var(--tracking-tight);
-  color: var(--c-ink-400);
+  color: var(--c-ink-600);
+  text-align: left;
   white-space: nowrap;
-  transition: color var(--dur-2) var(--ease-out),
-    background-color var(--dur-2) var(--ease-out);
+  transition: background-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out);
 }
 
 .stage-step:disabled {
   cursor: default;
+  color: var(--c-ink-400);
 }
 
 .stage-step:not(:disabled):hover {
-  background: var(--c-surface-3);
-  color: var(--c-ink-800);
+  background: rgba(14, 18, 27, 0.045);
+  color: var(--c-ink-900);
 }
 
 .stage-step:focus-visible {
   outline-offset: 0;
 }
 
+.stage-step__icon {
+  display: inline-flex;
+  color: var(--c-ink-400);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.stage-step__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The status glyph on the right: a number while pending, a tick when done. */
 .stage-step__num {
   display: grid;
   place-items: center;
-  width: 18px;
-  height: 18px;
-  flex: none;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  box-shadow: inset 0 0 0 1px var(--c-ink-200);
-  background: var(--c-surface);
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: var(--fw-semibold);
-  font-variant-numeric: tabular-nums;
+  font-feature-settings: var(--num);
   color: var(--c-ink-400);
-  transition: background-color var(--dur-2) var(--ease-out),
-    box-shadow var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+  box-shadow: inset 0 0 0 1px var(--c-ink-200);
+  transition: background-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out);
 }
 
 .stage-step__num svg {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
 }
 
 .stage-step[data-state="done"] {
-  color: var(--c-ink-600);
+  color: var(--c-ink-700);
 }
 
 .stage-step[data-state="done"] .stage-step__num {
-  background: var(--c-primary-soft);
-  box-shadow: inset 0 0 0 1px var(--c-primary-soft-2);
-  color: var(--c-primary);
+  background: var(--c-ink-800);
+  box-shadow: none;
+  color: var(--c-white);
+}
+
+.stage-step[data-state="done"] .stage-step__icon {
+  color: var(--c-ink-500);
 }
 
 .stage-step[data-state="active"] {
@@ -190,56 +194,187 @@
   font-weight: var(--fw-semibold);
 }
 
-.stage-step[data-state="active"] .stage-step__num {
-  background: var(--c-ink-900);
-  box-shadow: none;
-  color: var(--c-white);
+.stage-step[data-state="active"] .stage-step__icon {
+  color: var(--c-blue);
 }
 
-/* The current step is underlined on the bar's bottom edge, like a tab. */
-.stage-step[aria-current="step"]::after {
+.stage-step[data-state="active"] .stage-step__num {
+  color: var(--c-blue);
+  box-shadow: inset 0 0 0 1.5px var(--c-blue);
+}
+
+/* The current page is the one raised onto the workspace plane. */
+.stage-step[aria-current="step"] {
+  background: var(--c-surface);
+  box-shadow: 0 0 0 1px var(--c-line), 0 1px 2px rgba(14, 18, 27, 0.06);
+}
+
+.stage-step[aria-current="step"]::before {
   content: "";
   position: absolute;
-  left: 6px;
-  right: var(--sp-2);
-  bottom: var(--stage-underline);
-  height: 2px;
-  border-radius: 2px 2px 0 0;
-  background: var(--c-ink-900);
+  left: -12px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 0 2px 2px 0;
+  background: var(--c-blue);
 }
 
-.stage-sep {
-  width: 14px;
-  height: 1px;
-  flex: none;
-  background: var(--c-ink-200);
-  transition: background-color var(--dur-3) var(--ease-out);
-}
-
-.stages > li:has(> .stage-step[data-state="done"]) + .stage-sep {
-  background: color-mix(in srgb, var(--c-primary) 45%, var(--c-ink-200));
-}
-
-/* Progress is carried by the step glyphs and connectors themselves. */
+/* Progress: a hairline meter under the steps. */
 .stagebar__rail {
-  display: none;
+  position: relative;
+  height: 2px;
+  margin: var(--sp-4) 10px 0;
+  border-radius: 2px;
+  background: var(--c-ink-150);
+  overflow: hidden;
 }
 
-/* --- Session strip: instructor, course and timer as one control -------- */
-.app-header__tools {
-  grid-area: tools;
+.stagebar__fill {
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--c-ink-800);
+  transition: width var(--dur-4) var(--ease-out);
+}
+
+.rail__foot {
+  margin-top: auto;
+  padding: 0 10px;
+}
+
+.rail__privacy {
   display: flex;
-  align-items: stretch;
-  height: 34px;
-  border: 1px solid var(--c-line);
-  border-radius: var(--r-lg);
+  align-items: flex-start;
+  gap: 7px;
+  font-size: var(--fs-2xs);
+  color: var(--c-ink-400);
+  line-height: var(--lh-snug);
+}
+
+.rail__privacy svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   Frame: the workspace plane
+   ========================================================================== */
+.frame {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: calc(100vh - 16px);
+  margin: 8px 8px 8px 0;
   background: var(--c-surface);
-  box-shadow: var(--sh-xs);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-2xl);
+  box-shadow: 0 1px 2px rgba(14, 18, 27, 0.04), 0 8px 24px -16px rgba(14, 18, 27, 0.12);
+}
+
+/* --- Command bar ---------------------------------------------------------- */
+.commandbar {
+  position: sticky;
+  top: 0;
+  z-index: calc(var(--z-sticky) - 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  height: var(--bar-h);
+  padding: 0 var(--sp-4) 0 var(--sp-8);
+  border-bottom: 1px solid var(--c-line-soft);
+  border-radius: var(--r-2xl) var(--r-2xl) 0 0;
+  background: color-mix(in srgb, var(--c-surface) 96%, transparent);
+  backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+}
+
+.commandbar__context {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-width: 0;
+  font-size: var(--fs-sm);
+}
+
+.commandbar__empty {
+  color: var(--c-ink-400);
+}
+
+.context-chip {
+  display: none;
+  align-items: baseline;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+
+.context-chip[data-visible="true"] {
+  display: flex;
+}
+
+.context-chip__dot {
+  align-self: center;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--c-blue);
+  flex: none;
+}
+
+.context-chip__course {
+  flex: none;
+  font-weight: var(--fw-semibold);
+  color: var(--c-ink-900);
+  letter-spacing: -0.005em;
+}
+
+.context-chip__meta {
+  color: var(--c-ink-500);
+  font-feature-settings: var(--num);
+  white-space: nowrap;
+}
+
+.commandbar__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: var(--sp-3);
+  border-left: 1px solid var(--c-line);
+  font-size: var(--fs-xs);
+  color: var(--c-ink-500);
+  white-space: nowrap;
+  font-feature-settings: var(--num);
+}
+
+.commandbar__status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-success);
+}
+
+.commandbar__status[data-tone="demo"]::before {
+  background: var(--c-accent);
+}
+
+.commandbar__status[data-tone="final"] {
+  color: var(--c-success);
+  font-weight: var(--fw-medium);
+}
+
+.app-header__tools {
+  display: flex;
+  align-items: center;
+  height: 100%;
   min-width: 0;
 }
 
 .app-header__tools > * + * {
-  border-left: 1px solid var(--c-line-soft);
+  margin-left: var(--sp-2);
+  padding-left: var(--sp-3);
+  border-left: 1px solid var(--c-line);
 }
 
 .session-action {
@@ -250,63 +385,47 @@
   flex-wrap: wrap;
 }
 
+/* Instructor: a labelled inline field, not a pill. */
 .session-field {
-  position: relative;
   display: flex;
   align-items: center;
-  gap: 7px;
-  width: 200px;
-  padding: 0 var(--sp-3) 0 10px;
-  border-radius: var(--r-lg) 0 0 var(--r-lg);
-  background: transparent;
-  transition: background-color var(--dur-2) var(--ease-out),
-    box-shadow var(--dur-2) var(--ease-out);
+  gap: var(--sp-2);
+  height: 30px;
+  min-width: 0;
 }
 
-.session-field:hover {
-  background: var(--c-surface-2);
-}
-
-.session-field:focus-within {
-  background: var(--c-surface);
-  box-shadow: inset 0 0 0 1px var(--c-focus), 0 0 0 3px color-mix(in srgb, var(--c-focus) 18%, transparent);
-  z-index: 1;
-}
-
-.session-field[data-invalid="true"] {
-  background: var(--c-warning-soft);
-  box-shadow: inset 0 0 0 1px var(--c-warning-line);
-}
-
-.session-field__icon {
-  display: inline-flex;
+.session-field__label {
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-medium);
   color: var(--c-ink-400);
-  flex: none;
-}
-
-.session-field[data-filled="true"] .session-field__icon {
-  color: var(--c-primary);
-}
-
-.session-field[data-invalid="true"] .session-field__icon {
-  color: var(--c-warning);
+  white-space: nowrap;
 }
 
 .session-field__input {
-  width: 100%;
+  width: 168px;
   min-width: 0;
-  height: 100%;
-  border: 0;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
   background: transparent;
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   color: var(--c-ink-900);
-  padding: 0;
   text-overflow: ellipsis;
+  transition: border-color var(--dur-1) var(--ease-out), background-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out);
+}
+
+.session-field__input:hover {
+  background: var(--c-surface-3);
 }
 
 .session-field__input:focus {
   outline: none;
+  background: var(--c-surface);
+  border-color: var(--c-focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-focus) 16%, transparent);
 }
 
 .session-field__input::placeholder {
@@ -314,59 +433,24 @@
   font-weight: var(--fw-regular);
 }
 
-/* It is a text field, not a menu, so it does not wear a dropdown caret. */
-.session-field__caret {
-  display: none;
+.session-field[data-invalid="true"] .session-field__input {
+  border-color: var(--c-warning-line);
+  background: var(--c-warning-soft);
 }
 
-.context-chip {
-  display: none;
-  align-items: center;
-  gap: 7px;
-  padding: 0 var(--sp-3);
-  font-size: var(--fs-sm);
-  color: var(--c-ink-700);
-  max-width: 240px;
-  min-width: 0;
+.session-field[data-invalid="true"] .session-field__label {
+  color: var(--c-warning);
 }
 
-.context-chip[data-visible="true"] {
-  display: flex;
-}
-
-.context-chip__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 2px;
-  background: var(--c-primary);
-  flex: none;
-}
-
-.context-chip__course {
-  font-weight: var(--fw-semibold);
-  color: var(--c-ink-900);
-  letter-spacing: var(--tracking-tight);
-}
-
-.context-chip__meta {
-  color: var(--c-ink-500);
-  font-size: var(--fs-xs);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-/* --- Session timer ------------------------------------------------------ */
+/* --- Timer ---------------------------------------------------------------- */
 .timer {
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 0 var(--sp-3) 0 10px;
   font-size: var(--fs-sm);
-  border-radius: 0 var(--r-lg) var(--r-lg) 0;
 }
 
 .timer__dial {
-  position: relative;
   width: 14px;
   height: 14px;
   flex: none;
@@ -393,17 +477,16 @@
 }
 
 .timer__value {
-  font-variant-numeric: tabular-nums;
+  min-width: 36px;
   font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-tight);
+  font-feature-settings: var(--num);
   color: var(--c-ink-900);
-  min-width: 38px;
 }
 
 .timer__state {
-  font-size: 10px;
+  font-size: var(--fs-3xs);
   font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-eyebrow);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--c-ink-400);
 }
@@ -425,11 +508,13 @@
 }
 
 /* ==========================================================================
-   Main and stage headers
+   Main and page headers
    ========================================================================== */
 .main {
   flex: 1 1 auto;
-  padding-block: var(--sp-8) var(--sp-16);
+  width: 100%;
+  max-width: var(--shell-max);
+  padding: var(--sp-7) var(--sp-8) var(--sp-12);
 }
 
 .main:focus {
@@ -450,7 +535,7 @@
 @keyframes stage-in {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -464,7 +549,7 @@
   justify-content: space-between;
   gap: var(--sp-4) var(--sp-6);
   flex-wrap: wrap;
-  margin-bottom: var(--sp-5);
+  margin-bottom: var(--sp-6);
 }
 
 .stage__head > div:first-child {
@@ -475,37 +560,32 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0;
-  margin-bottom: 6px;
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-medium);
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--c-ink-500);
-  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-3xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink-400);
   white-space: pre-wrap;
 }
 
-.stage__head .eyebrow {
-  margin-bottom: 6px;
-}
-
 .stage__context {
-  color: var(--c-ink-700);
+  color: var(--c-ink-600);
 }
 
 .stage__title {
   font-size: var(--fs-xl);
   font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-display);
-  line-height: 1.2;
+  letter-spacing: -0.028em;
+  line-height: 1.15;
+  color: var(--c-ink-900);
 }
 
 .stage__desc {
   margin-top: 6px;
-  font-size: var(--fs-base);
+  font-size: var(--fs-sm);
   color: var(--c-ink-500);
-  max-width: 74ch;
+  max-width: 76ch;
   line-height: var(--lh-snug);
 }
 
@@ -516,6 +596,22 @@
   flex-wrap: wrap;
 }
 
+/* --- Section typography shared by every workspace ---------------------- */
+.section-title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--c-ink-900);
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+
+.section-hint {
+  margin-top: 2px;
+  font-size: var(--fs-xs);
+  color: var(--c-ink-500);
+  line-height: var(--lh-snug);
+}
+
 /* --- Grids -------------------------------------------------------------- */
 .grid {
   display: grid;
@@ -523,21 +619,6 @@
 }
 
 .grid--2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.grid--3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.split {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-  gap: var(--sp-4);
-  align-items: start;
-}
-
-.split--even {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -560,43 +641,35 @@
 
 /* --- Footer ------------------------------------------------------------- */
 .app-footer {
-  border-top: 1px solid var(--c-line);
-  padding-block: var(--sp-5);
-  font-size: var(--fs-xs);
-  color: var(--c-ink-500);
-}
-
-.app-footer__inner {
   display: flex;
-  gap: var(--sp-3) var(--sp-8);
   justify-content: space-between;
-  flex-wrap: wrap;
   align-items: baseline;
-}
-
-.app-footer__inner > div {
-  display: flex;
-  align-items: baseline;
-  gap: var(--sp-2) var(--sp-5);
+  gap: var(--sp-2) var(--sp-8);
   flex-wrap: wrap;
+  padding: var(--sp-4) var(--sp-8);
+  border-top: 1px solid var(--c-line-soft);
+  font-size: var(--fs-2xs);
+  color: var(--c-ink-400);
 }
 
 .app-footer p {
-  max-width: 78ch;
+  max-width: 80ch;
 }
 
 .app-footer b {
   font-weight: var(--fw-semibold);
+  color: var(--c-ink-600);
 }
 
 .footer-links {
   display: flex;
-  gap: var(--sp-4);
+  align-items: baseline;
+  gap: var(--sp-2) var(--sp-4);
   flex-wrap: wrap;
 }
 
 .footer-links a {
-  color: var(--c-ink-600);
+  color: var(--c-ink-500);
   text-decoration: none;
 }
 
@@ -606,190 +679,91 @@
 }
 
 /* ==========================================================================
-   Responsive - each breakpoint is designed, not just shrunk.
+   Responsive shell
    ========================================================================== */
 
-/* Laptop: the stepper moves to its own row beneath identity and session. */
-@media (max-width: 1340px) {
-  .app-header__inner {
-    --stage-underline: -8px;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas:
-      "brand tools"
-      "nav nav";
+/* Tablet: the rail folds to icons; labels move into tooltips. */
+@media (max-width: 1100px) {
+  .app {
+    grid-template-columns: var(--rail-w-compact) minmax(0, 1fr);
   }
 
-  .brand,
-  .app-header__tools {
-    margin-block: 10px;
-  }
-
-  .stagebar {
-    justify-self: stretch;
-    max-width: none;
-    height: 44px;
-    margin-inline: calc(var(--sp-8) * -1);
-    padding-inline: calc(var(--sp-8) - 6px);
-    border-top: 1px solid var(--c-line-soft);
-  }
-
-  html {
-    scroll-padding-top: 130px;
-  }
-}
-
-@media (max-width: 1180px) {
-  .split:not(.split--even) {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .split--even {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .shell {
-    padding-inline: var(--sp-5);
-  }
-
-  .stagebar {
-    margin-inline: calc(var(--sp-5) * -1);
-    padding-inline: calc(var(--sp-5) - 6px);
-  }
-
-  .grid--3 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .main {
-    padding-block: var(--sp-6) var(--sp-12);
-  }
-}
-
-@media (max-width: 720px) {
-  .grid--2,
-  .grid--3 {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .brand__sub {
-    display: none;
-  }
-
-  .brand__mark {
-    width: 40px;
-    height: 40px;
-  }
-
-  .session-field {
-    width: 150px;
-  }
-
-  .context-chip__meta {
-    display: none;
-  }
-
-  /* Only the current step keeps its name; the others are numbered glyphs. */
-  .stage-step__label {
-    display: none;
-  }
-
-  .stage-step[aria-current="step"] .stage-step__label {
-    display: inline;
-  }
-
-  .stage-step {
-    padding-right: 6px;
-  }
-
-  .stage-step[aria-current="step"] {
-    padding-right: var(--sp-2);
-  }
-
-  .stage-step[aria-current="step"]::after {
-    right: 6px;
-  }
-
-  .stages {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .stage-sep {
-    flex: 1 1 8px;
-    min-width: 6px;
-    max-width: 40px;
-  }
-
-  .stage__head {
-    align-items: stretch;
-    flex-direction: column;
-    gap: var(--sp-3);
-    margin-bottom: var(--sp-4);
-  }
-
-  .stage__title {
-    font-size: 1.25rem;
-  }
-
-  .stage__desc {
-    font-size: var(--fs-sm);
-  }
-
-  .stage__actions {
-    width: 100%;
-  }
-
-  .app-footer__inner,
-  .app-footer__inner > div {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-@media (max-width: 560px) {
-  .shell {
-    padding-inline: var(--sp-4);
-  }
-
-  .stagebar {
-    margin-inline: calc(var(--sp-4) * -1);
-    padding-inline: calc(var(--sp-4) - 6px);
+  .rail {
+    align-items: center;
+    padding-inline: 8px;
   }
 
   .brand {
-    gap: 10px;
+    padding: 2px 0 0;
   }
 
-  .brand__name {
-    font-size: var(--fs-sm);
+  .brand__text,
+  .rail__label,
+  .stage-step__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
-  .session-field {
-    width: 118px;
-    padding-right: var(--sp-2);
+  .stagebar,
+  .stages {
+    width: 100%;
+    align-items: center;
   }
 
-  /* The course is named in each stage's eyebrow, so the chip is redundant here. */
-  .context-chip {
-    display: none !important;
+  .stage-step {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr;
+    width: 40px;
+    height: 36px;
+    padding: 0;
   }
 
-  .timer__state {
+  .stage-step__num {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 13px;
+    height: 13px;
+    font-size: 8px;
+  }
+
+  .stage-step[data-state="pending"] .stage-step__num {
     display: none;
   }
 
-  .timer {
-    padding-right: 10px;
+  .stage-step[aria-current="step"]::before {
+    left: -8px;
+  }
+
+  .stagebar__rail {
+    width: 28px;
+    margin-inline: auto;
+  }
+
+  .rail__foot {
+    display: none;
+  }
+
+  .main {
+    padding-inline: var(--sp-6);
+  }
+
+  .commandbar {
+    padding-left: var(--sp-6);
+  }
+
+  .app-footer {
+    padding-inline: var(--sp-6);
   }
 }
 
-@media (max-width: 380px) {
-  /* Visually hidden, not removed: it is still the page heading. */
-  .brand__text {
+@media (max-width: 900px) {
+  .session-field__label {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -797,7 +771,131 @@
     clip-path: inset(50%);
   }
 
-  .session-field {
-    width: 136px;
+  .session-field__input {
+    width: 140px;
+  }
+}
+
+/* Phone: the rail becomes a compact top bar; the workspace goes edge to edge. */
+@media (max-width: 720px) {
+  .app {
+    display: block;
+  }
+
+  .rail {
+    position: sticky;
+    top: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-3);
+    height: 56px;
+    padding: 0 var(--sp-3);
+    border-bottom: 1px solid var(--c-line);
+    background: color-mix(in srgb, var(--c-rail) 97%, transparent);
+    backdrop-filter: saturate(160%) blur(10px);
+    -webkit-backdrop-filter: saturate(160%) blur(10px);
+  }
+
+  .brand {
+    flex: none;
+  }
+
+  .stagebar {
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    min-width: 0;
+  }
+
+  .stages {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0;
+  }
+
+  .stage-step {
+    width: 36px;
+    height: 36px;
+  }
+
+  .stage-step[aria-current="step"]::before {
+    left: 8px;
+    right: 8px;
+    top: auto;
+    bottom: -10px;
+    width: auto;
+    height: 2px;
+    border-radius: 2px 2px 0 0;
+  }
+
+  .stagebar__rail {
+    display: none;
+  }
+
+  .frame {
+    margin: 0;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .commandbar {
+    position: static;
+    height: auto;
+    min-height: 44px;
+    flex-wrap: wrap;
+    row-gap: 4px;
+    padding: 6px var(--sp-4);
+    border-radius: 0;
+    background: var(--c-surface);
+  }
+
+  .session-field__input {
+    width: 130px;
+  }
+
+  .timer__state {
+    display: none;
+  }
+
+  .main {
+    padding: var(--sp-5) var(--sp-4) var(--sp-10);
+  }
+
+  .stage__head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-5);
+  }
+
+  .stage__title {
+    font-size: 1.375rem;
+  }
+
+  .stage__actions {
+    width: 100%;
+  }
+
+  .app-footer {
+    flex-direction: column;
+    padding: var(--sp-4);
+  }
+
+  html {
+    scroll-padding-top: 64px;
+  }
+}
+
+@media (max-width: 380px) {
+  .commandbar__status {
+    display: none;
+  }
+
+  .session-field__label {
+    display: none;
   }
 }

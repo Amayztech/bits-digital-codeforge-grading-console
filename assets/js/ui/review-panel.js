@@ -94,16 +94,17 @@
         return r.marks;
       })
     );
+    var instructor = state.instructor.trim();
 
     // A finalized grade set leads with its completion record.
-    if (state.finalized) host.appendChild(receipt(state, handlers));
+    if (state.finalized) host.appendChild(receipt(state, handlers, bands.length));
 
     var sheet = D.el("section.sheet", {
       dataset: { printable: "true", status: state.finalized ? "final" : chk.ok ? "ready" : "blocked" },
       "aria-labelledby": "sheetTitle"
     });
 
-    /* --- masthead: the report's letterhead ------------------------------ */
+    /* --- masthead: a dark letterhead against the light product --------- */
     var statusBadge = state.finalized
       ? D.el("span.stamp", { dataset: { tone: "final" } }, [D.el("span.status-dot"), "Finalized"])
       : chk.ok
@@ -113,12 +114,17 @@
     sheet.appendChild(
       D.el("header.sheet__masthead", null, [
         D.el("div.sheet__ident", null, [
-          crest
-            ? D.el("img.sheet__crest", { src: crest.currentSrc || crest.src, alt: "", width: "44", height: "44" })
-            : null,
-          D.el("div", { style: { "min-width": "0" } }, [
-            D.el("p.sheet__eyebrow", { text: "BITS Pilani Digital · Final grade report" }),
-            D.el("h3.sheet__title", { id: "sheetTitle", text: state.courseName || "No course selected" })
+          D.el("p.sheet__eyebrow", null, [
+            crest ? D.el("img.sheet__crest", { src: crest.currentSrc || crest.src, alt: "", width: "20", height: "20" }) : null,
+            "BITS Pilani Digital · Final grade report"
+          ]),
+          D.el("h3.sheet__title", { id: "sheetTitle", text: state.courseName || "No course selected" }),
+          D.el("p.sheet__byline", null, [
+            D.el("span", { dataset: instructor ? null : { missing: "true" }, text: instructor || "Instructor not set" }),
+            D.el("span.sheet__sep", { "aria-hidden": "true", text: "/" }),
+            D.el("span.num", { text: state.cohort.length + " " + U.pluralise(state.cohort.length, "student") }),
+            D.el("span.sheet__sep", { "aria-hidden": "true", text: "/" }),
+            D.el("span.num", { text: U.formatDuration(state.elapsedMs) + " active grading" })
           ])
         ]),
         D.el("div.sheet__status", null, [
@@ -126,67 +132,22 @@
           D.el("p.sheet__prepared", { text: "Prepared " + U.humanStamp(state.now) })
         ]),
         D.el("dl.sheet__subtitle", null, [
-          metaItem("Instructor", state.instructor.trim() || "Not set", !state.instructor.trim()),
-          metaItem("Students", String(state.cohort.length)),
-          metaItem("Active grading time", U.formatDuration(state.elapsedMs)),
+          metaItem("Grade scale", bands.length + " bands · " + (isDefault ? "default cutoffs" : "custom cutoffs")),
+          metaItem("Mean / median", stats.mean.toFixed(1) + " / " + fmt(stats.median)),
+          metaItem("Changes", state.history.length + " this session"),
           metaItem("Source", state.analysis.meta.name + (state.isDemo ? " (demo)" : ""))
         ])
       ])
     );
 
     var body = D.el("div.sheet__body");
-
-    /* --- verification: concise, one line per check ---------------------- */
-    body.appendChild(
-      D.el("section.sheet__section", null, [
-        D.el("h4.sheet__section-title", null, [
-          "Before you finalize",
-          D.el("span", { text: chk.ok ? "All checks passed" : chk.blocking.length + " to resolve" })
-        ]),
-        D.el("ul.checklist.checklist--strip", null,
-          chk.list.map(function (l) {
-            var label = D.el("span.checklist__label", null, [
-              D.el("span.checklist__line", null, [
-                D.el("b", { text: l.strong }),
-                l.rest ? D.el("span", { text: " " + l.rest }) : null
-              ]),
-              D.el("span.checklist__detail", { text: l.detail, title: l.detail })
-            ]);
-            if (!l.ok && l.fix) label.appendChild(l.fix);
-            return D.el("li.checklist__item", { dataset: { ok: l.ok ? "true" : "false", soft: l.soft ? "true" : "false" } }, [
-              D.el("span.checklist__mark", { "aria-hidden": "true" }, [D.icon(l.ok ? "check" : "alert", 10)]),
-              D.el("span.visually-hidden", { text: l.ok ? "Passed: " : l.soft ? "Warning: " : "Not passed: " }),
-              label
-            ]);
-          })
-        )
-      ])
-    );
-
-    /* --- statistics: the same analytics rail as the workspace ----------- */
-    var statsRow = D.el("div.stats.stats--report");
-    [
-      ["Students", stats.count],
-      ["Lowest", stats.min],
-      ["Highest", stats.max],
-      ["Mean", stats.mean.toFixed(1)],
-      ["Median", fmt(stats.median)],
-      ["Std dev", fmt(stats.stdDev)]
-    ].forEach(function (t) {
-      statsRow.appendChild(D.statTile(t[0], t[1], {}));
-    });
-    body.appendChild(
-      D.el("section.sheet__section", null, [
-        D.el("h4.sheet__section-title", null, ["Cohort statistics", D.el("span", { text: "From the accepted rows of " + state.analysis.meta.name })]),
-        statsRow
-      ])
-    );
+    var main = D.el("div.sheet__main");
+    var aside = D.el("aside.sheet__aside", { "aria-label": "Verification, statistics and export" });
 
     /* --- distribution -------------------------------------------------- */
     // The chart element is owned by the caller and reused across re-renders, so
     // rebuilding the sheet does not orphan it.
-    var chartBox = handlers.chartHost;
-    body.appendChild(
+    main.appendChild(
       D.el("section.sheet__section", null, [
         D.el("h4.sheet__section-title", null, [
           "Final grade distribution",
@@ -195,11 +156,11 @@
             { cut: true, label: "Grade cutoff" }
           ])
         ]),
-        D.el("div.sheet__chart", null, chartBox)
+        D.el("div.sheet__chart", null, handlers.chartHost)
       ])
     );
 
-    /* --- band table + what to know, side by side ------------------------ */
+    /* --- band table ----------------------------------------------------- */
     var bandTable = D.el("table.diff");
     bandTable.classList.add("diff--report");
     bandTable.appendChild(D.el("caption.visually-hidden", { text: "Final grading bands and the number of students in each" }));
@@ -243,12 +204,20 @@
       );
     });
     bandTable.appendChild(bb);
+    main.appendChild(
+      D.el("section.sheet__section", null, [
+        D.el("h4.sheet__section-title", null, [
+          "Final grading bands",
+          D.el("span", { text: G.describeCutoffs(state.cutoffs).replace(/(\d)-(\d)/g, "$1–$2") })
+        ]),
+        D.el("div.sheet__bands", null, bandTable)
+      ])
+    );
 
-    var aside = D.el("div.sheet__aside");
-
-    /* change from defaults */
+    /* --- change from defaults and notes -------------------------------- */
+    var notes = D.el("div.sheet__notes-grid");
     if (!isDefault) {
-      aside.appendChild(
+      notes.appendChild(
         D.el("section.sheet__note", { dataset: { tone: impact.changed ? "warning" : "neutral" } }, [
           D.el("p.sheet__note-title", null, [
             D.el("span", { text: "Change against the default bands" }),
@@ -279,7 +248,6 @@
       );
     }
 
-    /* worth knowing */
     var attention = [];
     if (state.analysis.counts.rejected > 0) {
       attention.push(
@@ -301,7 +269,7 @@
     if (state.isDemo) {
       attention.push("This report is built from the synthetic demo class, not real student records.");
     }
-    if (!state.instructor.trim()) {
+    if (!instructor) {
       attention.push("No instructor name has been entered, so the report cannot be attributed.");
     }
     if (state.history.length) {
@@ -315,7 +283,7 @@
       );
     }
     if (attention.length) {
-      aside.appendChild(
+      notes.appendChild(
         D.el("section.sheet__note", null, [
           D.el("p.sheet__note-title", null, [
             D.el("span", { text: "Worth knowing before you finalize" }),
@@ -325,54 +293,88 @@
         ])
       );
     }
-    if (!aside.firstChild) {
-      aside.appendChild(
-        D.el("section.sheet__note", { dataset: { tone: "neutral" } }, [
-          D.el("p.sheet__note-title", null, [D.el("span", { text: "Default bands, unchanged" })]),
-          D.el("p.sheet__note-text", { text: "Every student is graded on the challenge's default bands. No notes for this grade set." })
-        ])
-      );
-    }
+    if (notes.firstChild) main.appendChild(notes);
 
-    body.appendChild(
+    /* --- aside: export, verification, statistics ----------------------- */
+    aside.appendChild(
+      D.el("section.sheet__export.no-print-actions", { "aria-label": "Export" }, [
+        D.el("p.sheet__aside-title", { text: state.finalized ? "Exported" : "Export" }),
+        D.el("ul.sheet__files", null, [
+          D.el("li", null, [
+            D.icon("doc", 13),
+            D.el("span", null, [D.el("b", { text: "Grades" }), " · one row per student"])
+          ]),
+          D.el("li", null, [
+            D.icon("doc", 13),
+            D.el("span", null, [D.el("b", { text: "Summary" }), " · cutoffs, statistics, change log"])
+          ])
+        ]),
+        D.button({
+          label: state.finalized ? "Export again" : "Finalize & export",
+          variant: null,
+          icon: "download",
+          block: true,
+          disabled: !chk.ok || !state.cohort.length,
+          title: chk.ok ? "" : "Resolve the checks first",
+          onClick: handlers.onFinalize
+        }),
+        D.el("div.sheet__export-row", null, [
+          D.button({ label: "Print report", variant: "secondary", size: "sm", icon: "printer", onClick: handlers.onPrint }),
+          D.button({ label: "Back to bands", variant: "ghost", size: "sm", icon: "sliders", onClick: handlers.onBack })
+        ]),
+        D.el("p.sheet__foot-note", {
+          text: "This is exactly what will be written to the files, graded as shown."
+        })
+      ])
+    );
+
+    aside.appendChild(
       D.el("section.sheet__section", null, [
         D.el("h4.sheet__section-title", null, [
-          "Final grading bands",
-          D.el("span", { text: G.describeCutoffs(state.cutoffs).replace(/(\d)-(\d)/g, "$1\u2013$2") })
+          "Before you finalize",
+          D.el("span", { text: chk.ok ? "All checks passed" : chk.blocking.length + " to resolve" })
         ]),
-        D.el("div.sheet__grid", null, [
-          D.el("div.table-wrap.sheet__bands", null, bandTable),
-          aside
-        ])
-      ])
-    );
-
-    sheet.appendChild(body);
-
-    /* --- footer actions ------------------------------------------------- */
-    sheet.appendChild(
-      D.el("div.sheet__foot", null, [
-        D.el("p.sheet__foot-note", null, [
-          D.el("b", { text: "This is exactly what will be written to the files. " }),
-          "One row per student with the grade shown above, plus a summary recording the instructor, course, " +
-            "source sheet, statistics, the exact cutoffs and every change made this session."
-        ]),
-        D.el("div.cluster.sheet__actions", null, [
-          D.button({ label: "Back to bands", variant: "ghost", icon: "sliders", onClick: handlers.onBack }),
-          D.button({ label: "Print report", variant: "secondary", icon: "printer", onClick: handlers.onPrint }),
-          D.button({
-            label: state.finalized ? "Export again" : "Finalize & export",
-            variant: null,
-            icon: "download",
-            disabled: !chk.ok || !state.cohort.length,
-            title: chk.ok ? "" : "Resolve the checks above first",
-            onClick: handlers.onFinalize
+        D.el("ul.checklist.checklist--verify", null,
+          chk.list.map(function (l) {
+            var label = D.el("span.checklist__label", null, [
+              D.el("span.checklist__line", null, [
+                D.el("b", { text: l.strong }),
+                l.rest ? D.el("span", { text: " " + l.rest }) : null
+              ]),
+              D.el("span.checklist__detail", { text: l.detail, title: l.detail })
+            ]);
+            if (!l.ok && l.fix) label.appendChild(l.fix);
+            return D.el("li.checklist__item", { dataset: { ok: l.ok ? "true" : "false", soft: l.soft ? "true" : "false" } }, [
+              D.el("span.checklist__mark", { "aria-hidden": "true" }, [D.icon(l.ok ? "check" : "alert", 10)]),
+              D.el("span.visually-hidden", { text: l.ok ? "Passed: " : l.soft ? "Warning: " : "Not passed: " }),
+              label
+            ]);
           })
-        ])
+        )
       ])
     );
 
-    sheet.lastElementChild.classList.add("no-print-actions");
+    var statsRow = D.el("div.stats.stats--report");
+    [
+      ["Students", stats.count],
+      ["Lowest", stats.min],
+      ["Highest", stats.max],
+      ["Mean", stats.mean.toFixed(1)],
+      ["Median", fmt(stats.median)],
+      ["Std dev", fmt(stats.stdDev)]
+    ].forEach(function (t) {
+      statsRow.appendChild(D.statTile(t[0], t[1], {}));
+    });
+    aside.appendChild(
+      D.el("section.sheet__section", null, [
+        D.el("h4.sheet__section-title", null, ["Cohort statistics", D.el("span", { text: "Accepted rows of " + state.analysis.meta.name })]),
+        statsRow
+      ])
+    );
+
+    body.appendChild(main);
+    body.appendChild(aside);
+    sheet.appendChild(body);
     host.appendChild(sheet);
 
     return chk;
@@ -386,20 +388,23 @@
   }
 
   /** The completion record: calm, factual, and it says what was written. */
-  function receipt(state, handlers) {
+  function receipt(state, handlers, bandCount) {
     var f = state.finalized;
-    return D.el("section.receipt", { "aria-label": "Grades finalized" }, [
-      D.el("div.receipt__icon", { "aria-hidden": "true" }, [D.icon("check", 16)]),
+    return D.el("section.receipt", { "aria-label": "Grading finalized" }, [
+      D.el("div.receipt__seal", { "aria-hidden": "true" }, [
+        D.svg("svg", { width: "44", height: "44", viewBox: "0 0 44 44", class: "receipt__svg" }, [
+          D.svg("circle", { class: "receipt__ring", cx: "22", cy: "22", r: "20" }),
+          D.svg("path", { class: "receipt__tick", d: "M14 22.5l5.5 5.5L30.5 16" })
+        ])
+      ]),
       D.el("div.receipt__main", null, [
-        D.el("p.receipt__title", { text: "Grades finalized" }),
-        D.el("p.receipt__body", null, [
-          D.el("b", { text: state.courseName }),
-          D.el("span.receipt__sep", { "aria-hidden": "true", text: "·" }),
-          state.cohort.length + " " + U.pluralise(state.cohort.length, "student"),
-          D.el("span.receipt__sep", { "aria-hidden": "true", text: "·" }),
-          U.humanStamp(f.at),
-          D.el("span.receipt__sep", { "aria-hidden": "true", text: "·" }),
-          U.formatDuration(f.elapsedMs) + " of active grading"
+        D.el("p.receipt__eyebrow", { text: "Grading finalized · " + U.humanStamp(f.at) }),
+        D.el("p.receipt__title", { text: state.courseName }),
+        D.el("dl.receipt__facts", null, [
+          D.el("div", null, [D.el("dd.num", { text: String(state.cohort.length) }), D.el("dt", { text: "students graded" })]),
+          D.el("div", null, [D.el("dd.num", { text: String(bandCount) }), D.el("dt", { text: "bands" })]),
+          D.el("div", null, [D.el("dd.num", { text: String(f.files.length) }), D.el("dt", { text: "files exported" })]),
+          D.el("div", null, [D.el("dd.num", { text: U.formatDuration(f.elapsedMs) }), D.el("dt", { text: "active grading" })])
         ]),
         D.el("div.receipt__files", { "aria-label": "Exported files" },
           f.files.map(function (file) {
@@ -408,7 +413,7 @@
         )
       ]),
       D.el("div.receipt__actions", null, [
-        D.button({ label: "Print", variant: "secondary", size: "sm", icon: "printer", onClick: handlers.onPrint }),
+        D.button({ label: "Print report", variant: "secondary", size: "sm", icon: "printer", onClick: handlers.onPrint }),
         D.button({ label: "Export again", variant: "ghost", size: "sm", icon: "download", onClick: handlers.onFinalize })
       ])
     ]);

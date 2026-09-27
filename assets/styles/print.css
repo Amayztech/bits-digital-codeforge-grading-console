@@ -22,6 +22,8 @@
   }
 
   .app-header,
+  .rail,
+  .commandbar,
   .stagebar,
   .stage__head,
   .app-footer,
@@ -34,6 +36,19 @@
 
   .main {
     padding: 0 !important;
+    max-width: none !important;
+  }
+
+  .app {
+    display: block !important;
+    background: #ffffff !important;
+  }
+
+  .frame {
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
 
   .shell {
@@ -49,16 +64,28 @@
   }
 
   .sheet__masthead {
-    padding: 0 0 5mm !important;
+    background: #0e121b !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    padding: 7mm 7mm 0 !important;
     border-radius: 0 !important;
   }
 
-  .sheet__masthead::before {
-    display: none !important;
+  .sheet__main {
+    padding: 6mm 6mm 6mm 0 !important;
+  }
+
+  .sheet__body {
+    grid-template-columns: minmax(0, 1fr) 62mm !important;
+  }
+
+  .sheet__aside {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .stamp,
-  .checklist--strip .checklist__item,
+  .checklist--verify .checklist__item,
   .sheet__note,
   .receipt {
     -webkit-print-color-adjust: exact;
@@ -69,19 +96,10 @@
     display: none !important;
   }
 
-  .sheet__grid {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) !important;
-  }
-
   .sheet__chart,
   .sheet__note,
-  .checklist--strip {
+  .checklist--verify {
     break-inside: avoid;
-  }
-
-  .sheet__body {
-    padding: 5mm 0 !important;
-    gap: 5mm !important;
   }
 
   .sheet__foot {

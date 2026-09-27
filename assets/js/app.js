@@ -215,6 +215,7 @@
     var fill = document.getElementById("stageFill");
     if (fill) fill.style.width = (doneCount / 6) * 100 + "%";
     renderStageContext();
+    renderContext();
   }
 
   /**
@@ -252,6 +253,24 @@
     } else {
       chip.dataset.visible = "false";
     }
+    // The command bar states where the session stands in one word.
+    var empty = document.getElementById("contextEmpty");
+    var status = document.getElementById("contextStatus");
+    if (empty) {
+      empty.hidden = !!state.courseKey;
+      empty.textContent = state.analysis ? "Select a course to grade" : "No marks imported";
+    }
+    if (status) {
+      var tone = state.finalized ? "final" : state.analysis ? (state.isDemo ? "demo" : "valid") : null;
+      status.hidden = !tone;
+      if (tone) {
+        status.dataset.tone = tone;
+        status.textContent =
+          tone === "final" ? "Finalized" :
+          tone === "demo" ? "Demo data · validated" :
+          "Validated · " + state.analysis.counts.accepted + " rows";
+      }
+    }
     // Only nag about a missing instructor name once it actually matters.
     instructorInvalid(
       state.stage === "review" && !state.instructor.trim()
@@ -269,6 +288,15 @@
     var help = document.getElementById("showOnboarding");
     if (board) board.hidden = !visible;
     if (help) help.hidden = visible;
+    // The same page is upload mode before a file and data-health mode after.
+    var title = document.getElementById("importTitle");
+    var desc = document.querySelector("#stage-import .stage__desc");
+    if (title) title.textContent = visible ? "Import marks" : "Data health";
+    if (desc) {
+      desc.textContent = visible
+        ? "Upload a workbook. Its structure and every row are validated before any grade exists."
+        : "What was read from the workbook, what was corrected, and the courses it contains.";
+    }
   }
 
   function adoptAnalysis(analysis, file) {
@@ -883,6 +911,8 @@
 
   function renderReview() {
     var host = document.getElementById("reviewBody");
+    var reviewTitle = document.getElementById("reviewTitle");
+    if (reviewTitle) reviewTitle.textContent = state.finalized ? "Grading complete" : "Final review";
     var chartHost = reviewChartHost();
     CF.reviewPanel.render(host, reviewState(), {
       chartHost: chartHost,
