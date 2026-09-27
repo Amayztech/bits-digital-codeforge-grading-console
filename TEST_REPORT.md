@@ -3,14 +3,15 @@
 Everything below was executed. The raw captured output is committed alongside
 this report:
 
-- `artifacts/test-run-unit.txt` — 92 unit and integration tests
-- `artifacts/test-run-browser.txt` — 181 browser assertions
+- `artifacts/test-run-unit.txt` — 94 unit and integration tests
+- `artifacts/test-run-browser.txt` — 185 browser assertions
+- `artifacts/test-run-second-review.txt` — 105 second-pass independent verification assertions
 - `artifacts/test-run-print.txt` — printable report rendering
-- `artifacts/live-verify.txt` — 23 assertions against the deployed URL
+- `artifacts/live-verify.txt` — 26 assertions against the deployed URL
 - `artifacts/recon/starter-probe.json` — the starter's recorded behaviour across 33 scenarios
 - `artifacts/recon/A-gap-export.csv` — the starter's 15-of-17-row export
 - `artifacts/grade-report.pdf` — the printable grade report
-- `artifacts/screenshots/` — 16 screenshots across five viewport widths
+- `artifacts/screenshots/` — screenshots across five viewport widths
 
 Reproduce with `npm run test:all` and `npm run verify:live`.
 
@@ -20,12 +21,12 @@ Reproduce with `npm run test:all` and `npm run verify:live`.
 
 | Environment | Version | How | Result |
 | --- | --- | --- | --- |
-| Chromium (Playwright headless shell) | 153.0.8010.12 | `npm run test:browser` | 174 / 174 pass, 0 console errors, 0 page errors |
+| Chromium (Playwright headless shell) | 153.0.8010.12 | `npm run test:browser` | 185 / 185 pass, 0 console errors, 0 page errors |
 | Chromium, **deployed URL** | same | `npm run verify:live` | 26 / 26 pass, 0 failed asset requests, 0 console errors |
 | Chromium, **`file://` protocol** | same | `npm run verify:file` | 8 / 8 pass — the console works opened directly from disk |
 | Chromium with `prefers-reduced-motion: reduce` | same | Playwright context option | Full journey completes, 0 errors |
 | Print rendering (A4 portrait) | Chromium print pipeline | `npm run test:print` → PDF | Clean single-document report |
-| Node.js | v22.23.0 on Windows 11 | `npm test` | 92 / 92 pass |
+| Node.js | v22.23.0 on Windows 11 | `npm test` | 94 / 94 pass |
 | Static analysis | `tools/hygiene.js` | `npm run hygiene` | Clean: 24 shipped files, 46 sources scanned |
 | Static file server | `tools/serve.js`, no dependencies | `npm start` | Serves on :4173, no caching |
 | GitHub Pages (production) | `ayeshh11.github.io` | `npm run verify:live` | Full workflow incl. both downloads |
@@ -194,7 +195,7 @@ generator.
 | E15 | Repeated downloads | Both files each time | 2 downloads in section 9, 2 in section 11 | Pass |
 | E16 | Confirmation count | Exactly one | 1 dialog, 2 actions | Pass |
 | E17 | Confirmation content | Names course, instructor, files, distribution | All present | Pass |
-| E18 | No native dialogs anywhere | Zero | 0 across 174 assertions | Pass |
+| E18 | No native dialogs anywhere | Zero | 0 across the full 185-assertion journey | Pass |
 | E19 | Deployed site | Full workflow from the public URL | 26 / 26 pass, both files downloaded from `ayeshh11.github.io` | Pass |
 | E20 | Assets resolve from a `/<repo>/` subdirectory | Yes | Verified against the live URL; the workflow fails the build on any absolute path | Pass |
 | E21 | Brand assets on the live site | Crest, favicon and apple-touch-icon all load | Verified over the network on the deployed URL | Pass |
@@ -285,6 +286,13 @@ caught by the tests and fixed:
 | The print report was a blank page | `tests/browser/print.js` | Printable flag moved to the stage section |
 | Student-count axis showed 0.5 / 1.5 gridlines | `tests/browser/print.js` | Integer steps for small peaks |
 | A mojibake pass corrupted 11 non-ASCII characters in `app.js` | Encoding audit | `tools/fix-encoding.js` |
+| A blank row between students shifted every later row number | Second-pass review, reproduced with a real workbook whose third row is blank | The grid is read position-preserving and the used-range start row is applied (`BUG_FIX_LOG` #56) |
+| Chart hover tooltips vanished after the first redraw | Second-pass review: moved a cutoff, hovered, nothing appeared and no tooltip element existed | The tooltip is re-attached on every draw, and hidden means `display: none` (`BUG_FIX_LOG` #57) |
+| The student table's change arrows contradicted the impact panel | Second-pass review: same student shown "down" in the impact panel and with an up arrow in the table | Direction derived from grade rank, the same rule the impact calculation uses (`BUG_FIX_LOG` #58) |
+| The summary CSV mislabelled its impact comparison | Second-pass review: label said "previous configuration", numbers compared the defaults | Label corrected to "Change from the default bands" (`BUG_FIX_LOG` #59) |
+| The finalize dialog's declared focus target never existed at focus time | Second-pass review: `activeElement` showed the fallback while `focus:` pointed at an attribute applied later | Dead option removed; safe-action focus documented as intended (`BUG_FIX_LOG` #60) |
+| Changing the rounding rule reset the instructor's cutoffs and history | `tests/browser/second-review.js`: A set to 85, rounding switched, cutoffs back to 80 and history emptied | Cutoffs, baseline, history, visited stages and grading time carried across re-validation (`BUG_FIX_LOG` #61) |
+| The impact table pushed the Configure stage 12px sideways on a phone | `tests/browser/second-review.js`: 390px, after a cutoff change, `scrollWidth` 402 vs 390 | Table placed in an `overflow-x: auto` wrapper (`BUG_FIX_LOG` #62) |
 | The course list was not cleared on a failed import | Browser journey §10 | `onFailed` clears the picker and the stage bar |
 | The review chart was orphaned when the sheet re-rendered, so the distribution vanished from the report after export | Browser journey 9, after the export | The chart element is created once and handed to the panel to place, so a re-render cannot detach it |
 
@@ -294,16 +302,45 @@ caught by the tests and fixed:
 
 | Suite | Tests | Pass | Fail |
 | --- | --- | --- | --- |
-| Unit and integration (`npm test`) | 92 | 92 | 0 |
-| Browser journey (`npm run test:browser`) | 174 | 174 | 0 |
+| Unit and integration (`npm test`) | 94 | 94 | 0 |
+| Browser journey (`npm run test:browser`) | 185 | 185 | 0 |
 | Deployed site (`npm run verify:live`) | 26 | 26 | 0 |
 | `file://` protocol (`npm run verify:file`) | 8 | 8 | 0 |
+| Second-pass verification (`npm run verify:review`) | 105 | 105 | 0 |
 | Static hygiene (`npm run hygiene`) | 24 files | clean | 0 |
 | Print rendering | 1 document | 1 | 0 |
-| **Total behavioural tests** | **304** | **304** | **0** |
+| **Total behavioural tests** | **419** | **419** | **0** |
 
 Uncaught page errors: **0**. Console errors: **0**. Native dialogs: **0**.
 Failed network requests on the deployed site: **0**. Static hygiene findings: **0**.
 
 Known limitations are listed in section 1 and in the README's *Honesty notes*.
 They are limitations of what was verified, not of what is claimed.
+
+---
+
+## 7. Second-pass independent verification
+
+After the suites above passed, an independent second review re-derived the
+expected results from scratch — using its own implementations rather than the
+application's — and drove the running console through the state sequences that
+are easy to get wrong. It found seven genuine defects (log entries #56–#62);
+everything else it probed held. The checks are committed as
+`tests/browser/second-review.js` (`npm run verify:review`, 105 assertions, output
+in `artifacts/test-run-second-review.txt`). What was independently verified:
+
+| Area | Method | Result |
+| --- | --- | --- |
+| Grade mapping, 0–100 | The brief's bands re-implemented from the brief text; every mark checked against them; then 300 random valid configurations, each walked mark-by-mark against independently derived bands | Exactly one grade per mark in every configuration; `gradeFor` and `gradeAll` agree with the independent bands everywhere |
+| Gap/overlap prevention | 500 hostile random edit sequences (including values like −50 and 250) through `applyCutoff`, validating after every step | No invalid configuration is reachable |
+| Statistics | Mean, median, sample standard deviation and R-7 quantiles re-implemented separately; compared on 14 vectors (empty, single, identical, 0 & 100 only, extreme spread) plus a 500-mark random sample; histogram bins re-counted independently | All values match; no `NaN`, `Infinity` or `undefined` anywhere |
+| Impact analysis | `changed` / `up` / `down` / per-band deltas / moved-student lists recomputed independently across five scenarios (no change, one-mark change, raise, lower, multi-band change), plus direction semantics for both moves | Match on every field, including "up means a better grade" |
+| Rounding | `nearest` / `up` / `down` against a hand-computed table incl. 0.5, 49.5, 79.5, 99.5, 100.0 | Behaves exactly as documented |
+| Export vs the rendered review sheet | The review sheet's visible band table was scraped from the DOM; the exported grades CSV was re-graded using only those scraped bands; the sheet's counts column compared with a fresh tally of the CSV; the summary's band rows compared with the sheet | Every exported grade equals the grade implied by the sheet the instructor saw; counts identical in all three places |
+| Review freshness | Change a cutoff after reviewing, return to the review sheet | The sheet re-renders from current state — no stale snapshot; the Finalized badge clears |
+| State isolation | File A → edit bands → review → file B; demo → real → demo; course A → edit → course B → course A | Nothing leaks: cutoffs, history, baseline, finalized state, demo flag, course list and review sheet all reset correctly on every transition |
+| Rounding rule change | Fractional-mark workbook, cutoff edited, rounding switched to "up" | Marks re-graded; course, cutoffs and history now preserved (was a defect, #61) |
+| Import errors | Missing column, not-a-zip, zero-byte, headers-only, zero-worksheet files, then a valid file | Each shows a specific error with a recovery action and adopts no data; the next valid file loads normally |
+| Second workbook end-to-end | 300-student workbook, second course, two cutoff edits, review, export | Export matches the review sheet row-for-row and count-for-count |
+| Responsiveness | Import, analyse, configure (with a live impact table) and review at 1024, 768, 390px | No horizontal overflow (was a defect at 390px, #62) |
+| Duplicate detection | Two rows whose course+ID concatenate identically (`CS1`+`01ABC` vs `CS10`+`1ABC`) | Correctly distinct — the dedupe key carries a separator; neither row is falsely rejected |

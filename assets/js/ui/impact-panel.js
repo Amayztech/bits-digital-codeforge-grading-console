@@ -127,7 +127,8 @@
         );
       });
       table.appendChild(tbody);
-      host.appendChild(table);
+      // Six columns do not fit a phone; scroll the table, not the page.
+      host.appendChild(D.el("div", { style: { "overflow-x": "auto" } }, table));
     } else {
       host.appendChild(
         D.el("p.field__hint", {

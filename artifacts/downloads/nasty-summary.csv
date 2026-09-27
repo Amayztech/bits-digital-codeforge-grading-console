@@ -5,7 +5,7 @@ Instructor,"Kumar, ""A."""
 Course,CS101
 Source file,01-valid-standard.xlsx
 Source sheet,Sheet1
-Generated at,"26 Sep 2026, 19:47"
+Generated at,"27 Sep 2026, 09:23"
 Active grading time,3s
 Rows accepted from workbook,60
 Rows rejected,0
@@ -33,13 +33,13 @@ C-,30,39,0,0.0%
 D,20,29,0,0.0%
 E,0,19,0,0.0%
 
-Change from previous configuration
+Change from the default bands
 Students affected,1
 Moved up a grade,0
 Moved down a grade,1
 
 Change log
 #,Time,Change
-1,19:47,A minimum: 80 → 85
+1,09:23,A minimum: 80 → 85
 
 Note,Generated in the instructor's browser. No student data was transmitted.

@@ -102,7 +102,10 @@
 
     if (ctx.changedFrom && ctx.changedFrom.length === ctx.cutoffs.length) {
       var diff = CF.grading.impact(ctx.records || [], ctx.cutoffs, ctx.changedFrom);
-      lines.push(U.csvRow(["Change from previous configuration"]));
+      // `changedFrom` is the challenge's default bands, so the section is
+      // labelled honestly rather than as a diff against the instructor's
+      // last edit (which would be empty at export time).
+      lines.push(U.csvRow(["Change from the default bands"]));
       lines.push(U.csvRow(["Students affected", diff.changed]));
       lines.push(U.csvRow(["Moved up a grade", diff.up]));
       lines.push(U.csvRow(["Moved down a grade", diff.down]));

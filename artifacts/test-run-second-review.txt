@@ -1,0 +1,132 @@
+
+> bits-digital-codeforge-grading-console@1.0.0 verify:review
+> node tests/browser/second-review.js
+
+
+[1m1. Grading logic (pure, independent reference)[0m
+  [32m✓[0m defaults: every mark 0-100 has exactly one grade, matching the app
+  [32m✓[0m defaults: boundary marks graded per the brief
+  [32m✓[0m out-of-scale marks are not graded
+  [32m✓[0m 400 random valid configurations: no gaps, no overlaps, app == reference
+  [32m✓[0m hostile edit sequences never reach an invalid configuration
+  [32m✓[0m invalid configurations are rejected by validate()
+  [32m✓[0m defaults() returns a fresh copy
+
+[1m2. Statistics (pure, independent reference)[0m
+  [32m✓[0m stats match reference: one
+  [32m✓[0m histogram counts every mark: one
+  [32m✓[0m stats match reference: identical
+  [32m✓[0m histogram counts every mark: identical
+  [32m✓[0m stats match reference: zero
+  [32m✓[0m histogram counts every mark: zero
+  [32m✓[0m stats match reference: hundred
+  [32m✓[0m histogram counts every mark: hundred
+  [32m✓[0m stats match reference: extremes
+  [32m✓[0m histogram counts every mark: extremes
+  [32m✓[0m stats match reference: mixed
+  [32m✓[0m histogram counts every mark: mixed
+  [32m✓[0m empty cohort yields nulls, not NaN
+  [32m✓[0m grade counts sum to cohort size
+
+[1m3. Import validation[0m
+  [32m✓[0m 10-missing-column.xlsx: clear error, no course picker, no data adopted
+  [32m✓[0m 20-corrupt-not-a-zip.xlsx: clear error, no course picker, no data adopted
+  [32m✓[0m 21-empty-file.xlsx: clear error, no course picker, no data adopted
+  [32m✓[0m 13-empty-headers-only.xlsx: clear error, no course picker, no data adopted
+  [32m✓[0m 24-zero-worksheets.xlsx: clear error, no course picker, no data adopted
+  [32m✓[0m recovery: a valid file after failures loads normally
+  [32m✓[0m duplicate and blank IDs are reported as rejected rows
+  [32m✓[0m invalid marks are rejected with their spreadsheet row numbers shown
+  [32m✓[0m fractional marks offer a rounding rule
+  [32m✓[0m changing the rounding rule re-grades the fractional marks
+  [32m✓[0m changing the rounding rule keeps the selected course
+  [32m✓[0m changing the rounding rule keeps the instructor's cutoffs
+  [32m✓[0m changing the rounding rule keeps the change history
+
+[1m4. Stale state / repeated upload[0m
+  [32m✓[0m file B: no course selected yet
+  [32m✓[0m file B: cutoffs back to defaults
+  [32m✓[0m file B: history and baseline cleared
+  [32m✓[0m file B: only its own courses listed
+  [32m✓[0m file B: stale review sheet removed
+  [32m✓[0m file B: review reflects file B cohort and defaults
+  [32m✓[0m demo loads and is flagged as demo
+  [32m✓[0m demo -> real: demo flag cleared, cutoffs default, no course
+  [32m✓[0m real -> demo: demo flag set, real courses gone
+  [32m✓[0m course A -> B: B starts from defaults with its own cohort
+  [32m✓[0m course B -> A: cohort is course A only
+
+[1m5. Impact calculations[0m
+  [32m✓[0m found a zero-impact move to test
+  [32m✓[0m zero affected: panel says so and matches reference
+  [32m✓[0m one affected: count and direction match reference
+  [32m✓[0m multiple affected: changed/up/down match reference
+  [32m✓[0m moved students listed with previous and new grade
+  [32m✓[0m before/after band deltas match reference
+  [32m✓[0m undo restores the previous cutoffs; impact still matches reference
+  [32m✓[0m reset restores the challenge defaults
+
+[1m6. Final review consistency[0m
+  [32m✓[0m review #1: course and instructor current
+  [32m✓[0m review #1: band table and counts match reference
+  [32m✓[0m review #1: statistics match reference
+  [32m✓[0m review after edits: course and instructor current
+  [32m✓[0m review after edits: band table and counts match reference
+  [32m✓[0m review after edits: statistics match reference
+
+[1m7. Export correctness[0m
+  [32m✓[0m export #1: two files, named for the course
+  [32m✓[0m export #1: header and row count
+  [32m✓[0m export #1: every ID and mark matches the cohort
+  [32m✓[0m export #1: EXPORTED GRADES == grades implied by the review sheet
+  [32m✓[0m export #1: exported grade counts == review sheet counts
+  [32m✓[0m export #1: summary instructor, course, count
+  [32m✓[0m export #1: summary bands == review sheet
+  [32m✓[0m export #1: impact section is labelled as a comparison with the defaults
+  [32m✓[0m export #1: no NaN/undefined/null in either file
+  [32m✓[0m finalized state recorded
+  [32m✓[0m an edit after finalize clears finalized state
+  [32m✓[0m export #2 (hostile name): two files, named for the course
+  [32m✓[0m export #2 (hostile name): header and row count
+  [32m✓[0m export #2 (hostile name): every ID and mark matches the cohort
+  [32m✓[0m export #2 (hostile name): EXPORTED GRADES == grades implied by the review sheet
+  [32m✓[0m export #2 (hostile name): exported grade counts == review sheet counts
+  [32m✓[0m export #2 (hostile name): summary instructor, course, count
+  [32m✓[0m export #2 (hostile name): summary bands == review sheet
+  [32m✓[0m export #2 (hostile name): impact section is labelled as a comparison with the defaults
+  [32m✓[0m export #2 (hostile name): no NaN/undefined/null in either file
+
+[1m8. Second workbook end-to-end[0m
+  [32m✓[0m second workbook: review shows the new course
+  [32m✓[0m second workbook export: two files, named for the course
+  [32m✓[0m second workbook export: header and row count
+  [32m✓[0m second workbook export: every ID and mark matches the cohort
+  [32m✓[0m second workbook export: EXPORTED GRADES == grades implied by the review sheet
+  [32m✓[0m second workbook export: exported grade counts == review sheet counts
+  [32m✓[0m second workbook export: summary instructor, course, count
+  [32m✓[0m second workbook export: summary bands == review sheet
+  [32m✓[0m second workbook export: impact section is labelled as a comparison with the defaults
+  [32m✓[0m second workbook export: no NaN/undefined/null in either file
+
+[1m9. Accessibility / responsiveness spot checks[0m
+  [32m✓[0m visible controls all have an accessible name
+  [32m✓[0m keyboard focus is visible
+  [32m✓[0m finalize dialog opens by keyboard, traps focus, closes on Escape
+  [32m✓[0m 1024px import: no horizontal overflow
+  [32m✓[0m 1024px analyse: no horizontal overflow
+  [32m✓[0m 1024px configure: no horizontal overflow
+  [32m✓[0m 1024px review: no horizontal overflow
+  [32m✓[0m 768px import: no horizontal overflow
+  [32m✓[0m 768px analyse: no horizontal overflow
+  [32m✓[0m 768px configure: no horizontal overflow
+  [32m✓[0m 768px review: no horizontal overflow
+  [32m✓[0m 390px import: no horizontal overflow
+  [32m✓[0m 390px analyse: no horizontal overflow
+  [32m✓[0m 390px configure: no horizontal overflow
+  [32m✓[0m 390px review: no horizontal overflow
+
+[1m10. Console[0m
+  [32m✓[0m no console errors, page errors or native dialogs
+
+----------------------------------------------------------------
+[32m105 passing, 0 failing[0m

@@ -274,6 +274,15 @@
     for (var i = 0; i < shown; i++) {
       var r = rows[i];
       var gi = CF.grading.GRADES.indexOf(r.grade);
+      /*
+       * Direction comes from the grade's rank in GRADES, not from string
+       * comparison: alphabetically "B" > "A-", but moving A- to B is a
+       * *downward* move. A better grade has a lower index, so "up" means the
+       * index decreased - the same definition the impact panel uses.
+       */
+      var movedUp =
+        r.changed &&
+        CF.grading.GRADES.indexOf(r.grade) < CF.grading.GRADES.indexOf(r.before);
       var row = D.el("tr", { dataset: { flagged: r.changed ? "true" : "false" } }, [
         D.el("td.cell-id", { text: r.id }),
         D.el("td.num.cell-strong", { text: String(r.marks) }),
@@ -282,7 +291,7 @@
             gradeChip(r.grade || "?", gi >= 0 ? gi : 7),
             r.changed
               ? D.el("span.row-marker", null, [
-                  D.icon(r.grade > r.before ? "arrow-up" : "arrow-down", 11),
+                  D.icon(movedUp ? "arrow-up" : "arrow-down", 11),
                   r.before + " → " + r.grade
                 ])
               : null

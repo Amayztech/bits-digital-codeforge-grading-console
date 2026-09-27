@@ -90,9 +90,10 @@ worked example row and a `How to use` sheet) and `samples/sample-marks.xlsx`
 
 ### Bugs fixed
 
-**60 entries in [`BUG_FIX_LOG.md`](BUG_FIX_LOG.md)** — 55 defects and 5
+**67 entries in [`BUG_FIX_LOG.md`](BUG_FIX_LOG.md)** — 62 defects and 5
 specification reconciliations, each reproduced in a real browser before it was
-fixed. The most consequential:
+fixed (seven of them, #56–#62, in an independent second-pass review of the rebuilt
+console). The most consequential:
 
 - **Students were silently dropped from the export.** A band configuration that
   left part of the 0–100 scale outside every grade was accepted as valid, and the
@@ -203,7 +204,7 @@ a record.
 
 **Testing follows the logic split.** Pure logic is tested in Node against 25
 generated adversarial workbooks; the user journey is driven in real Chromium with
-170 assertions on visible DOM state, plus console-error and overflow capture at
+185 assertions on visible DOM state, plus console-error and overflow capture at
 five viewport widths.
 
 ---
@@ -230,22 +231,23 @@ is not uploaded, and the interface says so where the choice is made.
 
 Full detail in [`TEST_REPORT.md`](TEST_REPORT.md)**. In summary:
 
-- **92 unit and integration tests** over the pure logic, run against a corpus of
-  **25 generated adversarial workbooks** covering valid files, the brief's own
-  header wording, messy headers, a single student, identical marks, boundary
-  marks, only 0 and 100, text marks, invalid marks, a missing column, duplicate
-  and blank IDs, course-name fragmentation, an empty workbook, extra columns, an
-  instructions-first workbook, extreme skew, a bimodal class, a 300-student class,
-  legacy `.xls`, a corrupt file, a zero-byte file, a truncated zip, CSV wearing an
-  `.xlsx` extension, a workbook with zero worksheets, and a title row above the
-  header.
-- **181 browser assertions** across 16 sections driving the real console in
-  Chromium: empty states, three unusable files, the demo class, course selection,
-  statistics verified against the rendered student table, search and all three
-  sort orders, the band editor by keyboard, mouse and by typing an illegal value,
-  the optional suggestion and its undo, the review sheet, two complete exports
-  with byte-level CSV verification, a second import, accessibility, five viewport
-  widths, console hygiene, reduced motion, and local draft recovery.
+- **94 unit and integration tests** over the pure logic, run against a corpus of
+   **25 generated adversarial workbooks** covering valid files, the brief's own
+   header wording, messy headers, a single student, identical marks, boundary
+   marks, only 0 and 100, text marks, invalid marks, a missing column, duplicate
+   and blank IDs, course-name fragmentation, an empty workbook, extra columns, an
+   instructions-first workbook, extreme skew, a bimodal class, a 300-student class,
+   legacy `.xls`, a corrupt file, a zero-byte file, a truncated zip, CSV wearing an
+   `.xlsx` extension, a workbook with zero worksheets, and a title row above the
+   header.
+- **185 browser assertions** across 16 sections driving the real console in
+   Chromium: empty states, three unusable files, the demo class, course selection,
+   statistics verified against the rendered student table, search and all three
+   sort orders, the band editor by keyboard, mouse and by typing an illegal value,
+   chart tooltips (before and after redraws) and per-student change markers,
+   the optional suggestion and its undo, the review sheet, two complete exports
+   with byte-level CSV verification, a second import, accessibility, five viewport
+   widths, console hygiene, reduced motion, and local draft recovery.
 - **26 live assertions** against the deployed URL, including that every asset
   resolves from the `/<repo>/` subdirectory, and that the crest, favicon and
   apple-touch-icon all load.
@@ -261,11 +263,12 @@ Full detail in [`TEST_REPORT.md`](TEST_REPORT.md)**. In summary:
 - **Zero** uncaught page errors and **zero** console errors across every run.
 
 ```bash
-npm test              # 92 unit tests
-npm run test:browser  # 181 browser assertions (needs: npx playwright install chromium)
+npm test              # 94 unit tests
+npm run test:browser  # 185 browser assertions (needs: npx playwright install chromium)
 npm run test:print    # renders the printable report to PDF
 npm run verify:file   # drives the console opened directly from disk
 npm run verify:live   # drives the deployed URL end to end (26 assertions)
+npm run verify:review # second-pass independent verification (105 assertions)
 npm run hygiene       # dead exports, console noise, raw-HTML sinks, encoding
 npm run test:all      # hygiene + unit + browser + print + file-protocol
 npm run fixtures      # regenerate the 25-workbook corpus

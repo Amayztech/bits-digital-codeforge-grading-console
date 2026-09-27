@@ -442,7 +442,9 @@
       title: "Finalize this grade set?",
       icon: "shield",
       body: summary,
-      focus: "[data-confirm-finalize]",
+      // No `focus` option: the modal focuses the first action ("Keep
+      // editing") on purpose - a keyboard user must never be one Enter away
+      // from finalizing a grade set they have not read.
       actions: [
         { label: "Keep editing", variant: "secondary" },
         {
@@ -457,7 +459,8 @@
       ]
     });
 
-    // Mark the primary action so tests and keyboard users can target it.
+    // Mark the primary action with a stable hook so it can be targeted
+    // without depending on its label text.
     setTimeout(function () {
       var btns = document.querySelectorAll(".modal__foot .btn");
       if (btns.length) btns[btns.length - 1].dataset.confirmFinalize = "true";

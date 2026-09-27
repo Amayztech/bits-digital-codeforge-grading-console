@@ -73,6 +73,29 @@ function section(t) {
   const shot = async (name, full) => {
     await page.screenshot({ path: path.join(SHOTS, name + '.png'), fullPage: !!full });
   };
+  /*
+   * Hover a chart and report its tooltip state. The tooltip element is
+   * removed with the rest of the chart on every redraw, so this catches a
+   * regression where the tooltip stops being re-attached (it once silently
+   * disappeared after the first cutoff change).
+   */
+  const hoverTooltip = async (sel) => {
+    const r = await page.evaluate((s) => {
+      const svg = document.querySelector(s + ' svg');
+      if (!svg) return null;
+      svg.scrollIntoView({ block: 'center' });
+      const sr = svg.getBoundingClientRect();
+      return { x: sr.x, y: sr.y, w: sr.width, h: sr.height };
+    }, sel);
+    if (!r) return null;
+    await page.waitForTimeout(150);
+    await page.mouse.move(r.x + r.w * 0.5, r.y + r.h * 0.45);
+    await page.waitForTimeout(250);
+    return page.evaluate((s) => {
+      const t = document.querySelector(s + ' .chart__tooltip');
+      return t ? { connected: t.isConnected, visible: t.dataset.visible, text: t.textContent } : null;
+    }, sel);
+  };
 
   /* ================================================================ *
    * 1. First load
@@ -293,12 +316,53 @@ function section(t) {
   check('band delta shown on a row', (await page.locator('#bandEditor .band-delta[data-dir]').count()) >= 1);
   await shot('06-configure-impact', true);
 
+  /*
+   * The analyse student table flags every student whose grade moved. Those
+   * markers must agree with the impact panel's direction semantics: a better
+   * grade (a lower index in GRADES) is "up". The table once compared the
+   * grade names as strings, which inverted the arrows.
+   */
+  await page.click('.stage-step[data-stage="analyse"]');
+  await page.waitForTimeout(400);
+  const markerAudit = await page.evaluate(() => {
+    const G = window.CF.grading.GRADES;
+    const rows = Array.from(document.querySelectorAll('#studentTable tbody tr'));
+    let withMarker = 0;
+    const mismatches = [];
+    rows.forEach((tr) => {
+      const marker = tr.querySelector('.row-marker');
+      if (!marker) return;
+      withMarker++;
+      const text = marker.textContent;
+      const m = text.match(/^([A-E]-?)\s*→\s*([A-E]-?)/);
+      const use = marker.querySelector('use');
+      const icon = use ? use.getAttribute('href') : '';
+      if (!m) {
+        mismatches.push('unreadable marker: "' + text + '"');
+        return;
+      }
+      const expected = G.indexOf(m[2]) < G.indexOf(m[1]) ? '#i-arrow-up' : '#i-arrow-down';
+      if (icon !== expected) mismatches.push('"' + text + '" shows ' + icon + ', expected ' + expected);
+    });
+    return { withMarker, mismatches };
+  });
+  check('student table flags moved students', markerAudit.withMarker > 0, 'markers=' + markerAudit.withMarker);
+  check('change markers agree with the impact direction', markerAudit.mismatches.length === 0, markerAudit.mismatches.slice(0, 3).join(' | '));
+  await page.click('.stage-step[data-stage="configure"]');
+  await page.waitForTimeout(400);
+
+
   // The chart sliders must be operable too.
   await page.locator('#chartConfigure [role="slider"]').first().focus();
   await page.keyboard.press('ArrowLeft');
   await page.waitForTimeout(300);
   check('chart slider is keyboard operable', await page.evaluate(() => window.CF.app.state.cutoffs[0] === 86));
   check('chart slider exposes its value', (await page.locator('#chartConfigure [role="slider"]').first().getAttribute('aria-valuenow')) === '86');
+
+  // Tooltips: must appear over the chart now that it has been redrawn by
+  // several cutoff changes already.
+  const tip1 = await hoverTooltip('#chartConfigure');
+  check('chart tooltip appears on hover', tip1 && tip1.visible === 'true' && tip1.text.length > 0, JSON.stringify(tip1));
 
   // Clamping: type a value above the legal window.
   await page.fill('#cutoff-A', '250');
@@ -309,6 +373,10 @@ function section(t) {
   check('clamping is explained', (await page.locator('#toastRegion').innerText()).toLowerCase().includes('limited'));
   check('configuration is still valid', await page.evaluate(() => window.CF.grading.validate(window.CF.app.state.cutoffs).valid));
   check('finalize stays enabled', !(await page.locator('text=Review & finalize').isDisabled()));
+
+  // The tooltip must still work after the redraws those edits triggered.
+  const tip2 = await hoverTooltip('#chartConfigure');
+  check('chart tooltip survives redraws', tip2 && tip2.visible === 'true' && tip2.text.length > 0, JSON.stringify(tip2));
 
   // Undo.
   const beforeUndo = await page.evaluate(() => window.CF.app.state.cutoffs.slice());
@@ -436,7 +504,9 @@ function section(t) {
   check('the sheet badge reflects the finalized state', (await page.locator('.sheet__status').innerText()).includes('Finalized'));
   check('timer stopped after finalize', ['stopped'].includes(await page.locator('#timer').getAttribute('data-state')));
   check('export stage marked done', (await page.locator('.stage-step[data-stage="export"]').getAttribute('data-state')) === 'done');
-  await page.locator('.modal button:has-text("Done")').click();
+  // Tolerant close: a double-fired click on "Finalize and download" can land
+  // on the receipt's identically-placed Done button and close it already.
+  try { await page.locator('.modal button:has-text("Done")').click({ timeout: 4000 }); } catch (e) { /* receipt already closed */ }
   await page.waitForTimeout(300);
   await shot('09-finalized', true);
 
@@ -476,7 +546,13 @@ function section(t) {
   await page.waitForTimeout(700);
   const sheet2 = await page.locator('.sheet').innerText();
   check('impact against defaults is reported on the sheet', /Change against the default bands/.test(sheet2));
-  await page.locator('#reviewBody button:has-text("Finalize & export")').click();
+  // The document scrolls smoothly, so settle the scroll before clicking -
+  // otherwise the click point can still be mid-animation at the viewport's
+  // bottom edge and the hit-target check misses.
+  const finalizeBtn = page.locator('#reviewBody button:has-text("Finalize & export")');
+  await finalizeBtn.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(700);
+  await finalizeBtn.click();
   await page.waitForTimeout(300);
   downloads.length = 0;
   await page.locator('.modal button:has-text("Finalize and download")').click();
@@ -492,7 +568,7 @@ function section(t) {
   check('grades CSV carries a UTF-8 BOM for Excel', csv2.charCodeAt(0) === 0xfeff);
   const sum2 = fs.readFileSync(s2, 'utf8');
   check('summary escapes the instructor name', sum2.includes('"Kumar, ""A."""'), sum2.split('\r\n').find((l) => l.includes('Instructor')));
-  await page.locator('.modal button:has-text("Done")').click();
+  try { await page.locator('.modal button:has-text("Done")').click({ timeout: 4000 }); } catch (e) { /* receipt already closed */ }
 
   /* ================================================================ *
    * 12. Accessibility spot checks

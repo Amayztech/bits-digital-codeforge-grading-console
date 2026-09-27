@@ -674,10 +674,11 @@ test('25 a title row above the header row is skipped', () => {
   const a = analyseFixture(CF, '25-title-row-offset.xlsx');
   eq(a.ok, true);
   eq(a.counts.accepted, 2);
-  // The title row occupies index 0 and the blank row is not carried into the
-  // grid, so the header is detected on the second grid row.
-  eq(a.headerRow, 1);
+  // Grid rows are position-preserving: the title is row 1, the blank row is
+  // row 2, the header is row 3 and the first student is row 4.
+  eq(a.headerRow, 2, 'header must be reported on its true spreadsheet row');
   eq(a.records[0].id, '2024CS0001');
+  eq(a.records[0].row, 4, 'first student sits on spreadsheet row 4');
 });
 
 test('re-uploading the same file replaces the state completely', () => {
@@ -694,6 +695,63 @@ test('blank rows are skipped silently but counted', () => {
   const a = W.readRows(rows, { name: 'inline' });
   eq(a.counts.accepted, 2);
   eq(a.blankRows, 2);
+});
+
+test('reported row numbers match the spreadsheet when blank rows intervene', () => {
+  // The health report promises "row numbers match the spreadsheet". A blank
+  // third row must not shift the invalid mark on spreadsheet row 4 to row 3.
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(
+    wb,
+    XLSX.utils.aoa_to_sheet([
+      ['BITS ID', 'Course', 'Total Marks'],
+      ['S1', 'CS101', 82],
+      [null, null, null],
+      ['S2', 'CS101', 150]
+    ]),
+    'Sheet1'
+  );
+  const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+  const a = W.readWorkbook(
+    buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength),
+    XLSX,
+    { name: 'blank-row.xlsx', size: 1 }
+  );
+  eq(a.ok, true);
+  eq(a.counts.accepted, 1);
+  eq(a.blankRows, 1);
+  const err = a.issues.find((i) => i.severity === 'error');
+  ok(err, 'the out-of-range mark must be rejected');
+  eq(err.row, 4, 'the row number must match what Excel shows');
+  eq(a.records[0].row, 2);
+});
+
+test('reported row numbers match the spreadsheet when the used range starts below row 1', () => {
+  // A sheet whose data genuinely starts on spreadsheet row 4: the grid
+  // begins mid-sheet, so every reported row must be offset accordingly.
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet([
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+    ['BITS ID', 'Course', 'Total Marks'],
+    ['S1', 'CS101', 150],
+    ['S2', 'CS101', 82]
+  ]);
+  ws['!ref'] = 'A4:C6';
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+  const a = W.readWorkbook(
+    buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength),
+    XLSX,
+    { name: 'offset-range.xlsx', size: 1 }
+  );
+  eq(a.ok, true);
+  eq(a.headerRow + 1, 4, 'the header is on spreadsheet row 4');
+  eq(a.records[0].row, 6, 'the accepted student is on spreadsheet row 6');
+  const err = a.issues.find((i) => i.severity === 'error');
+  ok(err, 'the out-of-range mark must be rejected');
+  eq(err.row, 5, 'the rejected student is on spreadsheet row 5');
 });
 
 /* ==================================================================== *

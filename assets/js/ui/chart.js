@@ -305,11 +305,19 @@
 
       if (reduceMotion) svg.classList.add("chart--static");
 
+      /*
+       * draw() clears the container, which removes any tooltip element from a
+       * previous draw. It must be (re-)attached every time - guarding with
+       * `if (!tip)` kept a reference to a node that was no longer in the
+       * document, so after the first redraw tooltips silently stopped
+       * appearing.
+       */
       function makeTip() {
-        tip = D.el("div.chart__tooltip", { role: "presentation" });
+        if (!tip) tip = D.el("div.chart__tooltip", { role: "presentation" });
+        tip.dataset.visible = "false";
         container.appendChild(tip);
       }
-      if (!tip) makeTip();
+      makeTip();
     }
 
     function attachCutoffBehaviour() {

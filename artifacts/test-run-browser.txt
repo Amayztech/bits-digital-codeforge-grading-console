@@ -1,217 +1,225 @@
-﻿
+
+> bits-digital-codeforge-grading-console@1.0.0 test:browser
+> node tests/browser/journey.js
+
+
 [1m1. First load and empty states[0m
-  [32mΓ£ô[0m page title is set
-  [32mΓ£ô[0m exactly one h1
-  [32mΓ£ô[0m brand crest loads
-  [32mΓ£ô[0m brand crest is decorative (empty alt, named by the h1)
-  [32mΓ£ô[0m brand crest is sized for legibility, not shrunk to a smudge
-  [32mΓ£ô[0m favicon points at a real raster asset
-  [32mΓ£ô[0m import stage is visible
-  [32mΓ£ô[0m analyse stage hidden
-  [32mΓ£ô[0m dropzone is present
-  [32mΓ£ô[0m timer starts at zero
-  [32mΓ£ô[0m timer state reads Idle
-  [32mΓ£ô[0m timer is not running
-  [32mΓ£ô[0m no chart drawn before data
-  [32mΓ£ô[0m template and sample links exist
-  [32mΓ£ô[0m skip link is the first tab stop
-  [32mΓ£ô[0m tab order reaches the file input
-  [32mΓ£ô[0m tab order reaches the demo loader
-  [32mΓ£ô[0m footer names the challenge
-  [32mΓ£ô[0m footer carries no disclaimer language
-  [32mΓ£ô[0m footer still states the privacy guarantee
+  [32m✓[0m page title is set
+  [32m✓[0m exactly one h1
+  [32m✓[0m brand crest loads
+  [32m✓[0m brand crest is decorative (empty alt, named by the h1)
+  [32m✓[0m brand crest is sized for legibility, not shrunk to a smudge
+  [32m✓[0m favicon points at a real raster asset
+  [32m✓[0m import stage is visible
+  [32m✓[0m analyse stage hidden
+  [32m✓[0m dropzone is present
+  [32m✓[0m timer starts at zero
+  [32m✓[0m timer state reads Idle
+  [32m✓[0m timer is not running
+  [32m✓[0m no chart drawn before data
+  [32m✓[0m template and sample links exist
+  [32m✓[0m skip link is the first tab stop
+  [32m✓[0m tab order reaches the file input
+  [32m✓[0m tab order reaches the demo loader
+  [32m✓[0m footer names the challenge
+  [32m✓[0m footer carries no disclaimer language
+  [32m✓[0m footer still states the privacy guarantee
 
 [1m2. Unusable files produce designed errors[0m
-  [32mΓ£ô[0m 20-corrupt-not-a-zip.xlsx shows a clear error
-  [32mΓ£ô[0m 20-corrupt-not-a-zip.xlsx offers a recovery action
-  [32mΓ£ô[0m 21-empty-file.xlsx shows a clear error
-  [32mΓ£ô[0m 21-empty-file.xlsx offers a recovery action
-  [32mΓ£ô[0m 10-missing-column.xlsx shows a clear error
-  [32mΓ£ô[0m 10-missing-column.xlsx offers a recovery action
-  [32mΓ£ô[0m no browser dialogs were used
+  [32m✓[0m 20-corrupt-not-a-zip.xlsx shows a clear error
+  [32m✓[0m 20-corrupt-not-a-zip.xlsx offers a recovery action
+  [32m✓[0m 21-empty-file.xlsx shows a clear error
+  [32m✓[0m 21-empty-file.xlsx offers a recovery action
+  [32m✓[0m 10-missing-column.xlsx shows a clear error
+  [32m✓[0m 10-missing-column.xlsx offers a recovery action
+  [32m✓[0m no browser dialogs were used
 
 [1m3. Demo class loads through the real pipeline[0m
-  [32mΓ£ô[0m demo file chip shown
-  [32mΓ£ô[0m demo badge shown
-  [32mΓ£ô[0m data health panel rendered
-  [32mΓ£ô[0m course picker rendered
-  [32mΓ£ô[0m course cards show counts
-  [32mΓ£ô[0m health report names the sheet
-  [32mΓ£ô[0m health report lists matched columns
-  [32mΓ£ô[0m health report is presentational, not raw JSON
+  [32m✓[0m demo file chip shown
+  [32m✓[0m demo badge shown
+  [32m✓[0m data health panel rendered
+  [32m✓[0m course picker rendered
+  [32m✓[0m course cards show counts
+  [32m✓[0m health report names the sheet
+  [32m✓[0m health report lists matched columns
+  [32m✓[0m health report is presentational, not raw JSON
 
 [1m4. Course selection starts the timer[0m
-  [32mΓ£ô[0m moved to the analyse stage
-  [32mΓ£ô[0m stats tiles rendered
-  [32mΓ£ô[0m no NaN in statistics
-  [32mΓ£ô[0m chart drawn
-  [32mΓ£ô[0m chart has an accessible name
-  [32mΓ£ô[0m chart ships a data table for screen readers
-  [32mΓ£ô[0m student table rendered
-  [32mΓ£ô[0m timer is running
-  [32mΓ£ô[0m context chip shows the course
-  [32mΓ£ô[0m course name in the header
-  [32mΓ£ô[0m Lowest mark tile equals the true minimum
-  [32mΓ£ô[0m Highest mark tile equals the true maximum
-  [32mΓ£ô[0m Mean tile correct to 1dp
-  [32mΓ£ô[0m Median tile correct
+  [32m✓[0m moved to the analyse stage
+  [32m✓[0m stats tiles rendered
+  [32m✓[0m no NaN in statistics
+  [32m✓[0m chart drawn
+  [32m✓[0m chart has an accessible name
+  [32m✓[0m chart ships a data table for screen readers
+  [32m✓[0m student table rendered
+  [32m✓[0m timer is running
+  [32m✓[0m context chip shows the course
+  [32m✓[0m course name in the header
+  [32m✓[0m Lowest mark tile equals the true minimum
+  [32m✓[0m Highest mark tile equals the true maximum
+  [32m✓[0m Mean tile correct to 1dp
+  [32m✓[0m Median tile correct
 
 [1m5. Student table search and sort[0m
-  [32mΓ£ô[0m search narrows the table to one student
-  [32mΓ£ô[0m no-match state is designed
-  [32mΓ£ô[0m search matches on grade too
-  [32mΓ£ô[0m numeric columns sort descending first
-  [32mΓ£ô[0m descending sort is correct
-  [32mΓ£ô[0m ascending sort is correct
-  [32mΓ£ô[0m aria-sort is exposed
-  [32mΓ£ô[0m sorting by BITS ID works
+  [32m✓[0m search narrows the table to one student
+  [32m✓[0m no-match state is designed
+  [32m✓[0m search matches on grade too
+  [32m✓[0m numeric columns sort descending first
+  [32m✓[0m descending sort is correct
+  [32m✓[0m ascending sort is correct
+  [32m✓[0m aria-sort is exposed
+  [32m✓[0m sorting by BITS ID works
 
 [1m6. Band editor and live impact[0m
-  [32mΓ£ô[0m configure stage visible
-  [32mΓ£ô[0m eight band rows
-  [32mΓ£ô[0m seven editable cutoffs
-  [32mΓ£ô[0m bottom band shows the fixed Min 0
-  [32mΓ£ô[0m default badge shown
-  [32mΓ£ô[0m cutoffs start at the challenge defaults
-  [32mΓ£ô[0m chart cutoffs are exposed as ARIA sliders
-  [32mΓ£ô[0m impact panel starts clean
-  [32mΓ£ô[0m arrow keys move the cutoff
-  [32mΓ£ô[0m shift+arrow moves by five
-  [32mΓ£ô[0m focus survives the re-render
-  [32mΓ£ô[0m input value tracks the model
-  [32mΓ£ô[0m impact now reports movement
-  [32mΓ£ô[0m impact shows up/down split
-  [32mΓ£ô[0m before/after table present
-  [32mΓ£ô[0m change history has an entry
-  [32mΓ£ô[0m band delta shown on a row
-  [32mΓ£ô[0m chart slider is keyboard operable
-  [32mΓ£ô[0m chart slider exposes its value
-  [32mΓ£ô[0m an illegal value is clamped, not accepted
-  [32mΓ£ô[0m clamping is explained
-  [32mΓ£ô[0m configuration is still valid
-  [32mΓ£ô[0m finalize stays enabled
-  [32mΓ£ô[0m undo changes the configuration
-  [32mΓ£ô[0m undo is logged
-  [32mΓ£ô[0m reset restores the exact defaults
-  [32mΓ£ô[0m reset offers undo rather than two confirms
-  [32mΓ£ô[0m no confirm() dialogs were used
+  [32m✓[0m configure stage visible
+  [32m✓[0m eight band rows
+  [32m✓[0m seven editable cutoffs
+  [32m✓[0m bottom band shows the fixed Min 0
+  [32m✓[0m default badge shown
+  [32m✓[0m cutoffs start at the challenge defaults
+  [32m✓[0m chart cutoffs are exposed as ARIA sliders
+  [32m✓[0m impact panel starts clean
+  [32m✓[0m arrow keys move the cutoff
+  [32m✓[0m shift+arrow moves by five
+  [32m✓[0m focus survives the re-render
+  [32m✓[0m input value tracks the model
+  [32m✓[0m impact now reports movement
+  [32m✓[0m impact shows up/down split
+  [32m✓[0m before/after table present
+  [32m✓[0m change history has an entry
+  [32m✓[0m band delta shown on a row
+  [32m✓[0m student table flags moved students
+  [32m✓[0m change markers agree with the impact direction
+  [32m✓[0m chart slider is keyboard operable
+  [32m✓[0m chart slider exposes its value
+  [32m✓[0m chart tooltip appears on hover
+  [32m✓[0m an illegal value is clamped, not accepted
+  [32m✓[0m clamping is explained
+  [32m✓[0m configuration is still valid
+  [32m✓[0m finalize stays enabled
+  [32m✓[0m chart tooltip survives redraws
+  [32m✓[0m undo changes the configuration
+  [32m✓[0m undo is logged
+  [32m✓[0m reset restores the exact defaults
+  [32m✓[0m reset offers undo rather than two confirms
+  [32m✓[0m no confirm() dialogs were used
 
 [1m7. Optional boundary suggestion[0m
-  [32mΓ£ô[0m suggestion explains its method
-  [32mΓ£ô[0m suggestion previews the effect
-  [32mΓ£ô[0m applying the suggestion changes the cutoffs
-  [32mΓ£ô[0m applied suggestion is still a valid configuration
-  [32mΓ£ô[0m applied suggestion is undoable
-  [32mΓ£ô[0m undo restores the previous cutoffs
+  [32m✓[0m suggestion explains its method
+  [32m✓[0m suggestion previews the effect
+  [32m✓[0m applying the suggestion changes the cutoffs
+  [32m✓[0m applied suggestion is still a valid configuration
+  [32m✓[0m applied suggestion is undoable
+  [32m✓[0m undo restores the previous cutoffs
 
 [1m8. Final review[0m
-  [32mΓ£ô[0m review stage visible
-  [32mΓ£ô[0m sheet masthead shows the course
-  [32mΓ£ô[0m sheet shows the instructor
-  [32mΓ£ô[0m sheet shows a statistics block
-  [32mΓ£ô[0m sheet shows the band table
-  [32mΓ£ô[0m sheet has the safety checklist
-  [32mΓ£ô[0m sheet review chart drawn
-  [32mΓ£ô[0m no NaN on the sheet
-  [32mΓ£ô[0m finalize is enabled
-  [32mΓ£ô[0m review chart is drawn
+  [32m✓[0m review stage visible
+  [32m✓[0m sheet masthead shows the course
+  [32m✓[0m sheet shows the instructor
+  [32m✓[0m sheet shows a statistics block
+  [32m✓[0m sheet shows the band table
+  [32m✓[0m sheet has the safety checklist
+  [32m✓[0m sheet review chart drawn
+  [32m✓[0m no NaN on the sheet
+  [32m✓[0m finalize is enabled
+  [32m✓[0m review chart is drawn
 
 [1m9. Export[0m
-  [32mΓ£ô[0m a single confirmation dialog is shown
-  [32mΓ£ô[0m no download happened before confirming
-  [32mΓ£ô[0m confirmation names the course and instructor
-  [32mΓ£ô[0m confirmation lists the files
-  [32mΓ£ô[0m confirmation has exactly two actions
-  [32mΓ£ô[0m confirmation has an escape hatch
-  [32mΓ£ô[0m grade file name carries the course and timestamp
-  [32mΓ£ô[0m summary file name is distinct
-  [32mΓ£ô[0m both files downloaded
-  [32mΓ£ô[0m grades CSV header is correct
-  [32mΓ£ô[0m grades CSV has one row per student
-  [32mΓ£ô[0m every ID matches
-  [32mΓ£ô[0m every grade matches the screen
-  [32mΓ£ô[0m summary records the instructor
-  [32mΓ£ô[0m summary records the course
-  [32mΓ£ô[0m summary records the cutoffs
-  [32mΓ£ô[0m summary has no null/NaN/undefined
-  [32mΓ£ô[0m receipt is shown after export
-  [32mΓ£ô[0m receipt lists both files
-  [32mΓ£ô[0m the review chart survives the re-render
-  [32mΓ£ô[0m the review chart is still attached
-  [32mΓ£ô[0m the sheet badge reflects the finalized state
-  [32mΓ£ô[0m timer stopped after finalize
-  [32mΓ£ô[0m export stage marked done
+  [32m✓[0m a single confirmation dialog is shown
+  [32m✓[0m no download happened before confirming
+  [32m✓[0m confirmation names the course and instructor
+  [32m✓[0m confirmation lists the files
+  [32m✓[0m confirmation has exactly two actions
+  [32m✓[0m confirmation has an escape hatch
+  [32m✓[0m grade file name carries the course and timestamp
+  [32m✓[0m summary file name is distinct
+  [32m✓[0m both files downloaded
+  [32m✓[0m grades CSV header is correct
+  [32m✓[0m grades CSV has one row per student
+  [32m✓[0m every ID matches
+  [32m✓[0m every grade matches the screen
+  [32m✓[0m summary records the instructor
+  [32m✓[0m summary records the course
+  [32m✓[0m summary records the cutoffs
+  [32m✓[0m summary has no null/NaN/undefined
+  [32m✓[0m receipt is shown after export
+  [32m✓[0m receipt lists both files
+  [32m✓[0m the review chart survives the re-render
+  [32m✓[0m the review chart is still attached
+  [32m✓[0m the sheet badge reflects the finalized state
+  [32m✓[0m timer stopped after finalize
+  [32m✓[0m export stage marked done
 
 [1m10. A second import replaces stale state completely[0m
-  [32mΓ£ô[0m course list is the new file only
-  [32mΓ£ô[0m no course from the previous file survives
-  [32mΓ£ô[0m finalized receipt is gone
-  [32mΓ£ô[0m stage bar reset to import
-  [32mΓ£ô[0m timer reset
-  [32mΓ£ô[0m no dialogs anywhere in the journey
+  [32m✓[0m course list is the new file only
+  [32m✓[0m no course from the previous file survives
+  [32m✓[0m finalized receipt is gone
+  [32m✓[0m stage bar reset to import
+  [32m✓[0m timer reset
+  [32m✓[0m no dialogs anywhere in the journey
 
 [1m11. Real fixture workbook end to end[0m
-  [32mΓ£ô[0m three unique courses, no duplicates
-  [32mΓ£ô[0m course names are unique
-  [32mΓ£ô[0m impact against defaults is reported on the sheet
-  [32mΓ£ô[0m second export also produced two files
-  [32mΓ£ô[0m instructor name with comma and quotes does not break the grades CSV
-  [32mΓ£ô[0m grades CSV carries a UTF-8 BOM for Excel
-  [32mΓ£ô[0m summary escapes the instructor name
+  [32m✓[0m three unique courses, no duplicates
+  [32m✓[0m course names are unique
+  [32m✓[0m impact against defaults is reported on the sheet
+  [32m✓[0m second export also produced two files
+  [32m✓[0m instructor name with comma and quotes does not break the grades CSV
+  [32m✓[0m grades CSV carries a UTF-8 BOM for Excel
+  [32m✓[0m summary escapes the instructor name
 
 [1m12. Accessibility[0m
-  [32mΓ£ô[0m every form control has a label
-  [32mΓ£ô[0m every button has an accessible name
-  [32mΓ£ô[0m live regions exist for status
-  [32mΓ£ô[0m main landmark present
-  [32mΓ£ô[0m skip link present
-  [32mΓ£ô[0m single h1
-  [32mΓ£ô[0m cutoffs exposed as sliders
-  [32mΓ£ô[0m no dialogs left open
-  [32mΓ£ô[0m collapsed onboarding is skipped by tab order
+  [32m✓[0m every form control has a label
+  [32m✓[0m every button has an accessible name
+  [32m✓[0m live regions exist for status
+  [32m✓[0m main landmark present
+  [32m✓[0m skip link present
+  [32m✓[0m single h1
+  [32m✓[0m cutoffs exposed as sliders
+  [32m✓[0m no dialogs left open
+  [32m✓[0m collapsed onboarding is skipped by tab order
 
 [1m13. Responsive layout[0m
-  [32mΓ£ô[0m onboarding is collapsed once a file is loaded
-  [32mΓ£ô[0m file format help is offered
-  [32mΓ£ô[0m file format help restores the dropzone
-  [32mΓ£ô[0m desktop-xl: no horizontal overflow
-  [32mΓ£ô[0m desktop-xl: chart reflows to the container
-  [32mΓ£ô[0m desktop-xl: band rows fit
-  [32mΓ£ô[0m laptop: no horizontal overflow
-  [32mΓ£ô[0m laptop: chart reflows to the container
-  [32mΓ£ô[0m laptop: band rows fit
-  [32mΓ£ô[0m tablet: no horizontal overflow
-  [32mΓ£ô[0m tablet: chart reflows to the container
-  [32mΓ£ô[0m tablet: band rows fit
-  [32mΓ£ô[0m tablet-p: no horizontal overflow
-  [32mΓ£ô[0m tablet-p: chart reflows to the container
-  [32mΓ£ô[0m tablet-p: band rows fit
-  [32mΓ£ô[0m mobile: no horizontal overflow
-  [32mΓ£ô[0m mobile: chart reflows to the container
-  [32mΓ£ô[0m mobile: band rows fit
+  [32m✓[0m onboarding is collapsed once a file is loaded
+  [32m✓[0m file format help is offered
+  [32m✓[0m file format help restores the dropzone
+  [32m✓[0m desktop-xl: no horizontal overflow
+  [32m✓[0m desktop-xl: chart reflows to the container
+  [32m✓[0m desktop-xl: band rows fit
+  [32m✓[0m laptop: no horizontal overflow
+  [32m✓[0m laptop: chart reflows to the container
+  [32m✓[0m laptop: band rows fit
+  [32m✓[0m tablet: no horizontal overflow
+  [32m✓[0m tablet: chart reflows to the container
+  [32m✓[0m tablet: band rows fit
+  [32m✓[0m tablet-p: no horizontal overflow
+  [32m✓[0m tablet-p: chart reflows to the container
+  [32m✓[0m tablet-p: band rows fit
+  [32m✓[0m mobile: no horizontal overflow
+  [32m✓[0m mobile: chart reflows to the container
+  [32m✓[0m mobile: band rows fit
 
 [1m14. Console hygiene[0m
-  [32mΓ£ô[0m no uncaught page errors
-  [32mΓ£ô[0m no console errors
+  [32m✓[0m no uncaught page errors
+  [32m✓[0m no console errors
 
 [1m15. Reduced motion[0m
-  [32mΓ£ô[0m reduced-motion journey runs without errors
+  [32m✓[0m reduced-motion journey runs without errors
 
 [1m16. Optional local draft recovery[0m
-  [32mΓ£ô[0m draft toggle exists and is off by default
-  [32mΓ£ô[0m no draft is stored before opting in
-  [32mΓ£ô[0m opting in stores a draft
-  [32mΓ£ô[0m the draft records the cutoffs
-  [32mΓ£ô[0m the draft records the change history
-  [32mΓ£ô[0m the draft is stored under one known key
-  [32mΓ£ô[0m a saved draft is offered on return
-  [32mΓ£ô[0m the offer states when it was saved
-  [32mΓ£ô[0m restoring returns to the saved course
-  [32mΓ£ô[0m restoring reports the course
-  [32mΓ£ô[0m a draft-restore notice is shown
-  [32mΓ£ô[0m discarding removes the stored draft
-  [32mΓ£ô[0m discarding unticks the toggle
+  [32m✓[0m draft toggle exists and is off by default
+  [32m✓[0m no draft is stored before opting in
+  [32m✓[0m opting in stores a draft
+  [32m✓[0m the draft records the cutoffs
+  [32m✓[0m the draft records the change history
+  [32m✓[0m the draft is stored under one known key
+  [32m✓[0m a saved draft is offered on return
+  [32m✓[0m the offer states when it was saved
+  [32m✓[0m restoring returns to the saved course
+  [32m✓[0m restoring reports the course
+  [32m✓[0m a draft-restore notice is shown
+  [32m✓[0m discarding removes the stored draft
+  [32m✓[0m discarding unticks the toggle
 
 ----------------------------------------------------------------
-[32m181 passing, 0 failing[0m
+[32m185 passing, 0 failing[0m
 Screenshots: artifacts/screenshots/

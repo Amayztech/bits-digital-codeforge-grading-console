@@ -326,10 +326,41 @@
     var next = CF.workbook.readRows(state.analysis.sourceRows, meta);
     next.sheet = state.analysis.sheet;
     if (!next.ok) return;
+    /*
+     * Same file, same course, same instructor decisions: only the marks move.
+     * adoptAnalysis and onCourseSelected both start a *new* grade set, so the
+     * band configuration, its history and the grading time are carried across
+     * explicitly - otherwise switching the rounding rule silently threw away
+     * every cutoff the instructor had set. Finalized state is still cleared by
+     * those calls, because the marks it was finalized on have changed.
+     */
     var courseKey = state.courseKey;
+    var kept = {
+      cutoffs: state.cutoffs.slice(),
+      baseline: state.baseline ? state.baseline.slice() : null,
+      history: state.history.slice(),
+      visited: { configure: state.visited.configure, review: state.visited.review },
+      timer: Object.assign({}, timer, { running: false, accumulated: elapsed() })
+    };
+    var wasRunning = timer.running;
     adoptAnalysis(next, state.file);
     if (courseKey && U.byKey(next.courses, courseKey)) {
       onCourseSelected(courseKey);
+      state.cutoffs = kept.cutoffs;
+      state.baseline = kept.baseline;
+      state.history = kept.history;
+      state.visited.configure = kept.visited.configure;
+      state.visited.review = kept.visited.review;
+      timer.accumulated = kept.timer.accumulated;
+      timer.engaged = kept.timer.engaged;
+      timer.running = false;
+      if (wasRunning) timerStart();
+      else renderTimer();
+      renderAll();
+      if (editor) editor.syncInputs();
+      renderStageBar();
+      setStage("import");
+      if (state.persist) saveDraft();
     }
     CF.importPanel.renderReport(
       document.getElementById("importReport"),

@@ -1,3 +1,7 @@
-﻿hygiene: clean
+
+> bits-digital-codeforge-grading-console@1.0.0 hygiene
+> node tools/hygiene.js
+
+hygiene: clean
   24 shipped files scanned
-  49 source files scanned for dead exports
+  50 source files scanned for dead exports

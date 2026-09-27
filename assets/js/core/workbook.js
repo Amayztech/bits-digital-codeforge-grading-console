@@ -238,6 +238,14 @@
   function analyseRows(rows, meta) {
     meta = meta || {};
     var policy = meta.rounding || "nearest";
+    /*
+     * Rows are kept positionally intact (see readWorkbook), so the grid index
+     * maps one-to-one onto spreadsheet rows. `rowOffset` is the 0-based first
+     * row of the sheet's used range, for the rare workbook whose data does not
+     * start on spreadsheet row 1 - without it, every reported row number would
+     * drift by the number of leading rows the sheet does not use.
+     */
+    var rowOffset = meta.rowOffset || 0;
     var maxScan = Math.min(rows.length, 12);
     var best = { score: 0, rowIndex: -1, matches: [] };
 
@@ -292,7 +300,7 @@
               .join(", ") +
             ".",
           "Headers found on row " +
-            (best.rowIndex + 1) +
+            (best.rowIndex + 1 + rowOffset) +
             ": " +
             (headerCells.length
               ? headerCells.map(function (h) { return h.text; }).join(" | ")
@@ -300,7 +308,7 @@
             ". Rename the " +
             missing.map(function (f) { return '"' + FIELD_LABEL[f] + '"'; }).join(" and ") +
             " column, or download the template and copy your data into it.",
-          { columns: columns, headerRow: best.rowIndex, foundHeaders: headerCells }
+          { columns: columns, headerRow: best.rowIndex + rowOffset, foundHeaders: headerCells }
         ),
         meta: meta
       };
@@ -316,7 +324,7 @@
 
     for (var i = dataStart; i < rows.length; i++) {
       var row = rows[i] || [];
-      var rowNumber = i + 1; // 1-based, matches what Excel shows
+      var rowNumber = i + 1 + rowOffset; // 1-based, matches what Excel shows
       var rawId = row[columns.id.index];
       var rawCourse = row[columns.course.index];
       var rawMarks = row[columns.marks.index];
@@ -381,7 +389,7 @@
                 "DUPLICATE_ID",
                 id,
                 "Row " +
-                  (seenIds[dedupeKey] + 1) +
+                  (seenIds[dedupeKey] + 1 + rowOffset) +
                   " already has this BITS ID for " +
                   course +
                   ". Keep one row, or correct the ID on one of them."
@@ -472,7 +480,10 @@
       // Kept so the instructor can switch rounding policy without re-uploading.
       sourceRows: rows,
       columns: columns,
-      headerRow: best.rowIndex,
+      // Spreadsheet-absolute 0-based row the header was found on, so every
+      // "+1" display matches what Excel shows even when the used range starts
+      // below row 1.
+      headerRow: best.rowIndex + rowOffset,
       records: records,
       issues: issues,
       courses: courses,
@@ -609,18 +620,29 @@
     // Score every sheet and read the one that actually looks like a marks table.
     // The starter always read SheetNames[0], which silently consumed an
     // instructions or cover sheet.
+    //
+    // `blankrows` stays true: dropping blank rows would shift every later row
+    // out of step with the spreadsheet, so "row 14" in the health report would
+    // point at the wrong row in the file the instructor actually has. Blank
+    // rows are still skipped and counted - just position-preserving.
     var candidates = [];
     wb.SheetNames.forEach(function (name) {
       var sheet = wb.Sheets[name];
       if (!sheet) return;
       var rows;
       try {
-        rows = XLSX.utils.sheet_to_json(sheet, { header: 1, blankrows: false, defval: null, raw: true });
+        rows = XLSX.utils.sheet_to_json(sheet, { header: 1, blankrows: true, defval: null, raw: true });
       } catch (e) {
         rows = [];
       }
+      var rowOffset = 0;
+      try {
+        if (sheet["!ref"]) rowOffset = XLSX.utils.decode_range(sheet["!ref"]).s.r;
+      } catch (e) {
+        rowOffset = 0;
+      }
       var probe = probeSheet(rows);
-      candidates.push({ name: name, rows: rows, header: probe });
+      candidates.push({ name: name, rows: rows, header: probe, rowOffset: rowOffset });
     });
 
     var usable = candidates
@@ -664,7 +686,7 @@
     }
 
     var chosen = usable[0];
-    var analysis = analyseRows(chosen.rows, meta);
+    var analysis = analyseRows(chosen.rows, Object.assign({}, meta, { rowOffset: chosen.rowOffset }));
     analysis.sheet = {
       name: chosen.name,
       skipped: wb.SheetNames.filter(function (n) {

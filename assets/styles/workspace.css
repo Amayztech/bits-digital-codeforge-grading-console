@@ -164,6 +164,12 @@
 .chart__tooltip {
   position: absolute;
   z-index: 5;
+  /*
+   * Hidden means no box at all, not a transparent box: a tooltip keeps the
+   * inline left/top of its last hover, and an invisible-but-rendered box at
+   * a stale desktop position would push a narrowed viewport sideways.
+   */
+  display: none;
   min-width: 128px;
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--r-sm);
@@ -173,12 +179,11 @@
   line-height: 1.45;
   box-shadow: var(--sh-lg);
   pointer-events: none;
-  opacity: 0;
   transform: translate(-50%, -100%) translateY(-8px);
-  transition: opacity var(--dur-1) var(--ease-out);
 }
 
 .chart__tooltip[data-visible="true"] {
+  display: block;
   opacity: 1;
 }
 
