@@ -3,3 +3,5 @@ node_modules/
 Thumbs.db
 *.log
 artifacts/screenshots/
+# Written by the browser suites on every run
+artifacts/downloads/
