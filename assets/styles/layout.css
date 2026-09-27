@@ -610,7 +610,7 @@
    ========================================================================== */
 
 /* Laptop: the stepper moves to its own row beneath identity and session. */
-@media (max-width: 1240px) {
+@media (max-width: 1340px) {
   .app-header__inner {
     --stage-underline: -8px;
     grid-template-columns: minmax(0, 1fr) auto;

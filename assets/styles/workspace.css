@@ -3032,3 +3032,41 @@ body[data-modal-open="true"] {
     justify-self: center;
   }
 }
+
+@media (max-width: 380px) {
+  .band-head__stats {
+    visibility: hidden;
+  }
+
+  .bands {
+    --band-cols: 26px 52px minmax(0, 1fr) 0 26px 92px;
+  }
+
+  .cutoff,
+  .cutoff__locked {
+    width: 92px;
+  }
+}
+
+@media (max-width: 560px) {
+  .filechip {
+    flex-wrap: wrap;
+    row-gap: var(--sp-2);
+  }
+
+  .filechip__body {
+    flex: 1 1 calc(100% - 48px);
+  }
+
+  .filechip > .badge {
+    margin-left: 44px;
+  }
+
+  .filechip > .btn {
+    margin-left: auto;
+  }
+
+  .metric__note {
+    display: none;
+  }
+}
