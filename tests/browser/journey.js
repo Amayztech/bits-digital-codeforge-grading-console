@@ -154,6 +154,13 @@ function section(t) {
   check('footer still states the privacy guarantee', /stays in this browser/.test(footer));
   await shot('01-empty-import');
 
+  // The brand is the home link. With nothing loaded it simply goes home.
+  await page.click('#homeLink');
+  await page.waitForLoadState('networkidle');
+  await page.waitForTimeout(300);
+  check('home link goes straight home when nothing is loaded',
+    (await page.locator('.modal').count()) === 0 && (await page.locator('#dropzone').isVisible()));
+
   /* ================================================================ *
    * 2. Bad files produce designed errors
    * ================================================================ */
@@ -198,6 +205,19 @@ function section(t) {
   await page.waitForTimeout(700);
   check('moved to the analyse stage', await page.locator('#stage-analyse').isVisible());
   check('stats tiles rendered', (await page.locator('#statsGrid .stat').count()) === 8);
+
+  // Mid-workflow, the home link asks first, and never on a single Enter.
+  await page.click('#homeLink');
+  await page.waitForTimeout(300);
+  const leaveTxt = (await page.locator('.modal').count()) ? await page.locator('.modal').innerText() : '';
+  check('home link asks before leaving an unsaved session',
+    /not saved/i.test(leaveTxt) && (await page.locator('.modal button:has-text("Leave and discard")').count()) === 1, leaveTxt.slice(0, 120));
+  check('"Stay" is focused so Enter cannot discard work',
+    await page.evaluate(() => document.activeElement.textContent.trim() === 'Stay'));
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(300);
+  check('dismissing the question keeps the session',
+    (await page.locator('.modal').count()) === 0 && (await page.locator('#stage-analyse').isVisible()));
   const statTexts = await page.locator('#statsGrid').innerText();
   check('no NaN in statistics', !/NaN|undefined|Infinity/.test(statTexts), statTexts);
   check('chart drawn', (await page.locator('#chartAnalyse svg').count()) === 1);

@@ -1231,6 +1231,62 @@
   }
 
   /**
+   * The brand is the way home: a fresh import screen. Leaving discards the
+   * in-memory session, so once a workbook is loaded the instructor is asked
+   * first, in the app's own dialog, with the consequence stated plainly.
+   */
+  function wireHome() {
+    var link = document.getElementById("homeLink");
+    if (!link) return;
+    link.addEventListener("click", function (e) {
+      // New-tab and new-window gestures keep the current session untouched.
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      var goHome = function () {
+        window.location.assign(link.href);
+      };
+      if (!state.analysis) {
+        goHome();
+        return;
+      }
+      var unsaved = !state.finalized;
+      var lead = state.courseKey
+        ? "You are grading " + state.courseName + " (" + state.cohort.length + " " +
+          U.pluralise(state.cohort.length, "student") + ")" +
+          (state.history.length ? " with " + state.history.length + " boundary " +
+            (state.history.length === 1 ? "change" : "changes") : "") + "."
+        : "A workbook is loaded but no course has been graded yet.";
+      var consequence = state.persist
+        ? "A copy of this session is kept on this device and will be offered when you return."
+        : unsaved
+        ? "This session is not saved. Leaving discards the imported marks, your cutoffs and the change history."
+        : "The grades were already exported. Leaving clears the session from this screen.";
+      CF.modal.open({
+        title: unsaved && !state.persist ? "Leave without saving?" : "Leave this session?",
+        icon: "alert",
+        iconTone: unsaved && !state.persist ? "var(--c-warning)" : null,
+        body: [
+          D.el("p.confirm__lead", { text: lead }),
+          D.el("p.confirm__note", { text: consequence })
+        ],
+        // "Stay" comes first, so Enter never discards work by accident.
+        actions: [
+          { label: "Stay", variant: "secondary" },
+          {
+            label: unsaved && !state.persist ? "Leave and discard" : "Leave",
+            variant: unsaved && !state.persist ? "danger" : null,
+            icon: "arrow-right",
+            onClick: function (close) {
+              close();
+              goHome();
+            }
+          }
+        ]
+      });
+    });
+  }
+
+  /**
    * The stage bar doubles as navigation. Steps the instructor has not reached
    * yet are disabled, so it doubles as an honest progress indicator.
    */
@@ -1367,6 +1423,7 @@
     document.getElementById("loadDemo").addEventListener("click", loadDemo);
     wireInstructor();
     wireStageBar();
+    wireHome();
 
     var showHelp = document.getElementById("showOnboarding");
     if (showHelp) {
