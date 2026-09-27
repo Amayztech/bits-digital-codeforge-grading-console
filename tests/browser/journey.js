@@ -422,9 +422,34 @@ function section(t) {
    * 8. Review
    * ================================================================ */
   section('8. Final review');
-  await page.fill('#instructor', 'Dr. A. Kumar');
+  // Reach the review without a name and enter it there, the way a person who
+  // skipped the field does. The sheet must pick the name up at once: it once
+  // kept reporting it missing, so Finalize stayed disabled after typing it.
+  await page.fill('#instructor', '');
+  await page.locator('#instructor').blur();
   await page.click('#configureActions button:has-text("Review & finalize")');
   await page.waitForTimeout(800);
+  const reviewFinalize = page.locator('#reviewBody button:has-text("Finalize & export")');
+  check('finalize is blocked while no instructor is named', await reviewFinalize.isDisabled());
+  check('the sheet offers to add the name', (await page.locator('.sheet').innerText()).includes('Add your name'));
+  await page.click('#reviewBody button:has-text("Add your name")');
+  await page.waitForTimeout(300);
+  check('"Add your name" puts the cursor in the field', await page.evaluate(() => document.activeElement && document.activeElement.id === 'instructor'));
+  await page.keyboard.type('Dr. A. Kumar');
+  await page.waitForTimeout(300);
+  check('typing the name on the review page unblocks finalize', !(await reviewFinalize.isDisabled()));
+  check('the sheet shows the typed name immediately', (await page.locator('.sheet').innerText()).includes('Dr. A. Kumar'));
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(300);
+  check('Enter commits the name and finalize stays enabled',
+    !(await reviewFinalize.isDisabled()) && (await page.evaluate(() => window.CF.app.state.instructor)) === 'Dr. A. Kumar');
+  await page.fill('#instructor', '');
+  await page.waitForTimeout(300);
+  check('clearing the name blocks finalize again', await reviewFinalize.isDisabled());
+  await page.click('#instructor');
+  await page.keyboard.type('Dr. A. Kumar');
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(400);
   check('review stage visible', await page.locator('#stage-review').isVisible());
   check('sheet masthead shows the course', (await page.locator('.sheet__title').innerText()).trim() === courseName);
   const sheet = await page.locator('.sheet').innerText();
@@ -509,6 +534,19 @@ function section(t) {
   try { await page.locator('.modal button:has-text("Done")').click({ timeout: 4000 }); } catch (e) { /* receipt already closed */ }
   await page.waitForTimeout(300);
   await shot('09-finalized', true);
+
+  // Renaming after finalizing means the files no longer match the report, so
+  // the completion record must be withdrawn and Finalize offered again.
+  await page.click('#instructor');
+  await page.keyboard.press('End');
+  await page.keyboard.type('.');
+  await page.waitForTimeout(400);
+  check('editing the name after finalizing withdraws the completion record',
+    (await page.locator('#reviewBody .receipt').count()) === 0 &&
+    (await page.locator('#reviewBody button:has-text("Finalize & export")').count()) === 1);
+  await page.keyboard.press('Backspace');
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(300);
 
   /* ================================================================ *
    * 10. Re-import clears state

@@ -1183,6 +1183,23 @@
     var input = document.getElementById("instructor");
     if (!input) return;
 
+    /*
+     * The review sheet is built from state when it is opened, and its
+     * instructor check decides whether Finalize is enabled. A name typed while
+     * the sheet is open has to rebuild it, or the check keeps reporting the
+     * name as missing and the export stays blocked even though the name was
+     * saved. Keystrokes are batched to one rebuild per frame.
+     */
+    var reviewFrame = 0;
+    function refreshReview() {
+      if (state.stage !== "review" || !state.analysis) return;
+      cancelAnimationFrame(reviewFrame);
+      reviewFrame = requestAnimationFrame(function () {
+        reviewFrame = 0;
+        renderReview();
+      });
+    }
+
     input.addEventListener("input", function () {
       state.instructor = input.value;
       instructorInvalid("");
@@ -1191,12 +1208,24 @@
         renderStageBar();
         CF.toast.warn("Instructor name changed", "Finalize again so the report and the export agree.");
       }
+      refreshReview();
       if (state.persist) saveDraft();
     });
     input.addEventListener("blur", function () {
       input.value = input.value.replace(/\s+/g, " ").trim();
       state.instructor = input.value;
-      instructorInvalid("");
+      // Re-applies the "name required" warning if the field was left empty
+      // on the review stage; typing alone never nags.
+      renderContext();
+      refreshReview();
+      if (state.persist) saveDraft();
+    });
+    // Enter commits the name, the way a single-line field is expected to.
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        input.blur();
+      }
     });
     instructorInvalid("");
   }
